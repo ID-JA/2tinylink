@@ -5,29 +5,29 @@ track their clicks.
 
 ## 🚀 features
 
-- URL shortening: Users can input a long URL and get a shortened version of it.
+- <b>URL shortening:</b> Users can input a long URL and get a shortened version of it.
 
-- Click tracking: Users can track the number of clicks on their shortened URLs.
+- <b>Click tracking:</b> Users can track the number of clicks on their shortened URLs.
 
-- Customizable URLs: Users can customize the ending of their shortened URLs.
+- <b>Customizable URLs:</b> Users can customize the ending of their shortened URLs.
 
-- User account: Users can create an account to save and manage their shortened
+- <b>User account:</b> Users can create an account to save and manage their shortened
   URLs.
 
-- QR Code generation: The app should generate a QR code for each short URL,
+- <b>QR Code generation:</b> The app should generate a QR code for each short URL,
   allowing users to easily scan the code to access the original link.
 
-- Security and Privacy: It should have built-in security features to protect
+- <b>Security and Privacy:</b> It should have built-in security features to protect
   users’ links from unwanted access and ensure that the links are not being used
   for malicious purposes.
 
-- Password protection: Allow users to protect their links with a password so
+- <b>Password protection:</b> Allow users to protect their links with a password so
   that only authorized people can access them.
 
-- Expiration dates: allow users to set an expiration date for their links after
+- <b>Expiration dates:</b> allow users to set an expiration date for their links after
   which the links will be inaccessible.
 
-- Grouping and tagging: Allow users to organize and manage their links by
+- <b>Grouping and tagging:</b> Allow users to organize and manage their links by
   grouping them into different categories or tagging them with keywords.
 
 ## 🤔 why we are building this
