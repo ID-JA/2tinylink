@@ -1,6 +1,6 @@
-# 2tinnyURL
+# 2tinylink
 
-2tinnyURL is a web application that allows users to generate short URLs and
+2tinylink is a web application that allows users to generate short URLs and
 track their clicks.
 
 ## 🚀 features
@@ -40,10 +40,10 @@ marketing campaigns, or any other purpose where tracking clicks is important.
 ## Built With
 
 - back end:
-  [ASP.NET Web API](https://dotnet.microsoft.com/en-us/apps/aspnet/apis).
-- front end: [Reactjs](https://reactjs.org/).
-- styling: [TalwindCss](https://tailwindcss.com/).
-- database: [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/).
+  [ASP.NET Web API](https://dotnet.microsoft.com/en-us/apps/aspnet/apis)
+- front end: [Reactjs](https://reactjs.org/) + [Nextjs](https://www.nextjs.org/)
+- styling: [TalwindCss](https://tailwindcss.com/)
+- database: [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/)
 
 ## Contributors ✨
 
