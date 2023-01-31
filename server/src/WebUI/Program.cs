@@ -1,4 +1,6 @@
+using Application.Common.Interfaces.Services;
 using Infrastructure.Persistence;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,7 @@ var configuration = builder.Configuration;
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
+builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
 
 var app = builder.Build();
 
