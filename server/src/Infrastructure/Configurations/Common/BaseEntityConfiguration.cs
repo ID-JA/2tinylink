@@ -8,6 +8,7 @@ namespace Infrastructure.Configurations.Common
     {
         public void Configure(EntityTypeBuilder<BaseEntity> builder)
         {
+            builder.UseTpcMappingStrategy();
         }
     }
 }
