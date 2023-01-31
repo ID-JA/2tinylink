@@ -9,5 +9,8 @@ namespace Domain.Entites
         public DateTime? ExpiredAt { get; set; }
         public string LockHash { get; set; }
         public string LockSalt { get; set; }
+
+        // relations
+        public Guid? AppUserId { get; set; }
     }
 }

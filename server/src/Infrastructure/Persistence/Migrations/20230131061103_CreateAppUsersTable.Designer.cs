@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230131061103_CreateAppUsersTable")]
+    partial class CreateAppUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
@@ -66,9 +69,6 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasBaseType("Domain.Common.BaseEntity");
 
-                    b.Property<Guid?>("AppUserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime?>("ExpiredAt")
                         .HasColumnType("TEXT");
 
@@ -86,21 +86,7 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasIndex("AppUserId");
-
                     b.ToTable("LINKS", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entites.Link", b =>
-                {
-                    b.HasOne("Domain.Entites.AppUser", null)
-                        .WithMany("Links")
-                        .HasForeignKey("AppUserId");
-                });
-
-            modelBuilder.Entity("Domain.Entites.AppUser", b =>
-                {
-                    b.Navigation("Links");
                 });
 #pragma warning restore 612, 618
         }

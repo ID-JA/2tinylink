@@ -19,5 +19,6 @@ namespace Infrastructure.Persistence
         }
         
         public DbSet<Link> Links { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
     }
 }
