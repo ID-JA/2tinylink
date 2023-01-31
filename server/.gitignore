@@ -5,7 +5,7 @@
 
 
 # App files
-src/*/appsettings.Development.json
+src/WebUI/2tinylink.db
 
 
 # User-specific files
