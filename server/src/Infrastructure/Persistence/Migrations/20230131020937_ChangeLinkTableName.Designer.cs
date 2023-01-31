@@ -3,16 +3,19 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230131020937_ChangeLinkTableName")]
+    partial class ChangeLinkTableName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
@@ -34,9 +37,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable((string)null);
+                    b.ToTable("BaseEntity");
 
-                    b.UseTpcMappingStrategy();
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Entites.Link", b =>
@@ -61,6 +64,15 @@ namespace Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.ToTable("LINKS", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entites.Link", b =>
+                {
+                    b.HasOne("Domain.Common.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Entites.Link", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

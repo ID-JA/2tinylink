@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230131020937_ChangeLinkTableName")]
-    partial class ChangeLinkTableName
+    [Migration("20230131052139_UseTPC")]
+    partial class UseTPC
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,9 +37,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BaseEntity");
+                    b.ToTable((string)null);
 
-                    b.UseTptMappingStrategy();
+                    b.UseTpcMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Entites.Link", b =>
@@ -64,15 +64,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.ToTable("LINKS", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entites.Link", b =>
-                {
-                    b.HasOne("Domain.Common.BaseEntity", null)
-                        .WithOne()
-                        .HasForeignKey("Domain.Entites.Link", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

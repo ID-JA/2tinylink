@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230130232358_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230131020612_ConfigureBaseEntityAndLink")]
+    partial class ConfigureBaseEntityAndLink
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
 
-            modelBuilder.Entity("Domain.Entites.Link", b =>
+            modelBuilder.Entity("Domain.Common.BaseEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,7 +29,8 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ExpiredAt")
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")
@@ -38,12 +39,26 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("TEXT");
 
+                    b.HasKey("Id");
+
+                    b.ToTable("BaseEntity");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseEntity");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Domain.Entites.Link", b =>
+                {
+                    b.HasBaseType("Domain.Common.BaseEntity");
+
+                    b.Property<DateTime?>("ExpiredAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("LockHash")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LockSalt")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OriginalUrl")
@@ -54,9 +69,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Links");
+                    b.HasDiscriminator().HasValue("Link");
                 });
 #pragma warning restore 612, 618
         }
