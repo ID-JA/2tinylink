@@ -1,4 +1,5 @@
 using Application;
+using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Services;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
@@ -16,6 +17,7 @@ internal class Program
 
         builder.Services.AddControllers();
         builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
+        builder.Services.AddScoped<IAppDbContext,AppDbContext>();
         builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
         builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
 

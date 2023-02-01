@@ -33,7 +33,7 @@ namespace Application.LinkShortning.Commands.RegularShortning
             _dbContext.Links.Add(link);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new(){ Id = link.Id, TinyUrl = link.URI };
+            return new(){ URI = link.URI };
         }
     }
 }
