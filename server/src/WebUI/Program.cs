@@ -25,6 +25,8 @@ internal class Program
 
         // Configure the HTTP request pipeline.
 
+        app.UseExceptionHandler("/error");
+
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
