@@ -5,6 +5,9 @@ using Infrastructure.Persistence;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using Application.Common.Behaviors;
+using Application.LinkShortning.Commands.RegularShortning;
 
 internal class Program
 {
@@ -20,6 +23,8 @@ internal class Program
         builder.Services.AddScoped<IAppDbContext,AppDbContext>();
         builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
         builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
+        builder.Services.AddScoped<IPipelineBehavior<RegularShortningCommand, RegularShortningResult>, RegularShortningCommandValidationBehavior>();
+        builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
 
         var app = builder.Build();
 
