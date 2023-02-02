@@ -2,7 +2,7 @@ using Application.LinkShortning.Commands.RegularShortning;
 using FluentValidation;
 using MediatR;
 
-namespace Application.Common.Behaviors
+namespace Application.LinkShortning.Commands.RegularShortning.Behaviors
 {
     public class RegularShortningCommandValidationBehavior : IPipelineBehavior<RegularShortningCommand, RegularShortningResult>
     {

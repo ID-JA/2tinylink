@@ -6,8 +6,8 @@ using Infrastructure.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
-using Application.Common.Behaviors;
 using Application.LinkShortning.Commands.RegularShortning;
+using Application.LinkShortning.Commands.RegularShortning.Behaviors;
 
 internal class Program
 {
