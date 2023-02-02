@@ -1,3 +1,4 @@
+using Application.Common.Exceptions;
 using Application.LinkShortning.Commands.RegularShortning;
 using FluentValidation;
 using MediatR;
@@ -13,6 +14,7 @@ namespace Application.LinkShortning.Commands.RegularShortning.Behaviors
         }
         public async Task<RegularShortningResult> Handle(RegularShortningCommand request, RequestHandlerDelegate<RegularShortningResult> next, CancellationToken cancellationToken)
         {
+
             var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
             if (validationResult.IsValid)
@@ -22,7 +24,7 @@ namespace Application.LinkShortning.Commands.RegularShortning.Behaviors
 
             var firstError = validationResult.Errors.First();
 
-            throw new Exception(firstError.ErrorMessage);
+            throw new AppException(400, firstError.ErrorMessage);
         }
     }
 }
