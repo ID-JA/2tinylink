@@ -13,7 +13,7 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(x => x.OriginalUrl)
             .IsRequired();
 
-            builder.Property(x => x.URI)
+            builder.Property(x => x.Uri)
             .IsRequired();
 
             builder.Property(x => x.LockHash)

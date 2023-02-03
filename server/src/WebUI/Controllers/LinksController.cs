@@ -26,7 +26,7 @@ namespace WebUI.Controllers
 
             var response = new LinkByIdResponse() { 
                 Id = queryResult.Id, 
-                URI = queryResult.URI, 
+                Uri = queryResult.Uri, 
                 CreatedAt = queryResult.CreatedAt 
             };
 
@@ -40,7 +40,7 @@ namespace WebUI.Controllers
             
             var result = await _sender.Send(command);
 
-            var response = new RegularShortningResponse { Id = result.Id, URI = result.URI };
+            var response = new RegularShortningResponse { Id = result.Id, Uri = result.URI };
 
             return CreatedAtAction(nameof(GetById), new { Id = response.Id }, response );
         }

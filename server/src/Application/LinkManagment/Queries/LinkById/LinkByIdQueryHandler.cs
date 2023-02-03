@@ -19,7 +19,7 @@ namespace Application.LinkManagment.Queries.LinkById
                                        .Where(x => query.Id == x.Id && x.IsActive)
                                        .Select(x => new {
                                         Id          = x.Id,
-                                        URI         = x.URI,
+                                        Uri         = x.Uri,
                                         CreatedAt   = x.CreatedAt
                                        })
                                        .FirstOrDefaultAsync();
@@ -28,7 +28,7 @@ namespace Application.LinkManagment.Queries.LinkById
                 throw new AppException(statusCode: (int)HttpStatusCode.NotFound, errorMessage: $"Link with Id: {query.Id} not found.");
             }
 
-            return new() { Id = link.Id, URI = link.URI, CreatedAt = link.CreatedAt };
+            return new() { Id = link.Id, Uri = link.Uri, CreatedAt = link.CreatedAt };
         }
     }
 }

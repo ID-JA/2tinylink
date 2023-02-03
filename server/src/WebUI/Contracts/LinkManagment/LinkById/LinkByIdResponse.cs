@@ -8,7 +8,7 @@ namespace WebUI.Contracts.LinkManagment.LinkById
     public class LinkByIdResponse
     {
         public Guid Id { get; set; }
-        public string URI { get; set; }
+        public string Uri { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

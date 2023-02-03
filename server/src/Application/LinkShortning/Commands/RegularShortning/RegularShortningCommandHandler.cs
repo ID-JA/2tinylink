@@ -22,18 +22,18 @@ namespace Application.LinkShortning.Commands.RegularShortning
             {
                 generatedUniqueId = _uniqueIdProvider.GetUniqueString();
             }
-            while(_dbContext.Links.Any(x => x.URI == generatedUniqueId));
+            while(_dbContext.Links.Any(x => x.Uri == generatedUniqueId));
 
             var link = new Link
             {
                 OriginalUrl = command.Url,
-                URI = generatedUniqueId  
+                Uri = generatedUniqueId  
             };
 
             _dbContext.Links.Add(link);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new() { Id = link.Id, URI = link.URI };
+            return new() { Id = link.Id, URI = link.Uri };
         }
     }
 }
