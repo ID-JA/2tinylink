@@ -1,0 +1,3 @@
+@host = http://localhost:5132/api
+
+GET {{host}}/Links/d28b5bc9-9b20-414b-9068-3a1c537b4c3c
