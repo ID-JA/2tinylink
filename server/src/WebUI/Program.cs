@@ -20,19 +20,32 @@ internal class Program
 
         builder.Services.AddControllers();
         builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
-        builder.Services.AddScoped<IAppDbContext,AppDbContext>();
+        builder.Services.AddScoped<IAppDbContext, AppDbContext>();
         builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
         builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
         builder.Services.AddScoped<IPipelineBehavior<RegularShortningCommand, RegularShortningResult>, RegularShortningCommandValidationBehavior>();
         builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
-        builder.Services.AddCors(options => {
-            options.AddPolicy("2tinylinkApp", policy => {
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("2tinylinkApp", policy =>
+            {
                 policy.WithOrigins(configuration["CorsSettings:Origin"])
                 .AllowAnyMethod();
             });
         });
 
         var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {       
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                dbContext.Database.Migrate();
+                
+            }
+        }
+
 
         // Configure the HTTP request pipeline.
 
