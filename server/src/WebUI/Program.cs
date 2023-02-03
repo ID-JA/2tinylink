@@ -25,6 +25,12 @@ internal class Program
         builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
         builder.Services.AddScoped<IPipelineBehavior<RegularShortningCommand, RegularShortningResult>, RegularShortningCommandValidationBehavior>();
         builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
+        builder.Services.AddCors(options => {
+            options.AddPolicy("2tinylinkApp", policy => {
+                policy.WithOrigins(configuration["CorsSettings:Origin"])
+                .AllowAnyMethod();
+            });
+        });
 
         var app = builder.Build();
 
@@ -33,6 +39,8 @@ internal class Program
         app.UseExceptionHandler("/error");
 
         app.UseHttpsRedirection();
+
+        app.UseCors("2tinylinkApp");
 
         app.UseAuthorization();
 
