@@ -22,7 +22,7 @@ namespace Application.LinkShortning.Commands.RegularShortning
             {
                 generatedUniqueId = _uniqueIdProvider.GetUniqueString();
             }
-            while(generatedUniqueId is not null && _dbContext.Links.Any(x => x.URI == generatedUniqueId));
+            while(_dbContext.Links.Any(x => x.URI == generatedUniqueId));
 
             var link = new Link
             {
@@ -33,7 +33,7 @@ namespace Application.LinkShortning.Commands.RegularShortning
             _dbContext.Links.Add(link);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new(){ URI = link.URI };
+            return new() { Id = link.Id, URI = link.URI };
         }
     }
 }

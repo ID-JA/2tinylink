@@ -1,3 +1,4 @@
+using System.Net;
 using Application.Common.Exceptions;
 using Application.LinkShortning.Commands.RegularShortning;
 using FluentValidation;
@@ -24,7 +25,7 @@ namespace Application.LinkShortning.Commands.RegularShortning.Behaviors
 
             var firstError = validationResult.Errors.First();
 
-            throw new AppException(400, firstError.ErrorMessage);
+            throw new AppException((int)HttpStatusCode.BadRequest, firstError.ErrorMessage);
         }
     }
 }
