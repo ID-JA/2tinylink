@@ -9,7 +9,7 @@ namespace Domain.Entites
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
 
-        public ICollection<Link> Links { get; set; }
+        public ICollection<TinyLink> TinyLinks { get; set; }
 
 
     }

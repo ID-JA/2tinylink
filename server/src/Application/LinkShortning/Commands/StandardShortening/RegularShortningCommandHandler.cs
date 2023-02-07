@@ -3,9 +3,9 @@ using Application.Common.Interfaces.Services;
 using Domain.Entites;
 using MediatR;
 
-namespace Application.LinkShortning.Commands.RegularShortning
+namespace Application.LinkShortning.Commands.StandardShortening
 {
-    public class RegularShortningCommandHandler : IRequestHandler<RegularShortningCommand, RegularShortningResult>
+    public class RegularShortningCommandHandler : IRequestHandler<StandardShorteningCommand, StandardShorteningResult>
     {
         private readonly IAppDbContext _dbContext;
         private readonly IUniqueIdProvider _uniqueIdProvider;
@@ -14,7 +14,7 @@ namespace Application.LinkShortning.Commands.RegularShortning
             _uniqueIdProvider = uniqueIdProvider;
             _dbContext = dbContext;
         }
-        public async Task<RegularShortningResult> Handle(RegularShortningCommand command, CancellationToken cancellationToken)
+        public async Task<StandardShorteningResult> Handle(StandardShorteningCommand command, CancellationToken cancellationToken)
         {
             string generatedUniqueId;
 
@@ -22,18 +22,18 @@ namespace Application.LinkShortning.Commands.RegularShortning
             {
                 generatedUniqueId = _uniqueIdProvider.GetUniqueString();
             }
-            while(_dbContext.Links.Any(x => x.Uri == generatedUniqueId));
+            while(_dbContext.TinyLinks.Any(x => x.Address == generatedUniqueId));
 
-            var link = new Link
+            var tinyLink = new TinyLink
             {
-                OriginalUrl = command.Url,
-                Uri = generatedUniqueId  
+                Address = generatedUniqueId,
+                Url  = command.Url
             };
 
-            _dbContext.Links.Add(link);
+            _dbContext.TinyLinks.Add(tinyLink);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new() { Id = link.Id, URI = link.Uri };
+            return new() { Id = tinyLink.Id, Address = tinyLink.Address , Url = tinyLink.Url };
         }
     }
 }

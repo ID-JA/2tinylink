@@ -6,8 +6,9 @@ using Infrastructure.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
-using Application.LinkShortning.Commands.RegularShortning;
-using Application.LinkShortning.Commands.RegularShortning.Behaviors;
+using Application.LinkShortning.Commands.StandardShortening;
+using Application.LinkShortning.Commands.StandardShortening.Behaviors;
+using System.Text;
 
 internal class Program
 {
@@ -23,7 +24,7 @@ internal class Program
         builder.Services.AddScoped<IAppDbContext, AppDbContext>();
         builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
         builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
-        builder.Services.AddScoped<IPipelineBehavior<RegularShortningCommand, RegularShortningResult>, RegularShortningCommandValidationBehavior>();
+        builder.Services.AddScoped<IPipelineBehavior<StandardShorteningCommand, StandardShorteningResult>, StandardShorteningCommandValidationBehavior>();
         builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
         builder.Services.AddCors(options =>
         {
@@ -37,12 +38,12 @@ internal class Program
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())
-        {       
+        {
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 dbContext.Database.Migrate();
-                
+
             }
         }
 
