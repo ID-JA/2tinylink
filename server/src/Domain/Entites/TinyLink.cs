@@ -2,10 +2,10 @@ using Domain.Common;
 
 namespace Domain.Entites
 {
-    public class Link : BaseEntity
+    public class TinyLink : BaseEntity
     {
-        public string OriginalUrl { get; set; }
-        public string Uri { get; set; }
+        public string Address { get; set; }
+        public string Url { get; set; }
         public DateTime? ExpiredAt { get; set; }
         public string LockHash { get; set; }
         public string LockSalt { get; set; }

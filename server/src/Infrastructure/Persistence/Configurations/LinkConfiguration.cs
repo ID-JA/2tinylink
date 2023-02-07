@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class LinkConfiguration : IEntityTypeConfiguration<Link>
+    public class LinkConfiguration : IEntityTypeConfiguration<TinyLink>
     {
-        public void Configure(EntityTypeBuilder<Link> builder)
+        public void Configure(EntityTypeBuilder<TinyLink> builder)
         {
-            builder.ToTable("LINKS");
+            builder.ToTable("TINY_LINKS");
 
-            builder.Property(x => x.OriginalUrl)
+            builder.Property(x => x.Address)
             .IsRequired();
 
-            builder.Property(x => x.Uri)
+            builder.Property(x => x.Url)
             .IsRequired();
 
             builder.Property(x => x.LockHash)
