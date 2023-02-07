@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "5d9d5a8e-58cb-4412-b0c4-e38b08c81820",
+		"name": "2tinylink",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Standard Tiny Links",
+			"item": [
+				{
+					"name": "Create a standard tiny link",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Url\": \"https://github.com/ID-JA/2tinylink/commit/cfb785365f2a49fa9355fabdda828a94ffb6fe66\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_host}}/standard/tiny-links",
+							"host": [
+								"{{api_host}}"
+							],
+							"path": [
+								"standard",
+								"tiny-links"
+							]
+						},
+						"description": "- Endpoint for an  anonymous user to create a short link by providing the URL to short at the body of the request.\n- `200`: the request has succeeded.\n- `400`: if no body provided or the media type sent is unsupported media type by the server.\n- `415`: if invalid value of url e.g. empty."
+					},
+					"response": []
+				},
+				{
+					"name": "Get a standard tiny link by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_host}}/standard/tiny-links/b2188488-1362-4605-b581-e07837b21266",
+							"host": [
+								"{{api_host}}"
+							],
+							"path": [
+								"standard",
+								"tiny-links",
+								"b2188488-1362-4605-b581-e07837b21266"
+							]
+						},
+						"description": "- Get a standard link by it's id.\n- `404` : if the server cannot find the link."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_host",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
