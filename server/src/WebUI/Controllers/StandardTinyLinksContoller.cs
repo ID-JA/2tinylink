@@ -8,11 +8,11 @@ using WebUI.Contracts.StandardTinyLinkManagment.TinyLinkById;
 namespace WebUI.Controllers
 {
     [Route("api/standard/tiny-links")]
-    public class StandardTinyLinks : ApiController
+    public class StandardTinyLinksContoller : ApiController
     {
         private readonly ISender _sender;
 
-        public StandardTinyLinks(ISender sender)
+        public StandardTinyLinksContoller(ISender sender)
         {
            _sender = sender;    
         }
