@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using Application.LinkShortning.Commands.StandardShortening;
 using Application.LinkShortning.Commands.StandardShortening.Behaviors;
-using System.Text;
+using Application.CorrespondedUrl.Queries.UrlByAddress;
+using Application.CorrespondedUrl.Queries.UrlByAddress.Behaviors;
 
 internal class Program
 {
@@ -25,6 +26,7 @@ internal class Program
         builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
         builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
         builder.Services.AddScoped<IPipelineBehavior<StandardShorteningCommand, StandardShorteningResult>, StandardShorteningCommandValidationBehavior>();
+        builder.Services.AddScoped<IPipelineBehavior<UrlByAddressQuery, UrlByAddressQueryResult>, UrlByAddressQueryValidationBehavior>();
         builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
         builder.Services.AddCors(options =>
         {

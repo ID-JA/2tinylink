@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Url\": \"https://github.com/ID-JA/2tinylink/commit/cfb785365f2a49fa9355fabdda828a94ffb6fe66\"\r\n}",
+							"raw": "{\r\n    \"Url\": \"https://www.linkedin.com/feed/\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,17 +42,41 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{api_host}}/standard/tiny-links/b2188488-1362-4605-b581-e07837b21266",
+							"raw": "{{api_host}}/standard/tiny-links/ ",
 							"host": [
 								"{{api_host}}"
 							],
 							"path": [
 								"standard",
 								"tiny-links",
-								"b2188488-1362-4605-b581-e07837b21266"
+								" "
 							]
 						},
 						"description": "- Get a standard link by it's id.\n- `404` : if the server cannot find the link."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Corresponded Url",
+			"item": [
+				{
+					"name": "Get Url by Address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_host}}/urls/TA8EmJd",
+							"host": [
+								"{{api_host}}"
+							],
+							"path": [
+								"urls",
+								"TA8EmJd"
+							]
+						},
+						"description": "- Get the corresponded Url by a given an address at the route parameter.\n- `200`: the request has succeeded.\n- `404`: the server cannot find the url of a given address.\n- `415`: if the provided address is empty."
 					},
 					"response": []
 				}

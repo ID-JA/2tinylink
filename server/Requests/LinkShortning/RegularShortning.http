@@ -1,8 +1,0 @@
-@host = http://localhost:5132/api
-
-POST {{host}}/Links/regular
-Content-Type: application/json
-
-{
-    "Url":"https://github.com/ID-JA/2tinylink"
-}
