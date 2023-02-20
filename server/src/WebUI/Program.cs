@@ -10,6 +10,7 @@ using Application.LinkShortning.Commands.StandardShortening;
 using Application.LinkShortning.Commands.StandardShortening.Behaviors;
 using Application.CorrespondedUrl.Queries.UrlByAddress;
 using Application.CorrespondedUrl.Queries.UrlByAddress.Behaviors;
+using WebUI.Extensions;
 
 internal class Program
 {
@@ -37,30 +38,7 @@ internal class Program
             });
         });
 
-        var app = builder.Build();
-
-        if (app.Environment.IsDevelopment())
-        {
-            using (var scope = app.Services.CreateScope())
-            {
-                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                dbContext.Database.Migrate();
-
-            }
-        }
-
-
-        // Configure the HTTP request pipeline.
-
-        app.UseExceptionHandler("/error");
-
-        app.UseHttpsRedirection();
-
-        app.UseCors("2tinylinkApp");
-
-        app.UseAuthorization();
-
-        app.MapControllers();
+        var app = builder.Build().ConfigurePipeline();
 
         app.Run();
     }
