@@ -1,4 +1,6 @@
 using Application;
+using Application.Auth.Command.Register;
+using Application.Auth.Command.Register.Behaviors;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Services;
 using Application.CorrespondedUrl.Queries.UrlByAddress;
@@ -27,6 +29,7 @@ namespace WebUI.Extensions
             builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
             builder.Services.AddScoped<IPipelineBehavior<StandardShorteningCommand, StandardShorteningResult>, StandardShorteningCommandValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<UrlByAddressQuery, UrlByAddressQueryResult>, UrlByAddressQueryValidationBehavior>();
+            builder.Services.AddScoped<IPipelineBehavior<RegisterCommand, RegisterCommandResult>, RegisterCommandValidationBehavior>();
             builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
             builder.Services.AddCors(options =>
             {
@@ -41,6 +44,8 @@ namespace WebUI.Extensions
         }
         internal static WebApplication ConfigurePipeline(this WebApplication app)
         {
+            app.UseExceptionHandler("/error");
+
             if (app.Environment.IsDevelopment())
             {
                 using (var scope = app.Services.CreateScope())
@@ -50,8 +55,6 @@ namespace WebUI.Extensions
 
                 }
             }
-
-            app.UseExceptionHandler("/error");
 
             app.UseHttpsRedirection();
 
