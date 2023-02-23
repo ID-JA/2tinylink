@@ -1,12 +1,13 @@
 using Application;
-using Application.Auth.Command.Register;
-using Application.Auth.Command.Register.Behaviors;
+using Application.UseCases.Auth.Command.Register;
+using Application.UseCases.Auth.Command.Register.Behaviors;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Services;
-using Application.CorrespondedUrl.Queries.UrlByAddress;
-using Application.CorrespondedUrl.Queries.UrlByAddress.Behaviors;
-using Application.LinkShortning.Commands.StandardShortening;
-using Application.LinkShortning.Commands.StandardShortening.Behaviors;
+using Application.UseCases.CorrespondedUrl.Queries.UrlByAddress;
+using Application.UseCases.CorrespondedUrl.Queries.UrlByAddress.Behaviors;
+using Application.UseCases.LinkShortning.Commands.StandardShortening;
+using Application.UseCases.LinkShortning.Commands.StandardShortening.Behaviors;
+using Domain.Entites;
 using FluentValidation;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
@@ -25,6 +26,8 @@ namespace WebUI.Extensions
             builder.Services.AddControllers();
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
             builder.Services.AddScoped<IAppDbContext, AppDbContext>();
+            builder.Services.AddIdentityCore<AppUser>()
+            .AddEntityFrameworkStores<AppDbContext>();
             builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
             builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
             builder.Services.AddScoped<IPipelineBehavior<StandardShorteningCommand, StandardShorteningResult>, StandardShorteningCommandValidationBehavior>();

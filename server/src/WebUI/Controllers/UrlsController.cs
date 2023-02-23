@@ -1,4 +1,4 @@
-using Application.CorrespondedUrl.Queries.UrlByAddress;
+using Application.UseCases.CorrespondedUrl.Queries.UrlByAddress;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.CorrespondedUrl;

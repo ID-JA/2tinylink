@@ -1,4 +1,4 @@
-using Application.Auth.Command.Register;
+using Application.UseCases.Auth.Command.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.Auth.Common;
