@@ -31,7 +31,7 @@ namespace WebUI.Controllers
 
             var result = await _sender.Send(command);
 
-            return Ok();
+            return CreatedAtAction("",new {}, result);
         }
     }
 }

@@ -26,7 +26,9 @@ namespace WebUI.Extensions
             builder.Services.AddControllers();
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
             builder.Services.AddScoped<IAppDbContext, AppDbContext>();
-            builder.Services.AddIdentityCore<AppUser>()
+            builder.Services.AddIdentityCore<AppUser>(opts => {
+                opts.User.RequireUniqueEmail = true;
+            })
             .AddEntityFrameworkStores<AppDbContext>();
             builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
             builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
