@@ -9,12 +9,12 @@ function HomeLayout({children}: {children: React.ReactNode}) {
 
           <ul className="flex gap-3">
             <li>
-              <button className="border-blue-500 border-2 px-4 py-2 text-blue-500 rounded-md active:scale-95">
+              <button className="border-gray-900 border-2 px-4 py-2 text-gray-900 rounded-md active:scale-95">
                 <a href="#">Login</a>
               </button>
             </li>
             <li>
-              <button className="bg-blue-500 border-2 border-blue-500 px-4 py-2 text-white rounded-md active:scale-95">
+              <button className="bg-gray-900 border-2 border-gray-900 px-4 py-2 text-white rounded-md active:scale-95">
                 <a href="#">Register</a>
               </button>
             </li>
