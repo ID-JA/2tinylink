@@ -8,20 +8,24 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            builder.ToTable("APP_USERS");
 
             builder.Property(x => x.UserName)
+            .IsRequired()
+            .HasMaxLength(30);
+
+            builder.Property(x => x.PasswordHash)
             .IsRequired();
 
             builder.Property(x => x.Email)
             .IsRequired();
 
-            builder.Property(x => x.PasswordHash)
-            .IsRequired();
+            builder.Property(x => x.FirstName)
+            .IsRequired()
+            .HasMaxLength(30); 
 
-            builder.Property(x => x.PasswordSalt)
-            .IsRequired();
-            
+            builder.Property(x => x.LastName)
+            .IsRequired()
+            .HasMaxLength(30);         
         }
     }
 }
