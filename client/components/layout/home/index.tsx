@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 function HomeLayout({children}: {children: React.ReactNode}) {
@@ -15,7 +16,9 @@ function HomeLayout({children}: {children: React.ReactNode}) {
             </li>
             <li>
               <button className="bg-gray-900 border-2 border-gray-900 px-4 py-2 text-white rounded-md active:scale-95">
-                <a href="#">Register</a>
+                <Link href="/register" passHref>
+                  Register
+                </Link>
               </button>
             </li>
           </ul>
