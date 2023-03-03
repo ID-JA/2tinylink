@@ -4,7 +4,7 @@ using Application.Common.Interfaces.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.UseCases.StandardTinyLinkManagment.Queries.TinyLinkById
+namespace Application.UseCases.StandardTinyLinkManagement.Queries.TinyLinkById
 {
     public class StandardTinyLinkByIdQueryHandler : IRequestHandler<StandardTinyLinkByIdQuery, StandardTinyLinkByIdQueryResult>
     {

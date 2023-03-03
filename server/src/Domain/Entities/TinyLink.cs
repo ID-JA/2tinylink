@@ -1,6 +1,6 @@
-using Domain.Entites.Common;
+using Domain.Entities.Common;
 
-namespace Domain.Entites
+namespace Domain.Entities
 {
     public class TinyLink : BaseEntity
     {

@@ -1,18 +1,18 @@
-using Application.UseCases.LinkShortning.Commands.StandardShortening;
-using Application.UseCases.StandardTinyLinkManagment.Queries.TinyLinkById;
+using Application.UseCases.LinkShortening.Commands.StandardShortening;
+using Application.UseCases.StandardTinyLinkManagement.Queries.TinyLinkById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.StandardShortening;
-using WebUI.Contracts.StandardTinyLinkManagment.TinyLinkById;
+using WebUI.Contracts.StandardTinyLinkManagement.TinyLinkById;
 
 namespace WebUI.Controllers
 {
     [Route("api/standard/tiny-links")]
-    public class StandardTinyLinksContoller : ApiController
+    public class StandardTinyLinksController : ApiController
     {
         private readonly ISender _sender;
 
-        public StandardTinyLinksContoller(ISender sender)
+        public StandardTinyLinksController(ISender sender)
         {
            _sender = sender;    
         }

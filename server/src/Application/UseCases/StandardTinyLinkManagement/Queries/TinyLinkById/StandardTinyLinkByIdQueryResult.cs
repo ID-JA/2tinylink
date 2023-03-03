@@ -1,4 +1,4 @@
-namespace Application.UseCases.StandardTinyLinkManagment.Queries.TinyLinkById
+namespace Application.UseCases.StandardTinyLinkManagement.Queries.TinyLinkById
 {
     public class StandardTinyLinkByIdQueryResult
     {

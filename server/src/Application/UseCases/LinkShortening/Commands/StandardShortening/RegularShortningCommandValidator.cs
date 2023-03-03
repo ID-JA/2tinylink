@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Application.UseCases.LinkShortning.Commands.StandardShortening
+namespace Application.UseCases.LinkShortening.Commands.StandardShortening
 {
     public class RegularShortningCommandValidator : AbstractValidator<StandardShorteningCommand>
     {
