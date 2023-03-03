@@ -1,3 +1,5 @@
+using System;
+
 namespace WebUI.Contracts.StandardTinyLinkManagement.TinyLinkById
 {
     public class StandardTinyLinkByIdResponse

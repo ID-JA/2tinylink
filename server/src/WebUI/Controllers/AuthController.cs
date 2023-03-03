@@ -1,7 +1,9 @@
 using Application.UseCases.Auth.Command.Register;
+using Application.UseCases.Auth.Queries.Login;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.Auth.Common;
+using WebUI.Contracts.Auth.Login;
 using WebUI.Contracts.Auth.Register;
 
 namespace WebUI.Controllers
@@ -17,7 +19,8 @@ namespace WebUI.Controllers
             _sender = sender;
         }
 
-        [Route("register")]
+        [HttpPost("register")]
+        
         public async Task<ActionResult<AuthenticatedUserResponse>> Register([FromBody] RegisterRequest registerRequest)
         {
             var command = new RegisterCommand() 
@@ -32,6 +35,22 @@ namespace WebUI.Controllers
             var result = await _sender.Send(command);
 
             return CreatedAtAction("GetUserProfileByUserName","Profiles", new { UserName = result.UserName }, result);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest loginRequest)
+        {
+            var query = new LoginQuery()
+            {
+                UserNameOrEmail = loginRequest.UserNameOrEmail,
+                Password = loginRequest.Password
+            };
+
+            var result = await _sender.Send(query);
+
+            var response = new LoginResponse() { Token = result.Token };
+            
+            return Ok(response);
         }
     }
 }

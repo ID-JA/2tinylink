@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using WebUI.Helpers;
 using Application.UseCases.UserManagement.Queries.UserByUserName;
 using Application.UseCases.UserManagement.Queries.UserByUserName.Behaviors;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebUI.Extensions
 {
@@ -29,11 +31,16 @@ namespace WebUI.Extensions
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
             builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 
+            // Add JWT Authentication
+            builder.Services.AddAuthentication();
+
             builder.Services.AddIdentityCore<AppUser>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
             })
+            .AddSignInManager<SignInManager<AppUser>>()
             .AddEntityFrameworkStores<AppDbContext>();
+
             builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
 
             builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
