@@ -1,6 +1,6 @@
 using System.Net;
 using Application.Common.Exceptions;
-using Domain.Entites;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 

@@ -1,15 +1,15 @@
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Services;
-using Domain.Entites;
+using Domain.Entities;
 using MediatR;
 
-namespace Application.UseCases.LinkShortning.Commands.StandardShortening
+namespace Application.UseCases.LinkShortening.Commands.StandardShortening
 {
-    public class RegularShortningCommandHandler : IRequestHandler<StandardShorteningCommand, StandardShorteningResult>
+    public class RegularShorteningCommandHandler : IRequestHandler<StandardShorteningCommand, StandardShorteningResult>
     {
         private readonly IAppDbContext _dbContext;
         private readonly IUniqueIdProvider _uniqueIdProvider;
-        public RegularShortningCommandHandler(IAppDbContext dbContext, IUniqueIdProvider uniqueIdProvider)
+        public RegularShorteningCommandHandler(IAppDbContext dbContext, IUniqueIdProvider uniqueIdProvider)
         {
             _uniqueIdProvider = uniqueIdProvider;
             _dbContext = dbContext;

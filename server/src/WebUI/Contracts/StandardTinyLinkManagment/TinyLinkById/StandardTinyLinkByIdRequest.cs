@@ -1,4 +1,4 @@
-namespace WebUI.Contracts.StandardTinyLinkManagment.TinyLinkById
+namespace WebUI.Contracts.StandardTinyLinkManagement.TinyLinkById
 {
     public class StandardTinyLinkByIdRequest
     {

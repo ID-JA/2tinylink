@@ -1,6 +1,6 @@
 using System.Reflection;
 using Application.Common.Interfaces.Persistence;
-using Domain.Entites;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

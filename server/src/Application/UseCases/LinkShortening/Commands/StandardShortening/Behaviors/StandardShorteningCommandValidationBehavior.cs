@@ -3,7 +3,7 @@ using Application.Common.Exceptions;
 using FluentValidation;
 using MediatR;
 
-namespace Application.UseCases.LinkShortning.Commands.StandardShortening.Behaviors
+namespace Application.UseCases.LinkShortening.Commands.StandardShortening.Behaviors
 {
     public class StandardShorteningCommandValidationBehavior : IPipelineBehavior<StandardShorteningCommand, StandardShorteningResult>
     {

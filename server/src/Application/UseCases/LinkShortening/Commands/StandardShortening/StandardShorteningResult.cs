@@ -1,4 +1,4 @@
-namespace Application.UseCases.LinkShortning.Commands.StandardShortening
+namespace Application.UseCases.LinkShortening.Commands.StandardShortening
 {
     public class StandardShorteningResult
     {
