@@ -31,7 +31,7 @@ namespace WebUI.Controllers
 
             var result = await _sender.Send(command);
 
-            return CreatedAtAction("",new {}, result);
+            return CreatedAtAction("GetUserProfileByUserName","Profiles", new { UserName = result.UserName }, result);
         }
     }
 }

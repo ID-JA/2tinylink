@@ -14,6 +14,8 @@ using Infrastructure.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WebUI.Helpers;
+using Application.UseCases.UserManagement.Queries.UserByUserName;
+using Application.UseCases.UserManagement.Queries.UserByUserName.Behaviors;
 
 namespace WebUI.Extensions
 {
@@ -26,16 +28,22 @@ namespace WebUI.Extensions
             builder.Services.AddControllers();
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
             builder.Services.AddScoped<IAppDbContext, AppDbContext>();
-            builder.Services.AddIdentityCore<AppUser>(opts => {
+
+            builder.Services.AddIdentityCore<AppUser>(opts =>
+            {
                 opts.User.RequireUniqueEmail = true;
             })
             .AddEntityFrameworkStores<AppDbContext>();
             builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
+
             builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
+
             builder.Services.AddScoped<IPipelineBehavior<StandardShorteningCommand, StandardShorteningResult>, StandardShorteningCommandValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<UrlByAddressQuery, UrlByAddressQueryResult>, UrlByAddressQueryValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<RegisterCommand, RegisterCommandResult>, RegisterCommandValidationBehavior>();
+            builder.Services.AddScoped<IPipelineBehavior<UserByUserNameQuery, UserByUserNameQueryResult>, UserByUserNameQueryValidationBehavior>();
             builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(Consts.CORS_POLICY_NAME, policy =>
@@ -49,6 +57,7 @@ namespace WebUI.Extensions
         }
         internal static WebApplication ConfigurePipeline(this WebApplication app)
         {
+
             app.UseExceptionHandler("/error");
 
             if (app.Environment.IsDevelopment())
