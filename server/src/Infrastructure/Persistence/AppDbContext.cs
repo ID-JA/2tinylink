@@ -1,11 +1,13 @@
 using System.Reflection;
 using Application.Common.Interfaces.Persistence;
 using Domain.Entites;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
 {
-    public class AppDbContext : DbContext, IAppDbContext
+    public class AppDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IAppDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -14,9 +16,8 @@ namespace Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
             base.OnModelCreating(builder);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

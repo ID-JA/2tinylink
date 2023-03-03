@@ -8,20 +8,49 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            builder.ToTable("APP_USERS");
+            builder.Property(x => x.Id)
+            .HasColumnOrder(1);
+            
+             builder.Property(x => x.UserName)
+            .IsRequired()
+            .HasMaxLength(30)
+            .HasColumnOrder(2);
 
-            builder.Property(x => x.UserName)
-            .IsRequired();
+             builder.Property(x => x.FirstName)
+            .IsRequired()
+            .HasMaxLength(30)
+            .HasColumnOrder(3); 
+
+            builder.Property(x => x.LastName)
+            .IsRequired()
+            .HasMaxLength(30)
+            .HasColumnOrder(4);  
 
             builder.Property(x => x.Email)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnOrder(5);
+
+            builder.Property(x => x.EmailConfirmed)
+            .IsRequired()
+            .HasColumnOrder(6);  
 
             builder.Property(x => x.PasswordHash)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnOrder(7);
 
-            builder.Property(x => x.PasswordSalt)
-            .IsRequired();
-            
+
+            builder.Property(x => x.CreatedAt)
+            .IsRequired()
+            .HasColumnOrder(8);
+
+            builder.Property(x => x.LastModified)
+            .IsRequired()
+            .HasColumnOrder(9);
+
+            builder.Property(x => x.IsActive)
+            .IsRequired()
+            .HasColumnOrder(10);
+     
         }
     }
 }

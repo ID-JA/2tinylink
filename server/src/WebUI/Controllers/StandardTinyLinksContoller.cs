@@ -1,5 +1,5 @@
-using Application.LinkShortning.Commands.StandardShortening;
-using Application.StandardTinyLinkManagment.Queries.TinyLinkById;
+using Application.UseCases.LinkShortning.Commands.StandardShortening;
+using Application.UseCases.StandardTinyLinkManagment.Queries.TinyLinkById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.StandardShortening;
