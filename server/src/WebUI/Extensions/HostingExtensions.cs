@@ -18,6 +18,8 @@ using Application.UseCases.UserManagement.Queries.UserByUserName;
 using Application.UseCases.UserManagement.Queries.UserByUserName.Behaviors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Application.UseCases.Auth.Queries.Login;
+using Application.UseCases.Auth.Queries.Login.Behaviors;
 
 namespace WebUI.Extensions
 {
@@ -49,6 +51,7 @@ namespace WebUI.Extensions
             builder.Services.AddScoped<IPipelineBehavior<UrlByAddressQuery, UrlByAddressQueryResult>, UrlByAddressQueryValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<RegisterCommand, RegisterCommandResult>, RegisterCommandValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<UserByUserNameQuery, UserByUserNameQueryResult>, UserByUserNameQueryValidationBehavior>();
+            builder.Services.AddScoped<IPipelineBehavior<LoginQuery, LoginQueryResult>, LoginQueryValidationBehavior>();
             builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
 
             builder.Services.AddCors(options =>

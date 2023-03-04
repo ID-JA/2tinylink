@@ -12,7 +12,7 @@ namespace Application.UseCases.Auth.Command.Register
             .NotEmpty()
             .MinimumLength(3)
             .MaximumLength(30)
-            .Matches(AppRegEx.USER_NAME);
+            .Matches(AppRegEx.USER_NAME).WithMessage($"{{PropertyName}} must match the pattern '{AppRegEx.USER_NAME}'");
 
             RuleFor(x => x.FirstName)
             .NotEmpty()
