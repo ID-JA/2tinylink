@@ -32,7 +32,7 @@
 								"tiny-links"
 							]
 						},
-						"description": "- Endpoint for an  anonymous user to create a short link by providing the URL to short at the body of the request.\n- `200`: the request has succeeded.\n- `400`: if no body provided or the media type sent is unsupported media type by the server.\n- `415`: if invalid value of url e.g. empty."
+						"description": "- Endpoint for an  anonymous user to create a short link by providing the URL to short at the body of the request.\n- `200`: the request has succeeded.\n- `400`: if no body provided or the media type sent is unsupported media type by the server.\n- `422`: if invalid value of url e.g. empty."
 					},
 					"response": []
 				},
@@ -42,14 +42,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{api_host}}/standard/tiny-links/ ",
+							"raw": "{{api_host}}/standard/tiny-links/2c38dba6-6ab3-4cc5-b821-476e0bb68405",
 							"host": [
 								"{{api_host}}"
 							],
 							"path": [
 								"standard",
 								"tiny-links",
-								" "
+								"2c38dba6-6ab3-4cc5-b821-476e0bb68405"
 							]
 						},
 						"description": "- Get a standard link by it's id.\n- `404` : if the server cannot find the link."
@@ -67,16 +67,115 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{api_host}}/urls/TA8EmJd",
+							"raw": "{{api_host}}/urls/9LXQ",
 							"host": [
 								"{{api_host}}"
 							],
 							"path": [
 								"urls",
-								"TA8EmJd"
+								"9LXQ"
 							]
 						},
 						"description": "- Get the corresponded Url by a given an address at the route parameter.\n- `200`: the request has succeeded.\n- `404`: the server cannot find the url of a given address.\n- `415`: if the provided address is empty."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"{{$randomFirstName}}\",\r\n    \"lastName\":\"{{$randomLastName}}\",\r\n    \"email\":\"{{$randomEmail}}\",\r\n    \"password\":\"{{default_password}}\",\r\n    \"userName\":\"{{$randomFirstName}}{{$randomInt}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_host}}/auth/register",
+							"host": [
+								"{{api_host}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "- `201` : The request has been successful. The user is required to check their email to confirm their email address.\n**P.S: Sending Email not implemented yet**\n- `422` : Invalid data payload."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"pm.collectionVariables.set(\"access_token\", responseJson.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UsernameOrEmail\":\"Alivia801\",\r\n    \"Password\":\"{{default_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_host}}/auth/login",
+							"host": [
+								"{{api_host}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "- `200` : The request has been successful.\n**After a successful authentication, the 'Authorize' header will be automatically added to your requests. This allows you to access any endpoint in the postman that requires authentication without needing to manually add the header for each request**\n- `422`: Invalid data payload."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile Management",
+			"item": [
+				{
+					"name": "User By UserName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/api/Profiles/Buddy930",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"api",
+								"Profiles",
+								"Buddy930"
+							]
+						}
 					},
 					"response": []
 				}
@@ -89,6 +188,22 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
+					"const access_token = pm.collectionVariables.get(\"access_token\");",
+					"",
+					"const anonymousRequestsName = [\"Create a standard tiny link\",\"Get a standard tiny link by Id\",\"Get Url by Address\", \"Register\", \"Login\"];",
+					"",
+					"const currentRequestName = pm.info.requestName;",
+					"",
+					"if(!anonymousRequestsName.includes(currentRequestName))",
+					"{",
+					"    pm.request.headers.add({",
+					"    key: \"Authorization\",",
+					"    value: \"bearer \" + access_token",
+					"    });",
+					"",
+					"}",
+					"",
+					"",
 					""
 				]
 			}
@@ -106,6 +221,16 @@
 	"variable": [
 		{
 			"key": "api_host",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "default_password",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "access_token",
 			"value": "",
 			"type": "default"
 		}
