@@ -16,6 +16,9 @@ namespace Infrastructure.Persistence.Configurations
             .HasMaxLength(30)
             .HasColumnOrder(2);
 
+            builder.HasIndex(x => x.UserName)
+            .IsUnique();
+
              builder.Property(x => x.FirstName)
             .IsRequired()
             .HasMaxLength(30)
@@ -29,6 +32,9 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(x => x.Email)
             .IsRequired()
             .HasColumnOrder(5);
+
+            builder.HasIndex(x => x.Email)
+            .IsUnique();
 
             builder.Property(x => x.EmailConfirmed)
             .IsRequired()
