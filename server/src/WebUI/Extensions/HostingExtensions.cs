@@ -16,6 +16,13 @@ using Microsoft.EntityFrameworkCore;
 using WebUI.Helpers;
 using Application.UseCases.UserManagement.Queries.UserByUserName;
 using Application.UseCases.UserManagement.Queries.UserByUserName.Behaviors;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Application.UseCases.Auth.Queries.Login;
+using Application.UseCases.Auth.Queries.Login.Behaviors;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Infrastructure.Options;
 
 namespace WebUI.Extensions
 {
@@ -29,12 +36,37 @@ namespace WebUI.Extensions
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
             builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 
+            // Add Options
+            builder.Services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
+
+
+            // Add JWT Authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opts =>
+            {
+                var jwtOptions = configuration.GetSection("Jwt").Get<JwtOptions>();
+
+                opts.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.SigningKey)),
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = jwtOptions.Audience
+
+                };
+            });
+
             builder.Services.AddIdentityCore<AppUser>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
             })
+            .AddSignInManager<SignInManager<AppUser>>()
             .AddEntityFrameworkStores<AppDbContext>();
+
             builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
+            builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
             builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
 
@@ -42,6 +74,7 @@ namespace WebUI.Extensions
             builder.Services.AddScoped<IPipelineBehavior<UrlByAddressQuery, UrlByAddressQueryResult>, UrlByAddressQueryValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<RegisterCommand, RegisterCommandResult>, RegisterCommandValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<UserByUserNameQuery, UserByUserNameQueryResult>, UserByUserNameQueryValidationBehavior>();
+            builder.Services.AddScoped<IPipelineBehavior<LoginQuery, LoginQueryResult>, LoginQueryValidationBehavior>();
             builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
 
             builder.Services.AddCors(options =>
@@ -74,9 +107,13 @@ namespace WebUI.Extensions
 
             app.UseCors(Consts.CORS_POLICY_NAME);
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
-            app.MapControllers();
+            app.MapControllers()
+                    .RequireAuthorization();
+                    
 
             return app;
         }

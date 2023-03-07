@@ -1,10 +1,12 @@
 using Application.Common.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     public class ErrorsController : ControllerBase
     {
         [Route("/error")]
