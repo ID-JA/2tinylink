@@ -1,6 +1,7 @@
 using Application.UseCases.Auth.Command.Register;
 using Application.UseCases.Auth.Queries.Login;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.Auth.Common;
 using WebUI.Contracts.Auth.Login;
@@ -9,6 +10,7 @@ using WebUI.Contracts.Auth.Register;
 namespace WebUI.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
@@ -20,7 +22,6 @@ namespace WebUI.Controllers
         }
 
         [HttpPost("register")]
-        
         public async Task<ActionResult<AuthenticatedUserResponse>> Register([FromBody] RegisterRequest registerRequest)
         {
             var command = new RegisterCommand() 

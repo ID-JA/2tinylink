@@ -1,11 +1,13 @@
 using Application.UseCases.CorrespondedUrl.Queries.UrlByAddress;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.CorrespondedUrl;
 
 namespace WebUI.Controllers
 {
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class UrlsController : ApiController
     {
         private readonly ISender _sender;

@@ -15,10 +15,11 @@ namespace Application.UseCases.Auth.Queries.Login
         private readonly UserManager<AppUser> _userManager;
         private readonly IJwtProvider _jwtProvider;
 
-        public LoginQueryHandler(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        public LoginQueryHandler(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IJwtProvider jwtProvider)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _jwtProvider = jwtProvider;
         }
 
         public async Task<LoginQueryResult> Handle(LoginQuery query, CancellationToken cancellationToken)
@@ -42,7 +43,7 @@ namespace Application.UseCases.Auth.Queries.Login
 
                 if(result.Succeeded)
                 {
-                    var token = "Token to be returned";
+                    var token = _jwtProvider.Create(user);
 
                     return new() { Token = token };
                 }
