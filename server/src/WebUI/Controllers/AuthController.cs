@@ -1,9 +1,11 @@
-using Application.UseCases.Auth.Command.Register;
+using Application.UseCases.Auth.Commands.EmailConfirmation;
+using Application.UseCases.Auth.Commands.Register;
 using Application.UseCases.Auth.Queries.Login;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.Auth.Common;
+using WebUI.Contracts.Auth.EmailConfirmation;
 using WebUI.Contracts.Auth.Login;
 using WebUI.Contracts.Auth.Register;
 
@@ -22,7 +24,7 @@ namespace WebUI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<AuthenticatedUserResponse>> Register([FromBody] RegisterRequest registerRequest)
+        public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest registerRequest)
         {
             var command = new RegisterCommand() 
             { 
@@ -35,7 +37,17 @@ namespace WebUI.Controllers
 
             var result = await _sender.Send(command);
 
-            return CreatedAtAction("GetUserProfileByUserName","Profiles", new { UserName = result.UserName }, result);
+            string endpointUrl = Url.Action(nameof(EmailConfirmation), 
+                                        ControllerContext.ActionDescriptor.ControllerName, 
+                                        new { UserName = command.UserName, Token = result.EmailConfirmationToken}, 
+                                        Request.Scheme);
+
+            var response = new RegisterResponse()
+            {
+                EmailConfirmationUrl = endpointUrl
+            };
+
+            return CreatedAtAction("GetUserProfileByUserName","Profiles", new { UserName = registerRequest.UserName }, response);
         }
 
         [HttpPost("login")]
@@ -53,5 +65,27 @@ namespace WebUI.Controllers
             
             return Ok(response);
         }
+
+        [HttpGet("email-confirmation", Name = "EmailConfirmation")]
+        public async Task<ActionResult<DefaultResponse>> EmailConfirmation([FromQuery] EmailConfirmationRequest emailConfirmationRequest)
+        {
+            var command = new EmailConfirmationCommand()
+            {
+                UserName = emailConfirmationRequest.UserName,
+                Token    = emailConfirmationRequest.Token
+            };
+
+            var result = await _sender.Send(command);
+
+            var response = new DefaultResponse()
+            {
+                Message = "Email verification complete! You're all set to use our services."
+            };
+
+            return Ok(response);
+        }
+
+
+
     }
 }

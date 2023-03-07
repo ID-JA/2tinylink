@@ -1,7 +1,7 @@
 using Application.Common.Helpers.Consts;
 using FluentValidation;
 
-namespace Application.UseCases.Auth.Command.Register
+namespace Application.UseCases.Auth.Commands.Register
 {
     public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {

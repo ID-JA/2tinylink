@@ -4,7 +4,7 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace Application.UseCases.Auth.Command.Register
+namespace Application.UseCases.Auth.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterCommandResult>
     {
@@ -16,7 +16,7 @@ namespace Application.UseCases.Auth.Command.Register
         }
         public async Task<RegisterCommandResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
-            var appUser = new AppUser()
+            var user = new AppUser()
             {
                 FirstName = command.FirstName,
                 LastName  = command.LastName,
@@ -24,11 +24,13 @@ namespace Application.UseCases.Auth.Command.Register
                 Email     = command.Email
             };
 
-            var result = await _userManager.CreateAsync(appUser, command.Password);
+            var result = await _userManager.CreateAsync(user, command.Password);
 
             if(result.Succeeded)
             {
-                 return new() { UserName = appUser.UserName };
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                return new() { EmailConfirmationToken = token };
             }
 
             var firstError = result.Errors.First().Description;
