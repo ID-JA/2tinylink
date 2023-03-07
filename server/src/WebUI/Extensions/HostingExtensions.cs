@@ -1,6 +1,6 @@
 using Application;
-using Application.UseCases.Auth.Command.Register;
-using Application.UseCases.Auth.Command.Register.Behaviors;
+using Application.UseCases.Auth.Commands.Register;
+using Application.UseCases.Auth.Commands.Register.Behaviors;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Services;
 using Application.UseCases.CorrespondedUrl.Queries.UrlByAddress;
@@ -63,7 +63,8 @@ namespace WebUI.Extensions
                 opts.User.RequireUniqueEmail = true;
             })
             .AddSignInManager<SignInManager<AppUser>>()
-            .AddEntityFrameworkStores<AppDbContext>();
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();

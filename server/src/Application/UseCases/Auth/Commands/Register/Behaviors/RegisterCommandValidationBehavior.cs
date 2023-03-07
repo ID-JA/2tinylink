@@ -3,7 +3,7 @@ using Application.Common.Exceptions;
 using FluentValidation;
 using MediatR;
 
-namespace Application.UseCases.Auth.Command.Register.Behaviors
+namespace Application.UseCases.Auth.Commands.Register.Behaviors
 {
     public class RegisterCommandValidationBehavior : IPipelineBehavior<RegisterCommand, RegisterCommandResult>
     {
