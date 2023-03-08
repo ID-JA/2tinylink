@@ -39,13 +39,17 @@ namespace Application.UseCases.Auth.Queries.Login
 
             if (user is not null)
             {
-                var result = await _signInManager.CheckPasswordSignInAsync(user, query.Password, false);
+                SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, query.Password, false);
 
                 if(result.Succeeded)
                 {
                     var token = _jwtProvider.Create(user);
 
                     return new() { Token = token };
+                }
+                else if(result.IsNotAllowed)
+                {
+                    throw new AppException((int)StatusCodes.Status409Conflict, "The email address is not confirmed.");
                 }
             }
 
