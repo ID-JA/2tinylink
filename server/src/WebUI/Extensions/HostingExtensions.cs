@@ -60,7 +60,8 @@ namespace WebUI.Extensions
 
             builder.Services.AddIdentityCore<AppUser>(opts =>
             {
-                opts.User.RequireUniqueEmail = true;
+                opts.User.RequireUniqueEmail      = true;
+                opts.SignIn.RequireConfirmedEmail = true;
             })
             .AddSignInManager<SignInManager<AppUser>>()
             .AddEntityFrameworkStores<AppDbContext>()
