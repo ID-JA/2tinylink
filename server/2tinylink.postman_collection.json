@@ -87,6 +87,39 @@
 			"item": [
 				{
 					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"function extractSubstring(str, targetLetter) {\r",
+									"  const startIndex = str.indexOf(targetLetter);\r",
+									"  return str.substring(startIndex + 1);\r",
+									"}\r",
+									"\r",
+									"\r",
+									"const url = extractSubstring(pm.response.json().emailConfirmationUrl,\"?\");\r",
+									"\r",
+									"const queryParams = url\r",
+									"  .split('&')\r",
+									"  .reduce((accumulator, singleQueryParam) => {\r",
+									"    const [key, value] = singleQueryParam.split('=');\r",
+									"    accumulator[key] = value;\r",
+									"    return accumulator;\r",
+									"}, {});\r",
+									"\r",
+									"pm.collectionVariables.set(\"email_confirmation_token\", queryParams.Token);\r",
+									"pm.collectionVariables.set(\"last_registred_username\", queryParams.UserName);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -120,8 +153,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const responseJson = pm.response.json();\r",
-									"pm.collectionVariables.set(\"access_token\", responseJson.token);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -132,7 +164,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"UsernameOrEmail\":\"Alivia801\",\r\n    \"Password\":\"{{default_password}}\"\r\n}",
+							"raw": "{\r\n    \"UsernameOrEmail\":\"Amya781\",\r\n    \"Password\":\"{{default_password}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -149,7 +181,76 @@
 								"login"
 							]
 						},
-						"description": "- `200` : The request has been successful.\n**After a successful authentication, the 'Authorize' header will be automatically added to your requests. This allows you to access any endpoint in the postman that requires authentication without needing to manually add the header for each request**\n- `422`: Invalid data payload."
+						"description": "- `200` : The request has been successful.\n**After a successful authentication, the 'Authorize' header will be automatically added to your requests. This allows you to access any endpoint in the postman that requires authentication without needing to manually add the header for each request**\n- `422`: Invalid data payload.\n- `409`: Email address must be confirmed to sign in."
+					},
+					"response": []
+				},
+				{
+					"name": "Login As Demo User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"pm.collectionVariables.set(\"access_token\", responseJson.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UsernameOrEmail\":\"{{demo_user_username}}\",\r\n    \"Password\":\"{{default_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_host}}/auth/login",
+							"host": [
+								"{{api_host}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "- `200` : The request has been successful.\n**After a successful authentication, the 'Authorize' header will be automatically added to your requests. This allows you to access any endpoint in the postman that requires authentication without needing to manually add the header for each request**\n- `422`: Invalid data payload.\n- `409`: Email address must be confirmed to sign in.\n**The Demo User is a special user account that has access to all the functionality in the application.**"
+					},
+					"response": []
+				},
+				{
+					"name": "Email Confirmation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_host}}/auth/email-confirmation?UserName={{last_registred_username}}&Token={{email_confirmation_token}}",
+							"host": [
+								"{{api_host}}"
+							],
+							"path": [
+								"auth",
+								"email-confirmation"
+							],
+							"query": [
+								{
+									"key": "UserName",
+									"value": "{{last_registred_username}}"
+								},
+								{
+									"key": "Token",
+									"value": "{{email_confirmation_token}}"
+								}
+							]
+						},
+						"description": "- Endpoint for email confirmation.\n- `401` : When the server cannot any user with the associated provided username.\n- `409` : When the server cannot create a confirmation token."
 					},
 					"response": []
 				}
@@ -190,7 +291,7 @@
 				"exec": [
 					"const access_token = pm.collectionVariables.get(\"access_token\");",
 					"",
-					"const anonymousRequestsName = [\"Create a standard tiny link\",\"Get a standard tiny link by Id\",\"Get Url by Address\", \"Register\", \"Login\"];",
+					"const anonymousRequestsName = [\"Create a standard tiny link\",\"Get a standard tiny link by Id\",\"Get Url by Address\", \"Register\", \"Login\", \"Email Confirmation\", \"Login As Demo User\"];",
 					"",
 					"const currentRequestName = pm.info.requestName;",
 					"",
@@ -213,7 +314,15 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"const loginEndpointNames = [\"Login\",\"Login As Demo User\"];",
+					"",
+					"const currentRequestName = pm.info.requestName;",
+					"",
+					"if(loginEndpointNames.includes(currentRequestName))",
+					"{",
+					"    const responseJson = pm.response.json();",
+					"    pm.collectionVariables.set(\"access_token\", responseJson.token);",
+					"}"
 				]
 			}
 		}
@@ -231,6 +340,21 @@
 		},
 		{
 			"key": "access_token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "email_confirmation_token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "last_registred_username",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "demo_user_username",
 			"value": "",
 			"type": "default"
 		}
