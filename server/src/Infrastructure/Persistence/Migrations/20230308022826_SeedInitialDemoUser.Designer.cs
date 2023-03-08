@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230308022826_SeedInitialDemoUser")]
+    partial class SeedInitialDemoUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
@@ -122,20 +125,18 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b7e9cda2-9a3a-49bf-b924-0eadce58a948"),
+                            Id = new Guid("d720370a-844a-40c2-9142-f16d9acfa631"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "32177dd5-becc-4a9a-afb1-f613dab03bdc",
-                            CreatedAt = new DateTime(2023, 3, 8, 4, 8, 8, 993, DateTimeKind.Local).AddTicks(9604),
+                            ConcurrencyStamp = "296aef19-d17d-4929-9379-537d4579ffae",
+                            CreatedAt = new DateTime(2023, 3, 8, 3, 28, 26, 597, DateTimeKind.Local).AddTicks(376),
                             Email = "user.demo@2tinylink.com",
                             EmailConfirmed = true,
                             FirstName = "User",
                             IsActive = true,
-                            LastModified = new DateTime(2023, 3, 8, 4, 8, 8, 993, DateTimeKind.Local).AddTicks(9661),
+                            LastModified = new DateTime(2023, 3, 8, 3, 28, 26, 597, DateTimeKind.Local).AddTicks(424),
                             LastName = "Demo",
                             LockoutEnabled = false,
-                            NormalizedEmail = "USER.DEMO@2TINYLINK.COM",
-                            NormalizedUserName = "DEMO",
-                            PasswordHash = "AQAAAAIAAYagAAAAENu6zGuaVw7ezRCkT8uBr7eshUMjjuD62RdTaG9nBbdim2wwmHQROOZZnze6T1nSbQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECzjJKSxrhKSwscrhfNSl1sgZW+cKr0V9aslvD830UQvtFmmDboaKLk8PkwJyUDp9g==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "Demo"
