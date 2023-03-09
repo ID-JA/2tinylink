@@ -25,7 +25,13 @@ info: Microsoft.Hosting.Lifetime[0]
 - [x] User Registration
   - User can sign up with their first name, last name, username, email and password
   - User receives an email confirmation link to activate their account
-- [x] User Login
-  - Registered users can log in with their email/username and password
 - [x] Email Confirmation
   - Users receive an email confirmation link to verify their email address
+- [x] User Login
+  - Registered users can log in with their email/username and password
+- [x] Trial User Login (for testing purposes only)
+  - To make it easier for users to test the application, we have added a trial user login feature. Here are the credentials for the trial account:
+  ```text
+   UserName: Demo
+   Password: Pa$$w0rd
+  ```
