@@ -1,0 +1,123 @@
+using Application;
+using Application.UseCases.Auth.Commands.Register;
+using Application.UseCases.Auth.Commands.Register.Behaviors;
+using Application.Common.Interfaces.Persistence;
+using Application.Common.Interfaces.Services;
+using Application.UseCases.CorrespondedUrl.Queries.UrlByAddress;
+using Application.UseCases.CorrespondedUrl.Queries.UrlByAddress.Behaviors;
+using Application.UseCases.LinkShortening.Commands.StandardShortening;
+using Application.UseCases.LinkShortening.Commands.StandardShortening.Behaviors;
+using Domain.Entities;
+using FluentValidation;
+using Infrastructure.Persistence;
+using Infrastructure.Services;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using WebUI.Helpers;
+using Application.UseCases.UserManagement.Queries.UserByUserName;
+using Application.UseCases.UserManagement.Queries.UserByUserName.Behaviors;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Application.UseCases.Auth.Queries.Login;
+using Application.UseCases.Auth.Queries.Login.Behaviors;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Infrastructure.Options;
+
+namespace WebUI.Extensions
+{
+    internal static class HostingExtensions
+    {
+        internal static WebApplication ConfigureServices(this WebApplicationBuilder builder)
+        {
+            var configuration = builder.Configuration;
+
+            builder.Services.AddControllers();
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
+            builder.Services.AddScoped<IAppDbContext, AppDbContext>();
+
+            // Add Options
+            builder.Services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
+
+
+            // Add JWT Authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opts =>
+            {
+                var jwtOptions = configuration.GetSection("Jwt").Get<JwtOptions>();
+
+                opts.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.SigningKey)),
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = jwtOptions.Audience
+
+                };
+            });
+
+            builder.Services.AddIdentityCore<AppUser>(opts =>
+            {
+                opts.User.RequireUniqueEmail      = true;
+                opts.SignIn.RequireConfirmedEmail = true;
+            })
+            .AddSignInManager<SignInManager<AppUser>>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
+            builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
+            builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+
+            builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
+
+            builder.Services.AddScoped<IPipelineBehavior<StandardShorteningCommand, StandardShorteningResult>, StandardShorteningCommandValidationBehavior>();
+            builder.Services.AddScoped<IPipelineBehavior<UrlByAddressQuery, UrlByAddressQueryResult>, UrlByAddressQueryValidationBehavior>();
+            builder.Services.AddScoped<IPipelineBehavior<RegisterCommand, RegisterCommandResult>, RegisterCommandValidationBehavior>();
+            builder.Services.AddScoped<IPipelineBehavior<UserByUserNameQuery, UserByUserNameQueryResult>, UserByUserNameQueryValidationBehavior>();
+            builder.Services.AddScoped<IPipelineBehavior<LoginQuery, LoginQueryResult>, LoginQueryValidationBehavior>();
+            builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(Consts.CORS_POLICY_NAME, policy =>
+                {
+                    policy.WithOrigins(configuration["CorsSettings:Origin"])
+                    .AllowAnyMethod();
+                });
+            });
+
+            return builder.Build();
+        }
+        internal static WebApplication ConfigurePipeline(this WebApplication app)
+        {
+
+            app.UseExceptionHandler("/error");
+
+            if (app.Environment.IsDevelopment())
+            {
+                using (var scope = app.Services.CreateScope())
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                    dbContext.Database.Migrate();
+
+                }
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseCors(Consts.CORS_POLICY_NAME);
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.MapControllers()
+                    .RequireAuthorization();
+                    
+
+            return app;
+        }
+    }
+}

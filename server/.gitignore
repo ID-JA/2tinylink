@@ -5,7 +5,8 @@
 
 
 # App files
-src/*/appsettings.Development.json
+src/WebUI/2tinylink.db*
+.vscode/
 
 
 # User-specific files
