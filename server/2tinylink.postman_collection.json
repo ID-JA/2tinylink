@@ -330,32 +330,32 @@
 	"variable": [
 		{
 			"key": "api_host",
-			"value": "",
+			"value": "http://localhost:5132/api",
 			"type": "default"
 		},
 		{
 			"key": "default_password",
-			"value": "",
+			"value": "Pa$$w0rd",
 			"type": "default"
 		},
 		{
 			"key": "access_token",
-			"value": "",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJEZW1vIiwibmJmIjoxNjc5Nzg1NTMwLCJleHAiOjE2Nzk4NzE5MzAsImlhdCI6MTY3OTc4NTUzMCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MTMyIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIn0.HLbje4DGC9i7J-rM5Uk4f9xqzmHUNdDZmwrBK0Uz7IU",
 			"type": "default"
 		},
 		{
 			"key": "email_confirmation_token",
-			"value": "",
+			"value": "CfDJ8A7AekaJTjNOumtCjwlRcjWA5X99cWhNYW%2Fd7R14KMDBbpJoJkGBZOjW%2BW%2B0pk%2Bcl4vMir6IVTAwagbjWpsQHQ17nppo%2F%2FFkt2ZXH5vLiLjzeLLIrUMcGxb%2F1%2BjQjO1XqZ7p%2B6oAS%2B8NZUbWL2Z2AyXZFsNka2FdvZUvmUCAvcNWt8eDaIbZW2zKw2DzTaAKMDnfpT%2FxV53ieQ7XLVg6iCWmvgWxGVBN%2B76ZRbsV7S%2BqqqyRDht5d5R7UnEjn6%2F8qw%3D%3D",
 			"type": "default"
 		},
 		{
 			"key": "last_registred_username",
-			"value": "",
+			"value": "Amya781",
 			"type": "default"
 		},
 		{
 			"key": "demo_user_username",
-			"value": "",
+			"value": "Demo",
 			"type": "default"
 		}
 	]
