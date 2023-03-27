@@ -1,4 +1,4 @@
-using Application.UseCases.CorrespondedUrl.Queries.UrlByAddress;
+using Application.UseCases.CorrespondedUrl.Queries.UrlByAlias;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +16,14 @@ namespace WebUI.Controllers
             _sender = sender;
         }
         
-        [HttpGet("{address}")]
-        public async Task<IActionResult> GetUrlByAddress([FromRoute] UrlByAddressRequest request)
+        [HttpGet("{alias}")]
+        public async Task<IActionResult> GetUrlByAlias([FromRoute] UrlByAliasRequest request)
         {
-            var query = new UrlByAddressQuery() { Address = request.Address };
+            var query = new UrlByAliasQuery() { Alias = request.Alias };
 
             var result = await _sender.Send(query);
 
-            var response = new UrlByAddressResponse() { Url = result.Url };
+            var response = new UrlByAliasResponse() { Url = result.Url };
 
             return Ok(response);
         }

@@ -3,16 +3,16 @@ using Application.Common.Exceptions;
 using FluentValidation;
 using MediatR;
 
-namespace Application.UseCases.CorrespondedUrl.Queries.UrlByAddress.Behaviors
+namespace Application.UseCases.CorrespondedUrl.Queries.UrlByAlias.Behaviors
 {
-    public class UrlByAddressQueryValidationBehavior : IPipelineBehavior<UrlByAddressQuery, UrlByAddressQueryResult>
+    public class UrlByAliasQueryValidationBehavior : IPipelineBehavior<UrlByAliasQuery, UrlByAliasQueryResult>
     {
-        private readonly IValidator<UrlByAddressQuery> _validator;
-        public UrlByAddressQueryValidationBehavior(IValidator<UrlByAddressQuery> validator)
+        private readonly IValidator<UrlByAliasQuery> _validator;
+        public UrlByAliasQueryValidationBehavior(IValidator<UrlByAliasQuery> validator)
         {
             _validator = validator;
         }
-        public async Task<UrlByAddressQueryResult> Handle(UrlByAddressQuery query, RequestHandlerDelegate<UrlByAddressQueryResult> next, CancellationToken cancellationToken)
+        public async Task<UrlByAliasQueryResult> Handle(UrlByAliasQuery query, RequestHandlerDelegate<UrlByAliasQueryResult> next, CancellationToken cancellationToken)
         {
             var validationResult = await _validator.ValidateAsync(query, cancellationToken);
 
