@@ -10,7 +10,7 @@ namespace Infrastructure.Persistence.Configurations
         {
             builder.ToTable("TINY_LINKS");
 
-            builder.Property(x => x.Address)
+            builder.Property(x => x.Alias)
             .IsRequired();
 
             builder.Property(x => x.Url)

@@ -19,7 +19,7 @@ namespace Application.UseCases.StandardTinyLinkManagement.Queries.TinyLinkById
                                        .Where(x => query.Id == x.Id && x.IsActive)
                                        .Select(x => new {
                                         Id          = x.Id,
-                                        Address         = x.Address,
+                                        Alias         = x.Alias,
                                         CreatedAt   = x.CreatedAt
                                        })
                                        .FirstOrDefaultAsync();
@@ -28,7 +28,7 @@ namespace Application.UseCases.StandardTinyLinkManagement.Queries.TinyLinkById
                 throw new AppException(statusCode: (int)HttpStatusCode.NotFound, errorMessage: $"Link with Id: {query.Id} not found.");
             }
 
-            return new() { Id = link.Id, Address = link.Address, CreatedAt = link.CreatedAt };
+            return new() { Id = link.Id, Alias = link.Alias, CreatedAt = link.CreatedAt };
         }
     }
 }

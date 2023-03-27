@@ -49,7 +49,7 @@ namespace Application.UseCases.Auth.Queries.Login
                 }
                 else if(result.IsNotAllowed)
                 {
-                    throw new AppException((int)StatusCodes.Status409Conflict, "The email address is not confirmed.");
+                    throw new AppException((int)StatusCodes.Status409Conflict, "The email alias is not confirmed.");
                 }
             }
 

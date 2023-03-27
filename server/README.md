@@ -20,8 +20,8 @@ info: Microsoft.Hosting.Lifetime[0]
 - [x] Link Shortening for Anonymous Users
   - Anonymous users can shorten links without registration
   - Shortened links redirect to the original URL
-- [x] Get Corresponding URL for address
-  - Users can retrieve the original URL for a given address
+- [x] Get Corresponding URL for alias
+  - Users can retrieve the original URL for a given alias
 - [x] User Registration
   - User can sign up with their first name, last name, username, email and password
   - User receives an email confirmation link to activate their account

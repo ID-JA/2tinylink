@@ -28,7 +28,7 @@ namespace WebUI.Controllers
 
             var response = new StandardTinyLinkByIdResponse() { 
                 Id = queryResult.Id, 
-                Address = queryResult.Address, 
+                Alias = queryResult.Alias, 
                 CreatedAt = queryResult.CreatedAt 
             };
 
@@ -42,7 +42,7 @@ namespace WebUI.Controllers
             
             var result = await _sender.Send(command);
 
-            var response = new StandardShorteningResponse { Id = result.Id, Address = result.Address ,Url = result.Url };
+            var response = new StandardShorteningResponse { Id = result.Id, Alias = result.Alias ,Url = result.Url };
 
             return CreatedAtAction(nameof(GetStandardTinyLinkById), new { Id = response.Id }, response );
 

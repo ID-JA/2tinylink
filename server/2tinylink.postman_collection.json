@@ -62,18 +62,18 @@
 			"name": "Corresponded Url",
 			"item": [
 				{
-					"name": "Get Url by Address",
+					"name": "Get Url by Alias",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{api_host}}/urls/9LXQ",
+							"raw": "{{api_host}}/urls/ND_8",
 							"host": [
 								"{{api_host}}"
 							],
 							"path": [
 								"urls",
-								"9LXQ"
+								"ND_8"
 							]
 						},
 						"description": "- Get the corresponded Url by a given an address at the route parameter.\n- `200`: the request has succeeded.\n- `404`: the server cannot find the url of a given address.\n- `415`: if the provided address is empty."

@@ -1,12 +1,12 @@
 using FluentValidation;
 
-namespace Application.UseCases.CorrespondedUrl.Queries.UrlByAddress
+namespace Application.UseCases.CorrespondedUrl.Queries.UrlByAlias
 {
-    public class UrlByAddressQueryValidator : AbstractValidator<UrlByAddressQuery>
+    public class UrlByAliasQueryValidator : AbstractValidator<UrlByAliasQuery>
     {
-        public UrlByAddressQueryValidator()
+        public UrlByAliasQueryValidator()
         {
-            RuleFor(x => x.Address)
+            RuleFor(x => x.Alias)
             .NotEmpty().WithMessage("'{PropertyName}' cannot be empty");
         }
     }

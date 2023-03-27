@@ -1,6 +1,6 @@
 namespace WebUI.Contracts.CorrespondedUrl
 {
-    public class UrlByAddressResponse
+    public class UrlByAliasResponse
     {
         public string Url { get; set; }
     }
