@@ -1,22 +1,19 @@
+import {Button} from '@/components/common'
 import React from 'react'
 
 function HomeLayout({children}: {children: React.ReactNode}) {
   return (
     <>
-      <header className="px-4 h-16 flex items-center pt-8">
-        <nav className="flex justify-between items-center max-w-6xl mx-auto w-full">
-          <div className="font-bold text-xl">2tinylink</div>
+      <header className="flex items-center h-16 px-4 ">
+        <nav className="flex items-center justify-between w-full max-w-6xl mx-auto">
+          <div className="text-xl font-bold">2tinylink</div>
 
           <ul className="flex gap-3">
             <li>
-              <button className="border-gray-900 border-2 px-4 py-2 text-gray-900 rounded-md active:scale-95">
-                <a href="#">Login</a>
-              </button>
+              <Button>Login</Button>
             </li>
             <li>
-              <button className="bg-gray-900 border-2 border-gray-900 px-4 py-2 text-white rounded-md active:scale-95">
-                <a href="#">Register</a>
-              </button>
+              <Button variant="outline">Register</Button>
             </li>
           </ul>
         </nav>
