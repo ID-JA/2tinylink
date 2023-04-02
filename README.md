@@ -1,34 +1,24 @@
-# 2tinylink
 
-2tinylink is a web application that allows users to generate short URLs and
-track their clicks.
+<p align="center">
+   <br/>
+   <a href="https://2tinylink.vercel.app/" target="_blank"><img width="550px" src="https://user-images.githubusercontent.com/69154853/229367597-6c9db529-5ce9-47eb-ad65-8e8fb42ccce5.jpeg" /></a>
+   <h3 align="center">2tinylink</h3>
+   <p align="center">2tinylink is a web application that allows users to generate short URLs and track their clicks.</p>
+</p>
 
-## 🚀 features
+## 🚀 Features
 
 - <b>URL shortening:</b> Users can input a long URL and get a shortened version of it.
-
 - <b>Click tracking:</b> Users can track the number of clicks on their shortened URLs.
-
 - <b>Customizable URLs:</b> Users can customize the ending of their shortened URLs.
-
-- <b>User account:</b> Users can create an account to save and manage their shortened
-  URLs.
-
+- <b>User account:</b> Users can create an account to save and manage their shortened URLs.
 - <b>QR Code generation:</b> The app should generate a QR code for each short URL,
   allowing users to easily scan the code to access the original link.
+- <b>Security and Privacy:</b> It should have built-in security features to protect users’ links from unwanted access and ensure that the links are not being used for malicious purposes.
+- <b>Password protection:</b> Allow users to protect their links with a password so that only authorized people can access them.
+- <b>Expiration dates:</b> allow users to set an expiration date for their links after which the links will be inaccessible.
 
-- <b>Security and Privacy:</b> It should have built-in security features to protect
-  users’ links from unwanted access and ensure that the links are not being used
-  for malicious purposes.
-
-- <b>Password protection:</b> Allow users to protect their links with a password so
-  that only authorized people can access them.
-
-- <b>Expiration dates:</b> allow users to set an expiration date for their links after
-  which the links will be inaccessible.
-
-- <b>Grouping and tagging:</b> Allow users to organize and manage their links by
-  grouping them into different categories or tagging them with keywords.
+- <b>Grouping and tagging:</b> Allow users to organize and manage their links by grouping them into different categories or tagging them with keywords.
 
 ## 🤔 why we are building this
 
@@ -39,8 +29,7 @@ marketing campaigns, or any other purpose where tracking clicks is important.
 
 ## Built With
 
-- back end:
-  [ASP.NET Web API](https://dotnet.microsoft.com/en-us/apps/aspnet/apis)
+- back end: [ASP.NET Web API](https://dotnet.microsoft.com/en-us/apps/aspnet/apis)
 - front end: [Reactjs](https://reactjs.org/) + [Nextjs](https://www.nextjs.org/)
 - styling: [TalwindCss](https://tailwindcss.com/)
 - database: [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/)
