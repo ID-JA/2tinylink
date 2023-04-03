@@ -20,7 +20,8 @@ namespace Infrastructure.Services
         {
             var claims = new Claim[]
             {
-                    new Claim(ClaimTypes.NameIdentifier, appUser.UserName)   
+                    new Claim(ClaimTypes.NameIdentifier, appUser.Id.ToString()),
+                    new Claim(ClaimTypes.Name, appUser.UserName)   
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
