@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using WebUI.Errors;
 using WebUI.Helpers;
 
 namespace WebUI.Extensions
@@ -9,6 +11,8 @@ namespace WebUI.Extensions
 
             services.AddControllers();
 
+            services.AddSingleton<ProblemDetailsFactory, AppProblemDetailsFactory>();
+
             services.AddCors(options =>
             {
               options.AddPolicy(Consts.CORS_POLICY_NAME, policy =>
@@ -18,6 +22,7 @@ namespace WebUI.Extensions
               });
 
             });
+
 
             return services;
         }
