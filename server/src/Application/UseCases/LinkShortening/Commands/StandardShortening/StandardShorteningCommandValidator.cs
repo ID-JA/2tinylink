@@ -1,8 +1,10 @@
 using Application.UseCases.LinkShortening.Commands.Common;
+using FluentValidation;
+
 namespace Application.UseCases.LinkShortening.Commands.StandardShortening
 {
-    public class StandardShorteningCommand : ShorteningCommand
+    public class StandardShorteningCommandValidator : ShorteningCommandValidator<StandardShorteningCommand>
     {
-        
+       
     }
 }

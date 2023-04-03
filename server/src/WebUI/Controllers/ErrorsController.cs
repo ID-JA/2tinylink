@@ -18,6 +18,11 @@ namespace WebUI.Controllers
             {
                 var appException = exceptionThrown as AppException;
 
+                if(appException.Code is not null)
+                {
+                    HttpContext.Items["code"] = appException.Code;
+                }
+                
                 return Problem(statusCode: appException.StatusCode, title: appException.ErrorMessage);
             }
 

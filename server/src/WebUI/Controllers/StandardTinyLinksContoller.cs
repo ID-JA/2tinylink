@@ -3,7 +3,7 @@ using Application.UseCases.StandardTinyLinkManagement.Queries.TinyLinkById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebUI.Contracts.StandardShortening;
+using WebUI.Contracts.Shortening.StandardShortening;
 using WebUI.Contracts.StandardTinyLinkManagement.TinyLinkById;
 
 namespace WebUI.Controllers

@@ -17,13 +17,20 @@ namespace Application.UseCases.CorrespondedUrl.Queries.UrlByAlias
         {
             var result = await _context.TinyLinks.AsNoTracking()
                                                  .Where(x => x.IsActive && x.Alias == query.Alias)
-                                                 .Select(x => new {
-                                                    Url = x.Url
+                                                 .Select(x => new 
+                                                 {
+                                                    Url       = x.Url,
+                                                    ExpiredAt = x.ExpiredAt
                                                  })
                                                  .SingleOrDefaultAsync(cancellationToken);
             if(result is null)
             {
-                throw new AppException((int)HttpStatusCode.NotFound, $"Cannot find url with alias : '{query.Alias}'");
+                throw new AppException((int)HttpStatusCode.NotFound, $"Cannot find url with alias : '{query.Alias}'", "");
+            }
+
+            if(result.ExpiredAt < DateTime.UtcNow)
+            {
+                throw new AppException((int)HttpStatusCode.NotFound, $"Alias has expired!", "Alias.Expired");
             }
 
             return new() { Url = result.Url };

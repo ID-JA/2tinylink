@@ -1,20 +1,17 @@
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Services;
+using Application.UseCases.LinkShortening.Commands.Common;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.UseCases.LinkShortening.Commands.StandardShortening
 {
-    public class RegularShorteningCommandHandler : IRequestHandler<StandardShorteningCommand, StandardShorteningResult>
+    public class StandardShorteningCommandHandler : ShorteningCommandHandler<StandardShorteningCommand>
     {
-        private readonly IAppDbContext _dbContext;
-        private readonly IUniqueIdProvider _uniqueIdProvider;
-        public RegularShorteningCommandHandler(IAppDbContext dbContext, IUniqueIdProvider uniqueIdProvider)
+        public StandardShorteningCommandHandler(IAppDbContext dbContext, IUniqueIdProvider uniqueIdProvider) : base(dbContext, uniqueIdProvider)
         {
-            _uniqueIdProvider = uniqueIdProvider;
-            _dbContext = dbContext;
         }
-        public async Task<StandardShorteningResult> Handle(StandardShorteningCommand command, CancellationToken cancellationToken)
+        public override async Task<ShorteningResult> Handle(StandardShorteningCommand command, CancellationToken cancellationToken)
         {
             string generatedUniqueId;
 

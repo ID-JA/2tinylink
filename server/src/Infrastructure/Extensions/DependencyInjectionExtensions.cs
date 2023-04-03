@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using WebUI.Application.Common.Interfaces.Services;
+using WebUI.Infrastructure.Services;
 
 namespace Infrastructure.Extensions
 {
@@ -22,6 +24,8 @@ namespace Infrastructure.Extensions
             
             services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
             services.AddScoped<IAppDbContext, AppDbContext>();
+
+            services.AddScoped<IUserService, UserService>();
 
             // Add Options
             services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));

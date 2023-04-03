@@ -1,6 +1,6 @@
-namespace Application.UseCases.LinkShortening.Commands.StandardShortening
+namespace WebUI.Contracts.Shortening.Common
 {
-    public class StandardShorteningResult
+    public class ShorteningResponse
     {
         public Guid Id { get; set; }
         public string Alias { get; set; }
