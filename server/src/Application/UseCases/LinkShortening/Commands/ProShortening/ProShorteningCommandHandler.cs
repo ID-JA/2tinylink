@@ -23,7 +23,8 @@ namespace Application.UseCases.LinkShortening.Commands.ProShortening
             var tinyLink = new TinyLink
             {
                 Alias = generatedUniqueId,
-                Url = command.Url
+                Url = command.Url,
+                ExpiredAt = command.ExpiredAt is null ? null : DateTime.Parse(command.ExpiredAt).ToUniversalTime()
             };
 
             _dbContext.TinyLinks.Add(tinyLink);

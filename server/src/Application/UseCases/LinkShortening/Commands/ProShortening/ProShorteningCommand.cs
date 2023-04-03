@@ -4,6 +4,6 @@ namespace Application.UseCases.LinkShortening.Commands.ProShortening
 {
     public class ProShorteningCommand : ShorteningCommand
     {
-        public DateTime? ExpiredAt { get; set; }
+        public string ExpiredAt { get; set; }
     }
 }

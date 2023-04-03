@@ -1,6 +1,8 @@
 using Application.UseCases.LinkShortening.Commands.ProShortening;
+using Application.UseCases.ProAliasManagement.Queries.ProAliasById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using WebUI.Contracts.ProAliasManagement.ProAliasById;
 using WebUI.Contracts.Shortening.ProShortening;
 
 namespace WebUI.Controllers
@@ -15,8 +17,24 @@ namespace WebUI.Controllers
            _sender = sender;    
         }
 
+        [HttpGet("{id:guid}", Name = "GetProAliasById")]
+        public async Task<ActionResult<ProAliasByIdResponse>> GetProAliasById([FromRoute] ProAliasByIdRequest request)
+        {
+            var query = new ProAliasByIdQuery { Id = request.Id };
+
+            var queryResult = await _sender.Send(query);
+
+            var response = new ProAliasByIdResponse() { 
+                Id = queryResult.Id, 
+                Alias = queryResult.Alias, 
+                CreatedAt = queryResult.CreatedAt 
+            };
+
+            return Ok(response);
+        }
+
         [HttpPost]
-        public async Task<ActionResult<ProShorteningResponse>> CreateStandardTinyLink([FromBody] ProShorteningRequest request)
+        public async Task<ActionResult<ProShorteningResponse>> CreateProAlias([FromBody] ProShorteningRequest request)
         {
             var command = new ProShorteningCommand { Url = request.Url, ExpiredAt = request.ExpiredAt };
             
@@ -24,7 +42,7 @@ namespace WebUI.Controllers
 
             var response = new ProShorteningResponse { Id = result.Id, Alias = result.Alias ,Url = result.Url };
 
-            return Ok(response);
+            return CreatedAtAction(nameof(GetProAliasById), new { Id = response.Id }, response );
 
         }
     }
