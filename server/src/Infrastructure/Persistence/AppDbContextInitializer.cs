@@ -23,14 +23,13 @@ namespace Infrastructure.Persistence
 
         public async Task InitializeAsync()
         {
-            await _context.Database.EnsureDeletedAsync();
             await _context.Database.MigrateAsync();
         }
         public async Task SeedAsync()
         {
             // Default roles
             var adminRole = new IdentityRole<Guid>(Roles.Admin.ToString());
-            var proRole = new IdentityRole<Guid>(Roles.Superuser.ToString());
+            var superuserRole = new IdentityRole<Guid>(Roles.Superuser.ToString());
 
             // Default Password
             var password = "Pa$$w0rd";
@@ -39,9 +38,9 @@ namespace Infrastructure.Persistence
             {
                 await _roleManager.CreateAsync(adminRole);
             }
-            if (await _roleManager.Roles.AllAsync(r => r.Name != proRole.Name))
+            if (await _roleManager.Roles.AllAsync(r => r.Name != superuserRole.Name))
             {
-                await _roleManager.CreateAsync(proRole);
+                await _roleManager.CreateAsync(superuserRole);
             }
 
             // Default users
@@ -76,9 +75,9 @@ namespace Infrastructure.Persistence
             {
                 await _userManager.CreateAsync(user, password);
 
-                if (!string.IsNullOrWhiteSpace(proRole.Name))
+                if (!string.IsNullOrWhiteSpace(superuserRole.Name))
                 {
-                    await _userManager.AddToRolesAsync(user, new[] { proRole.Name });
+                    await _userManager.AddToRolesAsync(user, new[] { superuserRole.Name });
                 }
             }
         }

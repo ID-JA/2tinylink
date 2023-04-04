@@ -1,6 +1,7 @@
 using Application.UseCases.LinkShortening.Commands.ProShortening;
 using Application.UseCases.ProAliasManagement.Queries.ProAliasById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.ProAliasManagement.ProAliasById;
 using WebUI.Contracts.Shortening.ProShortening;
@@ -18,13 +19,15 @@ namespace WebUI.Controllers
         }
 
         [HttpGet("{id:guid}", Name = "GetProAliasById")]
+        [Authorize(Policy = "ActiveSuperuserOnly")]
         public async Task<ActionResult<ProAliasByIdResponse>> GetProAliasById([FromRoute] ProAliasByIdRequest request)
         {
             var query = new ProAliasByIdQuery { Id = request.Id };
 
             var queryResult = await _sender.Send(query);
 
-            var response = new ProAliasByIdResponse() { 
+            var response = new ProAliasByIdResponse() 
+            { 
                 Id = queryResult.Id, 
                 Alias = queryResult.Alias, 
                 CreatedAt = queryResult.CreatedAt 
@@ -34,6 +37,7 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "ActiveSuperuserOnly")]
         public async Task<ActionResult<ProShorteningResponse>> CreateProAlias([FromBody] ProShorteningRequest request)
         {
             var command = new ProShorteningCommand { Url = request.Url, ExpiredAt = request.ExpiredAt };

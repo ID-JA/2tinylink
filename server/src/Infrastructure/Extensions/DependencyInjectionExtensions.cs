@@ -2,10 +2,12 @@ using System.Text;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Services;
 using Domain.Entities;
+using Infrastructure.Authorization;
 using Infrastructure.Options;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +22,7 @@ namespace Infrastructure.Extensions
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, ConfigurationManager configuration)
         {
-            
+
             services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
             services.AddScoped<IAppDbContext, AppDbContext>();
             services.AddScoped<AppDbContextInitializer>();
@@ -51,7 +53,7 @@ namespace Infrastructure.Extensions
 
             services.AddIdentityCore<AppUser>(opts =>
             {
-                opts.User.RequireUniqueEmail      = true;
+                opts.User.RequireUniqueEmail = true;
                 opts.SignIn.RequireConfirmedEmail = true;
             })
             .AddRoles<IdentityRole<Guid>>()
@@ -59,6 +61,17 @@ namespace Infrastructure.Extensions
             .AddSignInManager<SignInManager<AppUser>>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
+
+            // Policies
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ActiveSuperuserOnly", policy =>
+                {
+                    policy.Requirements.Add(new ActiveSuperuserOnlyRequirement());
+                });
+            });
+
+            services.AddScoped<IAuthorizationHandler, ActiveSuperuserOnlyHandler>();
 
 
             services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
