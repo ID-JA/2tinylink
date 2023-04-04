@@ -30,7 +30,7 @@ namespace Infrastructure.Persistence
         {
             // Default roles
             var adminRole = new IdentityRole<Guid>(Roles.Admin.ToString());
-            var proUserRole = new IdentityRole<Guid>(Roles.ProUser.ToString());
+            var proRole = new IdentityRole<Guid>(Roles.Superuser.ToString());
 
             // Default Password
             var password = "Pa$$w0rd";
@@ -39,9 +39,9 @@ namespace Infrastructure.Persistence
             {
                 await _roleManager.CreateAsync(adminRole);
             }
-            if (await _roleManager.Roles.AllAsync(r => r.Name != proUserRole.Name))
+            if (await _roleManager.Roles.AllAsync(r => r.Name != proRole.Name))
             {
-                await _roleManager.CreateAsync(proUserRole);
+                await _roleManager.CreateAsync(proRole);
             }
 
             // Default users
@@ -76,9 +76,9 @@ namespace Infrastructure.Persistence
             {
                 await _userManager.CreateAsync(user, password);
 
-                if (!string.IsNullOrWhiteSpace(proUserRole.Name))
+                if (!string.IsNullOrWhiteSpace(proRole.Name))
                 {
-                    await _userManager.AddToRolesAsync(user, new[] { proUserRole.Name });
+                    await _userManager.AddToRolesAsync(user, new[] { proRole.Name });
                 }
             }
         }
