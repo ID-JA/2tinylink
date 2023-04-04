@@ -6,7 +6,6 @@ using Infrastructure.Options;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +23,7 @@ namespace Infrastructure.Extensions
             
             services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
             services.AddScoped<IAppDbContext, AppDbContext>();
+            services.AddScoped<AppDbContextInitializer>();
 
             services.AddScoped<IUserService, UserService>();
 
@@ -54,9 +54,12 @@ namespace Infrastructure.Extensions
                 opts.User.RequireUniqueEmail      = true;
                 opts.SignIn.RequireConfirmedEmail = true;
             })
+            .AddRoles<IdentityRole<Guid>>()
+            .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
             .AddSignInManager<SignInManager<AppUser>>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
+
 
             services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
             services.AddScoped<IJwtProvider, JwtProvider>();

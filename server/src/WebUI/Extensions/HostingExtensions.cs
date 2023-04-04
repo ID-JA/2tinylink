@@ -21,7 +21,7 @@ namespace WebUI.Extensions
             return builder.Build();
         }
         
-        internal static WebApplication ConfigurePipeline(this WebApplication app)
+        internal static async Task<WebApplication> ConfigurePipeline(this WebApplication app)
         {
 
             app.UseExceptionHandler("/error");
@@ -30,8 +30,10 @@ namespace WebUI.Extensions
             {
                 using (var scope = app.Services.CreateScope())
                 {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                    dbContext.Database.Migrate();
+                    var initializer = scope.ServiceProvider.GetRequiredService<AppDbContextInitializer>();
+                    
+                    await initializer.InitializeAsync();
+                    await initializer.SeedAsync();
 
                 }
             }

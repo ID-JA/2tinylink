@@ -7,6 +7,6 @@ namespace Application.Common.Interfaces.Persistence
     {
         public DbSet<TinyLink> TinyLinks { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
