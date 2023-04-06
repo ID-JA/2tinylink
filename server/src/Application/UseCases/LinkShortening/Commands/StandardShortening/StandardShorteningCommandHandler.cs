@@ -8,26 +8,21 @@ namespace Application.UseCases.LinkShortening.Commands.StandardShortening
 {
     public class StandardShorteningCommandHandler : ShorteningCommandHandler<StandardShorteningCommand>
     {
-        public StandardShorteningCommandHandler(IAppDbContext dbContext, IUniqueIdProvider uniqueIdProvider) : base(dbContext, uniqueIdProvider)
+        public StandardShorteningCommandHandler(IAppDbContext dbContext, IAliasProvider aliasProvider) : base(dbContext, aliasProvider)
         {
         }
         public override async Task<ShorteningResult> Handle(StandardShorteningCommand command, CancellationToken cancellationToken)
         {
-            string generatedUniqueId;
-
-            do
-            {
-                generatedUniqueId = _uniqueIdProvider.GetUniqueString();
-            }
-            while(_dbContext.TinyLinks.Any(x => x.Alias == generatedUniqueId));
+            var alias = await _aliasProvider.GetAliasAsync();
 
             var tinyLink = new TinyLink
             {
-                Alias = generatedUniqueId,
+                Alias = alias,
                 Url  = command.Url
             };
 
             _dbContext.TinyLinks.Add(tinyLink);
+            
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return new() { Id = tinyLink.Id, Alias = tinyLink.Alias , Url = tinyLink.Url };

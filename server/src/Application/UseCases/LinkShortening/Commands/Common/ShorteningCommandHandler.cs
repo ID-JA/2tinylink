@@ -7,10 +7,10 @@ namespace Application.UseCases.LinkShortening.Commands.Common
     public abstract class ShorteningCommandHandler<TCommand>: IRequestHandler<TCommand, ShorteningResult> where TCommand : ShorteningCommand
     {
         protected readonly IAppDbContext _dbContext;
-        protected readonly IUniqueIdProvider _uniqueIdProvider;
-        public ShorteningCommandHandler(IAppDbContext dbContext, IUniqueIdProvider uniqueIdProvider)
+        protected readonly IAliasProvider _aliasProvider;
+        public ShorteningCommandHandler(IAppDbContext dbContext, IAliasProvider uniqueIdProvider)
         {
-            _uniqueIdProvider = uniqueIdProvider;
+            _aliasProvider = uniqueIdProvider;
             _dbContext = dbContext;
         }
         public abstract Task<ShorteningResult> Handle(TCommand command, CancellationToken cancellationToken);
