@@ -74,7 +74,7 @@ namespace Infrastructure.Extensions
             services.AddScoped<IAuthorizationHandler, ActiveSuperuserOnlyHandler>();
 
 
-            services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
+            services.AddScoped<IAliasProvider, AliasProvider>();
             services.AddScoped<IJwtProvider, JwtProvider>();
 
             return services;

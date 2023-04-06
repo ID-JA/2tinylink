@@ -40,7 +40,7 @@ namespace WebUI.Controllers
         [Authorize(Policy = "ActiveSuperuserOnly")]
         public async Task<ActionResult<ProShorteningResponse>> CreateProAlias([FromBody] ProShorteningRequest request)
         {
-            var command = new ProShorteningCommand { Url = request.Url, ExpiredAt = request.ExpiredAt };
+            var command = new ProShorteningCommand { Url = request.Url, ExpiredAt = request.ExpiredAt, CustomAlias = request.CustomAlias };
             
             var result = await _sender.Send(command);
 

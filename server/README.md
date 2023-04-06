@@ -22,7 +22,8 @@ info: Microsoft.Hosting.Lifetime[0]
   - Shortened links redirect to the original URL
 - [ ] Pro Link Shortening (for registered users only )
   - Registered users can access this feature to shorten their links with additional features, such as :
-    - [x] The expiration date feature allows registered users to set an expiration date for their pro shortening link. This means that after a certain period of time, the link will expire and no longer be accessible. 
+    - [x] The expiration date feature allows registered users to set an expiration date for their pro shortening link. This means that after a certain period of time, the link will expire and no longer be accessible.
+    - [x] Custom Alias feature that allows registered users to customize their short links with their own preferred alias. 
 - [x] Get Corresponding URL for alias
   - Users can retrieve the original URL for a given alias
 - [x] User Registration
