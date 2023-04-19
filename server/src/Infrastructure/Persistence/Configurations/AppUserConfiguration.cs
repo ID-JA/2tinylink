@@ -58,29 +58,8 @@ namespace Infrastructure.Persistence.Configurations
             .IsRequired()
             .HasColumnOrder(10);
 
-            builder.HasData(SeedDemoUsers());
-
         }
 
-        private AppUser SeedDemoUsers()
-        {
-            var defaultPassword = "Pa$$w0rd";
-            var user = new AppUser()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "User",
-                LastName = "Demo",
-                UserName = "Demo",
-                NormalizedUserName = "DEMO",
-                Email = "user.demo@2tinylink.com",
-                NormalizedEmail = "USER.DEMO@2TINYLINK.COM",
-                EmailConfirmed = true
-            };
-
-            PasswordHasher<AppUser> ph = new PasswordHasher<AppUser>();
-            user.PasswordHash = ph.HashPassword(user, defaultPassword);
-
-            return user;
-        }
+        
     }
 }

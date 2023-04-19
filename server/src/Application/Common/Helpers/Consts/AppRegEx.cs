@@ -4,7 +4,8 @@ namespace Application.Common.Helpers.Consts
     {
         public const string FIRST_NAME = "^[A-Za-z]+$";
         public const string PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).{6,}$";
-        public const string USER_NAME = "^[A-Za-z0-9]{3,29}_?$";
+        public const string USER_NAME = "^[A-Za-z0-9.]{3,29}_?$";
+        public const string ALIAS = "^[A-Za-z0-9]+(?:[-_][A-Za-z0-9]+)*[-_]?$";
 
     }
 }

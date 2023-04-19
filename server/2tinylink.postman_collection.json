@@ -6,59 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "Standard Tiny Links",
-			"item": [
-				{
-					"name": "Create a standard tiny link",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"Url\": \"https://www.linkedin.com/feed/\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{api_host}}/standard/tiny-links",
-							"host": [
-								"{{api_host}}"
-							],
-							"path": [
-								"standard",
-								"tiny-links"
-							]
-						},
-						"description": "- Endpoint for an  anonymous user to create a short link by providing the URL to short at the body of the request.\n- `200`: the request has succeeded.\n- `400`: if no body provided or the media type sent is unsupported media type by the server.\n- `422`: if invalid value of url e.g. empty."
-					},
-					"response": []
-				},
-				{
-					"name": "Get a standard tiny link by Id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{api_host}}/standard/tiny-links/2c38dba6-6ab3-4cc5-b821-476e0bb68405",
-							"host": [
-								"{{api_host}}"
-							],
-							"path": [
-								"standard",
-								"tiny-links",
-								"2c38dba6-6ab3-4cc5-b821-476e0bb68405"
-							]
-						},
-						"description": "- Get a standard link by it's id.\n- `404` : if the server cannot find the link."
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Corresponded Url",
 			"item": [
 				{
@@ -67,16 +14,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{api_host}}/urls/ND_8",
+							"raw": "{{api_host}}/urls/Yd2",
 							"host": [
 								"{{api_host}}"
 							],
 							"path": [
 								"urls",
-								"ND_8"
+								"Yd2"
 							]
 						},
-						"description": "- Get the corresponded Url by a given an address at the route parameter.\n- `200`: the request has succeeded.\n- `404`: the server cannot find the url of a given address.\n- `415`: if the provided address is empty."
+						"description": "### Endpoint\n```bash\nGET /api/urls/{alias}\n```\n* Required parameters:\n  - alias: a string representing the alias associated with the original URL.\n\n### Description\n- Returns the original URL for a given alias.\n\n### Responses\n- `200`: Success. Returns the original URL corresponding to the provided alias in the response body.\n```json\n{\n    \"url\": \"https://www.linkedin.com/feed/\"\n}\n```\n- `404`: Not Found.\n    - With empty `code` property in response body: The server cannot find the URL of a given alias. \n        ```json\n{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Cannot find url with alias : 'WwV9Td'\",\n    \"status\": 404,\n    \"traceId\": \"00-cea6fb0158bedb2ba705b3ca82c68704-53506110eba1ae3b-00\",\n    \"code\": \"\"\n}\n        ```\n    - With `Alias.Expired` code: The alias has expired and is no longer accessible. You can use this code to decide to display a friendly page to the user that the link has expired.\n        ```json\n        {\n            \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n            \"title\": \"Alias has expired!\",\n            \"status\": 404,\n            \"traceId\": \"00-a613e46eac3011dcd165a8f5bbfc3eae-56e94e2e011fb537-00\",\n            \"code\": \"Alias.Expired\"\n        }\n        ```"
 					},
 					"response": []
 				}
@@ -164,7 +111,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"UsernameOrEmail\":\"Amya781\",\r\n    \"Password\":\"{{default_password}}\"\r\n}",
+							"raw": "{\r\n    \"UsernameOrEmail\":\"Hollie902\",\r\n    \"Password\":\"{{default_password}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -186,7 +133,7 @@
 					"response": []
 				},
 				{
-					"name": "Login As Demo User",
+					"name": "Login As Superuser",
 					"event": [
 						{
 							"listen": "test",
@@ -204,7 +151,47 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"UsernameOrEmail\":\"{{demo_user_username}}\",\r\n    \"Password\":\"{{default_password}}\"\r\n}",
+							"raw": "{\r\n    \"UsernameOrEmail\":\"john.doe\",\r\n    \"Password\":\"{{default_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_host}}/auth/login",
+							"host": [
+								"{{api_host}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "- `200` : The request has been successful.\n**After a successful authentication, the 'Authorize' header will be automatically added to your requests. This allows you to access any endpoint in the postman that requires authentication without needing to manually add the header for each request**\n- `422`: Invalid data payload.\n- `409`: Email address must be confirmed to sign in.\n**The Demo User is a special user account that has access to all the functionality in the application.**"
+					},
+					"response": []
+				},
+				{
+					"name": "Login As Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"pm.collectionVariables.set(\"access_token\", responseJson.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UsernameOrEmail\":\"admin.user\",\r\n    \"Password\":\"{{default_password}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -281,6 +268,203 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Link Shortening",
+			"item": [
+				{
+					"name": "Standard Shortening",
+					"item": [
+						{
+							"name": "Create Standard Alias",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Url\": \"https://www.linkedin.com/feed/\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_host}}/standard/tiny-links",
+									"host": [
+										"{{api_host}}"
+									],
+									"path": [
+										"standard",
+										"tiny-links"
+									]
+								},
+								"description": "- Endpoint for an  anonymous user to create a short link by providing the URL to short at the body of the request.\n- `200`: the request has succeeded.\n- `400`: if no body provided or the media type sent is unsupported media type by the server.\n- `422`: if invalid value of url e.g. empty."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Standard Alias By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_host}}/standard/tiny-links/3887a62b-f142-4545-a15e-6265cf3d272d",
+									"host": [
+										"{{api_host}}"
+									],
+									"path": [
+										"standard",
+										"tiny-links",
+										"3887a62b-f142-4545-a15e-6265cf3d272d"
+									]
+								},
+								"description": "- Get a standard link by it's id.\n- `404` : if the server cannot find the link."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pro Shortening",
+					"item": [
+						{
+							"name": "Shortening",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Url\": \"https://www.linkedin.com/feed/\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_host}}/pro/aliases",
+									"host": [
+										"{{api_host}}"
+									],
+									"path": [
+										"pro",
+										"aliases"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Shortening with Expired At",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Url\": \"https://www.linkedin.com/feed/\",\r\n    \"ExpiredAt\":\"2023-04-06T03:21Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_host}}/pro/aliases",
+									"host": [
+										"{{api_host}}"
+									],
+									"path": [
+										"pro",
+										"aliases"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Shortening with custom alias",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Url\": \"https://www.linkedin.com/feed/\",\r\n    \"CustomAlias\":\"David\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_host}}/pro/aliases",
+									"host": [
+										"{{api_host}}"
+									],
+									"path": [
+										"pro",
+										"aliases"
+									]
+								},
+								"description": "- `409` : When you try to create a shortlink with already existed alias\n```json\n{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.8\",\n    \"title\": \"Alias already exists, please choose a different alias.\",\n    \"status\": 409,\n    \"traceId\": \"00-2139ba346f0581dc98036d2f9e164934-1b804a030bf378ed-00\"\n}\n```\n- `422` : If the provided custom alias does not match the regex set on the server.\n```json\n{\n    \"type\": \"https://tools.ietf.org/html/rfc4918#section-11.2\",\n    \"title\": \"'Custom Alias' must match the pattern '^[A-Za-z0-9]+(?:[-_][A-Za-z0-9]+)*[-_]?$'\",\n    \"status\": 422,\n    \"traceId\": \"00-760a7f8d25c04fc2916ae32b5cfe7b5b-68973d81bf122638-00\"\n}\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Pro Alias By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_host}}/pro/aliases/143bdcc8-f20b-48c2-a5dd-9901638ca2cd",
+									"host": [
+										"{{api_host}}"
+									],
+									"path": [
+										"pro",
+										"aliases",
+										"143bdcc8-f20b-48c2-a5dd-9901638ca2cd"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [
@@ -351,11 +535,6 @@
 		{
 			"key": "last_registred_username",
 			"value": "Amya781",
-			"type": "default"
-		},
-		{
-			"key": "demo_user_username",
-			"value": "Demo",
 			"type": "default"
 		}
 	]
