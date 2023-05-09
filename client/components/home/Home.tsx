@@ -1,6 +1,6 @@
-import {animated, useSpring} from '@react-spring/web'
+import { animated, useSpring } from '@react-spring/web'
 import Image from 'next/image'
-import {useState} from 'react'
+import { useState } from 'react'
 
 import HomeLayout from '@/components/layout/home'
 import Feature from './Feature'
@@ -53,8 +53,8 @@ function Home() {
   const [open, toggle] = useState(false)
 
   const props = useSpring({
-    from: {width: '66%'},
-    to: {width: open ? '0%' : '66%', opacity: open ? 0 : 1},
+    from: { width: '66%' },
+    to: { width: open ? '0%' : '66%', opacity: open ? 0 : 1 },
   })
   return (
     <HomeLayout>
@@ -77,8 +77,7 @@ function Home() {
           Simplify Your Navigation with Short URLs
         </h1>
         <p className="mx-auto mb-6 text-lg font-normal text-center text-gray-700 md:text-xl md:max-w-lg">
-          Shorten and manage your web links efficiently with our easy-to-use
-          short URL app.
+          Shorten and manage your web links efficiently with our easy-to-use short URL app.
         </p>
         <form className="flex justify-center h-14">
           <animated.input
@@ -93,29 +92,17 @@ function Home() {
           <animated.button
             type="submit"
             className={`px-6 text-white bg-black ${
-              open
-                ? 'rounded-md bg-opacity-50 cursor-not-allowed'
-                : 'rounded-r-md'
+              open ? 'rounded-md bg-opacity-50 cursor-not-allowed' : 'rounded-r-md'
             } focus:outline-none`}
             onClick={() => toggle(!open)}
           >
             {open ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-width="2"
-                >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="2">
                   <path
-                    stroke-dasharray="60"
-                    stroke-dashoffset="60"
-                    stroke-opacity=".3"
+                    strokeDasharray="60"
+                    strokeDashoffset="60"
+                    strokeOpacity=".3"
                     d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"
                   >
                     <animate
@@ -126,8 +113,8 @@ function Home() {
                     />
                   </path>
                   <path
-                    stroke-dasharray="15"
-                    stroke-dashoffset="15"
+                    strokeDasharray="15"
+                    strokeDashoffset="15"
                     d="M12 3C16.9706 3 21 7.02944 21 12"
                   >
                     <animate
@@ -159,12 +146,11 @@ function Home() {
               All the features you need from a URL shortener
             </h2>
             <p className="text-gray-500 sm:text-xl">
-              Shorten and manage your web links efficiently with our easy-to-use
-              short URL app.
+              Shorten and manage your web links efficiently with our easy-to-use short URL app.
             </p>
           </div>
           <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
-            {FEATURES.map(feature => (
+            {FEATURES.map((feature) => (
               <Feature
                 key={feature.title}
                 title={feature.title}

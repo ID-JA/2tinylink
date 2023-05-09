@@ -1,7 +1,7 @@
-import {Button} from '@/components/common'
+import { Button } from '@/components/common'
 import React from 'react'
 
-function HomeLayout({children}: {children: React.ReactNode}) {
+function HomeLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <header className="flex items-center h-16 px-4 ">
@@ -18,9 +18,7 @@ function HomeLayout({children}: {children: React.ReactNode}) {
           </ul>
         </nav>
       </header>
-      <main className="max-w-6xl mx-auto px-4 h-[calc(100vh_-_64px)] ">
-        {children}
-      </main>
+      <main className="max-w-6xl mx-auto px-4 h-[calc(100vh_-_64px)] ">{children}</main>
     </>
   )
 }
