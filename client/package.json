@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "lint:fix": "eslint \"**/*.{ts,tsx}\" --fix --ext .ts,.tsx --cache",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@next/font": "13.1.4",
@@ -21,8 +22,7 @@
     "next": "13.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwind-merge": "^1.11.0",
-    "typescript": "4.9.4"
+    "tailwind-merge": "^1.11.0"
   },
   "devDependencies": {
     "@types/node": "18.11.18",
@@ -35,9 +35,10 @@
     "eslint-config-next": "^13.1.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.8",
     "tailwindcss": "^3.2.4",
-    "husky": "^8.0.0"
+    "typescript": "4.9.4"
   }
 }
