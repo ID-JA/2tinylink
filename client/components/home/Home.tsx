@@ -140,9 +140,9 @@ function Home() {
         </form>
       </section>
       <section className="bg-white">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+        <div className="max-w-screen-xl px-4 py-8 mx-auto sm:py-16 lg:px-6">
           <div className="max-w-screen-md mb-8 lg:mb-16">
-            <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
+            <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900">
               All the features you need from a URL shortener
             </h2>
             <p className="text-gray-500 sm:text-xl">

@@ -1,4 +1,4 @@
-import { Button } from '@/components/common'
+import { Button } from '@/components/ui/button'
 import React from 'react'
 
 function HomeLayout({ children }: { children: React.ReactNode }) {
@@ -13,7 +13,7 @@ function HomeLayout({ children }: { children: React.ReactNode }) {
               <Button>Login</Button>
             </li>
             <li>
-              <Button variant="outline">Register</Button>
+              <Button variant="destructive">Register</Button>
             </li>
           </ul>
         </nav>
