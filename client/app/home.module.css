@@ -1,0 +1,37 @@
+.title {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-size: rem(64px);
+  font-weight: bold;
+  letter-spacing: rem(-2px);
+  text-align: center;
+  @media (max-width: $mantine-breakpoint-md) {
+    font-size: rem(50px);
+  }
+  @media (max-width: $mantine-breakpoint-xs) {
+    font-size: rem(36px);
+  }
+}
+
+.header {
+  position: sticky;
+  inset: 0;
+  top: 0px;
+  height: rem(56px);
+  z-index: var(--mantine-z-index-app);
+}
+
+.headerContent {
+  padding: var(--mantine-spacing-md);
+  max-width: rem(1140px);
+  margin: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sparkle {
+  @media (max-width: $mantine-breakpoint-xs) {
+    display: none;
+  }
+}
