@@ -23,6 +23,8 @@ using Application.UseCases.Auth.Queries.Login.Behaviors;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Infrastructure.Options;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WebUI.Extensions
 {
@@ -60,7 +62,7 @@ namespace WebUI.Extensions
 
             builder.Services.AddIdentityCore<AppUser>(opts =>
             {
-                opts.User.RequireUniqueEmail      = true;
+                opts.User.RequireUniqueEmail = true;
                 opts.SignIn.RequireConfirmedEmail = true;
             })
             .AddSignInManager<SignInManager<AppUser>>()
@@ -70,7 +72,11 @@ namespace WebUI.Extensions
             builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
-            builder.Services.AddMediatR(typeof(IApplicationAssemblyReference).Assembly);
+            builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
+
+            });
 
             builder.Services.AddScoped<IPipelineBehavior<StandardShorteningCommand, StandardShorteningResult>, StandardShorteningCommandValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<UrlByAddressQuery, UrlByAddressQueryResult>, UrlByAddressQueryValidationBehavior>();
@@ -115,7 +121,7 @@ namespace WebUI.Extensions
 
             app.MapControllers()
                     .RequireAuthorization();
-                    
+
 
             return app;
         }

@@ -15,23 +15,23 @@ namespace Application.UseCases.Auth.Commands.EmailConfirmation
             _userManager = userManager;
         }
 
-        public async Task<Unit> Handle(EmailConfirmationCommand request, CancellationToken cancellationToken)
+        public async Task Handle(EmailConfirmationCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
 
-            if( user is null )
+            if (user is null)
             {
                 throw new AppException((int)HttpStatusCode.NotFound, $"User with '{request.UserName}' not found.");
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, request.Token);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
-                return Unit.Value;
+                return;
             }
 
-            
+
             var firstError = result.Errors.First().Description;
 
             throw new AppException((int)HttpStatusCode.Conflict, firstError);

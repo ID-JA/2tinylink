@@ -26,20 +26,20 @@ namespace WebUI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest registerRequest)
         {
-            var command = new RegisterCommand() 
-            { 
-                UserName  = registerRequest.UserName,
+            var command = new RegisterCommand()
+            {
+                UserName = registerRequest.UserName,
                 FirstName = registerRequest.FirstName,
-                LastName  = registerRequest.LastName,
-                Email     = registerRequest.Email,
-                Password  = registerRequest.Password
+                LastName = registerRequest.LastName,
+                Email = registerRequest.Email,
+                Password = registerRequest.Password
             };
 
             var result = await _sender.Send(command);
 
-            string endpointUrl = Url.Action(nameof(EmailConfirmation), 
-                                        ControllerContext.ActionDescriptor.ControllerName, 
-                                        new { UserName = command.UserName, Token = result.EmailConfirmationToken}, 
+            string endpointUrl = Url.Action(nameof(EmailConfirmation),
+                                        ControllerContext.ActionDescriptor.ControllerName,
+                                        new { UserName = command.UserName, Token = result.EmailConfirmationToken },
                                         Request.Scheme);
 
             var response = new RegisterResponse()
@@ -47,7 +47,7 @@ namespace WebUI.Controllers
                 EmailConfirmationUrl = endpointUrl
             };
 
-            return CreatedAtAction("GetUserProfileByUserName","Profiles", new { UserName = registerRequest.UserName }, response);
+            return CreatedAtAction("GetUserProfileByUserName", "Profiles", new { UserName = registerRequest.UserName }, response);
         }
 
         [HttpPost("login")]
@@ -62,7 +62,7 @@ namespace WebUI.Controllers
             var result = await _sender.Send(query);
 
             var response = new LoginResponse() { Token = result.Token };
-            
+
             return Ok(response);
         }
 
@@ -72,10 +72,10 @@ namespace WebUI.Controllers
             var command = new EmailConfirmationCommand()
             {
                 UserName = emailConfirmationRequest.UserName,
-                Token    = emailConfirmationRequest.Token
+                Token = emailConfirmationRequest.Token
             };
 
-            var result = await _sender.Send(command);
+            await _sender.Send(command);
 
             var response = new DefaultResponse()
             {
