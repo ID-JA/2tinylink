@@ -1,14 +1,7 @@
 using WebUI.Extensions;
+var builder = WebApplication.CreateBuilder(args);
 
-internal class Program
-{
-    private static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
-        
-        var app = builder.ConfigureServices()
-                         .ConfigurePipeline();
+var app = builder.ConfigureServices()
+                 .ConfigurePipeline();
 
-        app.Run();
-    }
-}
+app.Run();
