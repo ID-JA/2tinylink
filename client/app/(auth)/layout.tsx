@@ -9,18 +9,6 @@ import Image from "next/image";
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <Box bg="gray.1">
-      {/* <Container size="lg" h="100vh" w="100vw" className={classes.container}>
-        <div className={classes.card}>
-          <div className={classes.cardHeader}>
-            <Title order={3} mb="sm" fw="bold" ta="center">
-              2tinylink{" "}
-            </Title>
-            <Text size="sm" c="gray" ta="center">
-              Use your email address and password to sign in.
-            </Text>
-          </div>
-        </div>
-      </Container> */}
       <div className={classes.container}>
         <div className={classes.left}>
           <Button

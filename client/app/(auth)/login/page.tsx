@@ -1,5 +1,5 @@
 import { GoogleButton } from "@/components/GoogleButton";
-import { Button, Divider, Text, TextInput, Title } from "@mantine/core";
+import { Button, Text, TextInput, Title } from "@mantine/core";
 import Link from "next/link";
 import React from "react";
 
