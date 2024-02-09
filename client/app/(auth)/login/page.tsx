@@ -1,5 +1,12 @@
 import { GoogleButton } from "@/components/GoogleButton";
-import { Button, Text, TextInput, Title } from "@mantine/core";
+import {
+  Button,
+  Checkbox,
+  Divider,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import Link from "next/link";
 import React from "react";
 
@@ -15,12 +22,19 @@ function LoginPage() {
       <GoogleButton mt="lg" fullWidth>
         Google
       </GoogleButton>
+      <Divider label="OR" color="gray.5" my="sm" />
+
       <form>
-        <TextInput my="lg" label="Email" />
-        <TextInput mb="lg" label="Password" />
-        <Button fullWidth>Log in</Button>
+        <TextInput my="sm" label="Email" />
+        <TextInput mb="sm" label="Password" />
+        <Text href="/register" size="sm" c="gray" component={Link}>
+          Forgot your password ?
+        </Text>{" "}
+        <Button fullWidth mt="lg">
+          Log in
+        </Button>
       </form>
-      <Text ta="center" c="gray" size="sm" mt="lg">
+      <Text ta="center" c="gray" mb="lg" size="sm" mt="lg">
         Don&apos;t have an account?{" "}
         <Text
           href="/register"

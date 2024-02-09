@@ -16,7 +16,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
             passHref
             variant="subtle"
             href="/"
-            leftSection={<IconArrowLeft />}
+            leftSection={<IconArrowLeft className={classes.backIcon} />}
             className={classes.backButton}
           >
             Back To Home

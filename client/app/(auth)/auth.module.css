@@ -24,10 +24,33 @@
   justify-content: center;
 }
 
+.backIcon {
+}
 .backButton {
   position: absolute;
   top: 10px;
   left: 20px;
+  &:hover {
+    .backIcon {
+      animation-duration: 1000ms;
+      animation-name: animateLeft;
+      animation-timing-function: ease-in;
+      animation-iteration-count: infinite;
+      transition: all;
+    }
+  }
+}
+
+@keyframes animateLeft {
+  0% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
 }
 
 .left,
