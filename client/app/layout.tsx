@@ -2,6 +2,7 @@ import "@mantine/core/styles.css";
 import React from "react";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { theme } from "../theme";
+import { HydrationOverlay } from "@builder.io/react-hydration-overlay";
 
 export const metadata = {
   title: "2tinylink app",
@@ -20,7 +21,9 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <HydrationOverlay>
+          <MantineProvider theme={theme}>{children}</MantineProvider>
+        </HydrationOverlay>
       </body>
     </html>
   );

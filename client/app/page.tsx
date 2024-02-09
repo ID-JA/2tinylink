@@ -1,21 +1,21 @@
-import { ColorSchemeToggle } from "@/components/ColorSchemeToggle/ColorSchemeToggle";
 import classes from "./home.module.css";
 import {
   ActionIcon,
   Box,
   Button,
   Container,
+  Flex,
   Text,
   TextInput,
   Title,
-  px,
   rem,
 } from "@mantine/core";
 import { IconArrowBack, IconLink } from "@tabler/icons-react";
 import NextImage from "next/image";
 import React from "react";
+import Link from "next/link";
 
-function Page() {
+function HomePage() {
   return (
     <>
       <header className={classes.header}>
@@ -23,7 +23,14 @@ function Page() {
           <Text fw="700" size="lg">
             2tinyLink
           </Text>
-          <Button>Sign in</Button>
+          <Flex gap="md">
+            <Button component={Link} href="/login" variant="outline">
+              Login
+            </Button>
+            <Button component={Link} href="/register">
+              Register
+            </Button>
+          </Flex>
         </div>
       </header>
       <Container size="lg">
@@ -60,7 +67,7 @@ function Page() {
                 component="span"
                 inherit
                 variant="gradient"
-                gradient={{ from: "pink", to: "yellow", deg: 90 }}
+                gradient={{ from: "red", to: "yellow", deg: 90 }}
               >
                 Short Links
               </Text>{" "}
@@ -96,4 +103,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default HomePage;
