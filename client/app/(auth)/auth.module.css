@@ -17,10 +17,17 @@
 }
 
 .left {
+  position: relative;
   background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.backButton {
+  position: absolute;
+  top: 10px;
+  left: 20px;
 }
 
 .left,

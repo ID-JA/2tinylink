@@ -1,4 +1,5 @@
-import { Button, Text, TextInput, Title } from "@mantine/core";
+import { GoogleButton } from "@/components/GoogleButton";
+import { Button, Divider, Text, TextInput, Title } from "@mantine/core";
 import Link from "next/link";
 import React from "react";
 
@@ -11,6 +12,9 @@ function LoginPage() {
       <Text ta="center" size="sm" mt="xs" c="gray">
         Start creating short links with superpowers
       </Text>
+      <GoogleButton mt="lg" fullWidth>
+        Google
+      </GoogleButton>
       <form>
         <TextInput my="lg" label="Email" />
         <TextInput mb="lg" label="Password" />

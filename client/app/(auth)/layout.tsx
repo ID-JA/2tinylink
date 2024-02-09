@@ -9,22 +9,6 @@ import Image from "next/image";
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <Box bg="gray.1">
-      <Button
-        component={Link}
-        passHref
-        variant="subtle"
-        href="/"
-        styles={{
-          root: {
-            position: "fixed",
-            top: "40px",
-            left: "40px",
-          },
-        }}
-        leftSection={<IconArrowLeft />}
-      >
-        Back To Home
-      </Button>
       {/* <Container size="lg" h="100vh" w="100vw" className={classes.container}>
         <div className={classes.card}>
           <div className={classes.cardHeader}>
@@ -39,6 +23,16 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
       </Container> */}
       <div className={classes.container}>
         <div className={classes.left}>
+          <Button
+            component={Link}
+            passHref
+            variant="subtle"
+            href="/"
+            leftSection={<IconArrowLeft />}
+            className={classes.backButton}
+          >
+            Back To Home
+          </Button>
           <div className={classes.card}>{children}</div>
         </div>
         <div className={classes.right}>
