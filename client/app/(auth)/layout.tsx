@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Container, Flex, Grid, Text, Title } from "@mantine/core";
+import { Box, Button } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
 import Link from "next/link";
 import React from "react";

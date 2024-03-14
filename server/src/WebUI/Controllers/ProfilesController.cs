@@ -36,14 +36,11 @@ namespace WebUI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("current")]
+        [HttpGet("me", Name = "GetCurrentUser")]
         [Authorize]
         public async Task<ActionResult<UserByUserNameResponse>> GetCurrentUser()
         {
-            var i = await _sender.Send(new GetUserProfileQuery());
-
-
-            return Ok(i);
+            return Ok(await _sender.Send(new GetUserProfileQuery()));
         }
     }
 }

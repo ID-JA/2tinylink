@@ -31,6 +31,7 @@ namespace WebUI.Extensions
 {
     internal static class HostingExtensions
     {
+        private const string CorsPolicy = nameof(Consts.CORS_POLICY_NAME);
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             // Add Repositories
@@ -106,14 +107,13 @@ namespace WebUI.Extensions
             builder.Services.AddScoped<IPipelineBehavior<LoginQuery, LoginQueryResult>, LoginQueryValidationBehavior>();
             builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
             builder.Services.AddRepositories();
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(Consts.CORS_POLICY_NAME, policy =>
-                {
-                    policy.WithOrigins(configuration["CorsSettings:Origin"])
-                    .AllowAnyMethod();
-                });
-            });
+            builder.Services.AddCors(opt =>
+                opt.AddPolicy(CorsPolicy, policy =>
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .WithOrigins("https://localhost:3000", "http://localhost:3000")));
+
 
             return builder.Build();
         }
@@ -124,24 +124,23 @@ namespace WebUI.Extensions
 
             if (app.Environment.IsDevelopment())
             {
-                using (var scope = app.Services.CreateScope())
-                {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                    dbContext.Database.Migrate();
-
-                }
+                using var scope = app.Services.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                dbContext.Database.Migrate();
             }
 
             app.UseHttpsRedirection();
 
-            app.UseCors(Consts.CORS_POLICY_NAME);
+            app.UseRouting();
+
+            app.UseCors(CorsPolicy);
 
             app.UseAuthentication();
 
+            app.UseMiddleware<CurrentUserMiddleware>();
 
             app.UseAuthorization();
 
-            app.UseMiddleware<CurrentUserMiddleware>();
 
             app.MapControllers()
                     .RequireAuthorization();
