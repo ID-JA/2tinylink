@@ -1,5 +1,6 @@
 using System.Net;
 using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Application.Common.Interfaces.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,18 +10,22 @@ namespace Application.UseCases.StandardTinyLinkManagement.Queries.TinyLinkById
     public class StandardTinyLinkByIdQueryHandler : IRequestHandler<StandardTinyLinkByIdQuery, StandardTinyLinkByIdQueryResult>
     {
         private readonly IAppDbContext _dbContext;
-        public StandardTinyLinkByIdQueryHandler(IAppDbContext dbContext)
+        private readonly ICurrentUser _currentUser;
+        public StandardTinyLinkByIdQueryHandler(IAppDbContext dbContext, ICurrentUser currentUser)
         {
             _dbContext = dbContext;
+            _currentUser = currentUser;
         }
         public async Task<StandardTinyLinkByIdQueryResult> Handle(StandardTinyLinkByIdQuery query, CancellationToken cancellationToken)
         {
+            var userId = _currentUser.GetUserId();
             var link = await _dbContext.TinyLinks.AsNoTracking()
-                                       .Where(x => query.Id == x.Id && x.IsActive)
-                                       .Select(x => new {
-                                        Id          = x.Id,
-                                        Address         = x.Address,
-                                        CreatedAt   = x.CreatedAt
+                                       .Where(x => query.Id == x.Id && x.IsActive && x.AppUserId.ToString() == _currentUser.GetUserId())
+                                       .Select(x => new
+                                       {
+                                           x.Id,
+                                           x.Address,
+                                           x.CreatedAt,
                                        })
                                        .FirstOrDefaultAsync();
             if(link is null)

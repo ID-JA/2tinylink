@@ -24,7 +24,7 @@ namespace Infrastructure.Persistence
         {
             return await base.SaveChangesAsync(cancellationToken);
         }
-        
+
         public DbSet<TinyLink> TinyLinks { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
     }

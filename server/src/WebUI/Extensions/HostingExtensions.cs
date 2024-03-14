@@ -23,13 +23,32 @@ using Application.UseCases.Auth.Queries.Login.Behaviors;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Infrastructure.Options;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using Application.Common.Interfaces;
+using Domain.Entities.Common;
+using Infrastructure.Repository;
 
 namespace WebUI.Extensions
 {
     internal static class HostingExtensions
     {
+        private static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            // Add Repositories
+            services.AddScoped(typeof(IRepository<>), typeof(ApplicationDbRepository<>));
+
+            foreach (var aggregateRootType in
+                     typeof(IAggregateRoot).Assembly.GetExportedTypes()
+                         .Where(t => typeof(IAggregateRoot).IsAssignableFrom(t) && t.IsClass)
+                         .ToList())
+            {
+                // Add ReadRepositories.
+                services.AddScoped(typeof(IReadRepository<>).MakeGenericType(aggregateRootType), sp =>
+                    sp.GetRequiredService(typeof(IRepository<>).MakeGenericType(aggregateRootType)));
+
+            }
+
+            return services;
+        }
         internal static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
             var configuration = builder.Configuration;
@@ -71,6 +90,8 @@ namespace WebUI.Extensions
 
             builder.Services.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+            builder.Services.AddScoped<CurrentUserMiddleware>().
+               AddScoped<ICurrentUser, CurrentUser>();
 
             builder.Services.AddMediatR(cfg =>
             {
@@ -84,7 +105,7 @@ namespace WebUI.Extensions
             builder.Services.AddScoped<IPipelineBehavior<UserByUserNameQuery, UserByUserNameQueryResult>, UserByUserNameQueryValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<LoginQuery, LoginQueryResult>, LoginQueryValidationBehavior>();
             builder.Services.AddValidatorsFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
-
+            builder.Services.AddRepositories();
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(Consts.CORS_POLICY_NAME, policy =>
@@ -117,7 +138,10 @@ namespace WebUI.Extensions
 
             app.UseAuthentication();
 
+
             app.UseAuthorization();
+
+            app.UseMiddleware<CurrentUserMiddleware>();
 
             app.MapControllers()
                     .RequireAuthorization();

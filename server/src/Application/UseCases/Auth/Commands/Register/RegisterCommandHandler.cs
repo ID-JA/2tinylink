@@ -19,17 +19,18 @@ namespace Application.UseCases.Auth.Commands.Register
             var user = new AppUser()
             {
                 FirstName = command.FirstName,
-                LastName  = command.LastName,
-                UserName  = command.UserName,
-                Email     = command.Email
+                LastName = command.LastName,
+                UserName = command.UserName,
+                Email = command.Email
             };
 
             var result = await _userManager.CreateAsync(user, command.Password);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
+                // TODO: send Email for account's confirmation.
                 return new() { EmailConfirmationToken = token };
             }
 

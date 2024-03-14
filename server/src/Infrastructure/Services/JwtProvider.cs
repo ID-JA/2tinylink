@@ -20,17 +20,17 @@ namespace Infrastructure.Services
         {
             var claims = new Claim[]
             {
-                    new Claim(ClaimTypes.NameIdentifier, appUser.UserName)   
+                    new(ClaimTypes.NameIdentifier, appUser.Id.ToString())
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_jwtOptions.SigningKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Issuer             = _jwtOptions.Issuer,
-                Audience           = _jwtOptions.Audience, 
-                Subject            = new ClaimsIdentity(claims),
-                Expires            = DateTime.UtcNow.AddSeconds(_jwtOptions.ExpiresInSeconds),
+                Issuer = _jwtOptions.Issuer,
+                Audience = _jwtOptions.Audience,
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddSeconds(_jwtOptions.ExpiresInSeconds),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

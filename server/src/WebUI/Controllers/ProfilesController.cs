@@ -1,5 +1,7 @@
+using Application.UseCases.Settings.Queries;
 using Application.UseCases.UserManagement.Queries.UserByUserName;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Contracts.UserManagement.UserByUserName;
 
@@ -26,12 +28,22 @@ namespace WebUI.Controllers
             var response = new UserByUserNameResponse()
             {
                 FirstName = result.FirstName,
-                LastName  = result.LastName,
-                UserName  = result.UserName,
+                LastName = result.LastName,
+                UserName = result.UserName,
                 CreatedAt = result.CreatedAt
             };
 
             return Ok(response);
+        }
+
+        [HttpGet("current")]
+        [Authorize]
+        public async Task<ActionResult<UserByUserNameResponse>> GetCurrentUser()
+        {
+            var i = await _sender.Send(new GetUserProfileQuery());
+
+
+            return Ok(i);
         }
     }
 }
