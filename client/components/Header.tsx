@@ -1,6 +1,7 @@
 "use client";
 import cx from "clsx";
 import { useState } from "react";
+import Link from "next/link";
 import {
   Container,
   Avatar,
@@ -21,23 +22,33 @@ import {
   IconChevronDown,
 } from "@tabler/icons-react";
 import classes from "./Header.module.css";
+import { useParams } from "next/navigation";
 
 interface IUser {
   email: string;
   userName: string;
 }
 
-const tabs = ["Dashboard", "Domains", "Settings"];
-
 export function HeaderTabs({ user }: { user: IUser | null }) {
   const [opened, { toggle }] = useDisclosure(false);
+  const { slug } = useParams() as { slug?: string };
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-  const items = tabs.map((tab) => (
-    <Tabs.Tab value={tab} key={tab}>
-      {tab}
-    </Tabs.Tab>
-  ));
+  const tabs = [
+    { name: "Links", href: `/${slug}` },
+    { name: "Settings", href: `/${slug}/settings` },
+  ];
+  const items = tabs.map(({ name, href }) => {
+    return (
+      <Tabs.Tab
+        value={name}
+        key={href}
+        component={(props: any) => <Link {...props} href={href} />}
+      >
+        {name}
+      </Tabs.Tab>
+    );
+  });
 
   return (
     <div className={classes.header}>
@@ -120,7 +131,7 @@ export function HeaderTabs({ user }: { user: IUser | null }) {
       </Container>
       <Container size="md">
         <Tabs
-          defaultValue="Dashboard"
+          defaultValue="Links"
           variant="outline"
           visibleFrom="sm"
           classNames={{
