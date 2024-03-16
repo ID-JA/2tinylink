@@ -2,13 +2,13 @@
 import { GoogleButton } from "@/components/GoogleButton";
 import { axios } from "@/utils";
 import { Button, Divider, Text, TextInput, Title } from "@mantine/core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const useLogin = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
 
   const mutation = useMutation({
     mutationKey: ["login"],
@@ -21,8 +21,11 @@ const useLogin = () => {
     },
     onSuccess: (data) => {
       localStorage.setItem("token", data?.token);
-      queryClient.setQueryData(["CURRENT_USER"], data);
-      router.push("/portal");
+      if (searchParams.get("redirect")) {
+        router.push(searchParams.get("redirect") as string);
+      } else {
+        router.push("/portal");
+      }
     },
   });
 

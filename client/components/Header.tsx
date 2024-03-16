@@ -1,3 +1,4 @@
+"use client";
 import cx from "clsx";
 import { useState } from "react";
 import {
@@ -10,6 +11,7 @@ import {
   Tabs,
   Burger,
   rem,
+  Skeleton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -21,20 +23,13 @@ import {
 import classes from "./Header.module.css";
 
 interface IUser {
-  email: string | undefined;
-  userName: string | undefined;
+  email: string;
+  userName: string;
 }
 
 const tabs = ["Dashboard", "Domains", "Settings"];
 
-export function HeaderTabs({
-  user = {
-    email: undefined,
-    userName: undefined,
-  },
-}: {
-  user: IUser;
-}) {
+export function HeaderTabs({ user }: { user: IUser | null }) {
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
@@ -50,7 +45,7 @@ export function HeaderTabs({
         <Group justify="space-between">
           <span>2tinyLink</span>
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
-          {user.userName && (
+          {user && user.userName ? (
             <Menu
               width={260}
               position="bottom-end"
@@ -118,12 +113,14 @@ export function HeaderTabs({
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
+          ) : (
+            <Skeleton height={40} width={150} />
           )}
         </Group>
       </Container>
       <Container size="md">
         <Tabs
-          defaultValue="Home"
+          defaultValue="Dashboard"
           variant="outline"
           visibleFrom="sm"
           classNames={{
