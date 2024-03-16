@@ -5,7 +5,7 @@ import { axios } from "@/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-const useCurrentUserProfile = () => {
+export const useCurrentUserProfile = () => {
   const router = useRouter();
 
   const query = useQuery({
@@ -24,10 +24,9 @@ const useCurrentUserProfile = () => {
 };
 
 function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { data } = useCurrentUserProfile();
   return (
     <div>
-      <HeaderTabs user={data} />
+      <HeaderTabs />
       {children}
     </div>
   );
