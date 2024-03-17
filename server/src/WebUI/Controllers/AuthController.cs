@@ -59,11 +59,7 @@ namespace WebUI.Controllers
                 Password = loginRequest.Password
             };
 
-            var result = await _sender.Send(query);
-
-            var response = new LoginResponse() { Token = result.Token };
-
-            return Ok(response);
+            return Ok(await _sender.Send(query));
         }
 
         [HttpGet("email-confirmation", Name = "EmailConfirmation")]
