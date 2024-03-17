@@ -5,6 +5,7 @@ import { Button, Divider, Text, TextInput, Title } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const useLogin = () => {
   const router = useRouter();
@@ -34,6 +35,13 @@ const useLogin = () => {
 
 function LoginPage() {
   const { mutate, isPending } = useLogin();
+  const handleLogin = async () => {
+    await signIn("credentials", {
+      username: "Jermey78@yahoo.com",
+      password: "Pa$$w0rd",
+      callbackUrl: "/portal",
+    });
+  };
   return (
     <>
       <Title ta="center" order={3}>
@@ -50,7 +58,7 @@ function LoginPage() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          mutate();
+          handleLogin();
         }}
       >
         <TextInput my="sm" label="Email" disabled={isPending} />
