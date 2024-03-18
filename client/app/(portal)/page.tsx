@@ -2,7 +2,7 @@ import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
 
 async function PortalPage() {
-  const authSession = await getServerAuthSession(); //(1)
+  const authSession = await getServerAuthSession();
 
   return (
     <div>
