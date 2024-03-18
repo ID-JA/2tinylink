@@ -45,12 +45,12 @@ export function HeaderTabs() {
 }
 
 const UserDropDown = () => {
-  const { data: user } = useCurrentUserProfile();
-  const [userMenuOpened, setUserMenuOpened] = useState(false);
+  // const { data: user } = useCurrentUserProfile();
+  // const [userMenuOpened, setUserMenuOpened] = useState(false);
 
   return (
     <>
-      {user && user?.userName ? (
+      {/* {user && user?.userName ? (
         <Menu
           width={260}
           position="bottom-end"
@@ -120,7 +120,8 @@ const UserDropDown = () => {
         </Menu>
       ) : (
         <Skeleton height={40} width={150} />
-      )}
+      )} */}
+      <Skeleton height={40} width={150} />
     </>
   );
 };

@@ -14,15 +14,6 @@ async function authenticate({
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userNameOrEmail, password }),
   });
-  const data = (await response.json()) as { token: string };
-
-  if (data?.token) {
-    return {
-      name: "Jamal Id AIssa",
-      email: "jamal@idaissa.io",
-      id: "0",
-      token: data.token,
-    };
-  }
-  return null;
+  const data = await response.json();
+  return data?.token ? data : null;
 }

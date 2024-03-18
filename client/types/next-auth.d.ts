@@ -3,21 +3,22 @@ import { JWT } from "next-auth/jwt";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    user: {
-      id: string;
-    } & DefaultSession["user"];
+    user: User;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     userId: string;
+    user: User;
   }
 }
-// /src/types/user.ts
 
 export type User = {
   id?: string | null;
-  name?: string | null;
+  token?: string | null;
   email?: string | null;
+  userName?: string | null;
+  emailConfirmed?: boolean | null;
+  createdAt?: string | null;
 };

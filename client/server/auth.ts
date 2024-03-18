@@ -7,20 +7,17 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt", //(1)
   },
   callbacks: {
-    async jwt({ token, account }) {
-      if (account && account.type === "credentials") {
-        //(2)
-        token.userId = account.providerAccountId; // this is Id that coming from authorize() callback
-      }
+    async jwt({ token, user }) {
+      if (user) token.user = user;
       return token;
     },
     async session({ session, token }) {
-      session.user.id = token.userId; //(3)
+      session.user = token.user;
       return session;
     },
   },
   pages: {
-    signIn: "/login", //(4) custom signin page path
+    signIn: "/login",
   },
   providers: [
     Credentials({
@@ -29,22 +26,19 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text", placeholder: "username" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        console.log("🚀 ~ authorize ~ credentials:", credentials);
+      async authorize(credentials) {
         const { username, password } = credentials as {
           username: string;
           password: string;
         };
-        // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
-
-        return userService.authenticate({
+        const userInfo = await userService.authenticate({
           userNameOrEmail: username,
           password,
-        }); //(5)
-        // return user;
+        });
+        return userInfo;
       },
     }),
   ],
 };
 
-export const getServerAuthSession = () => getServerSession(authOptions); //(6)
+export const getServerAuthSession = () => getServerSession(authOptions);
