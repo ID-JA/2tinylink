@@ -1,16 +1,47 @@
+"use client";
 import { GoogleButton } from "@/components/GoogleButton";
-import {
-  Button,
-  Checkbox,
-  Divider,
-  Text,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { axios } from "@/utils";
+import { Button, Divider, Text, TextInput, Title } from "@mantine/core";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
+
+const useLogin = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const mutation = useMutation({
+    mutationKey: ["login"],
+    mutationFn: async () => {
+      const response = await axios.post("/auth/login", {
+        userNameOrEmail: "Jermey78@yahoo.com",
+        password: "Pa$$w0rd",
+      });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      localStorage.setItem("token", data?.token);
+      if (searchParams.get("redirect")) {
+        router.push(searchParams.get("redirect") as string);
+      } else {
+        router.push("/portal");
+      }
+    },
+  });
+
+  return mutation;
+};
 
 function LoginPage() {
+  const { mutate, isPending } = useLogin();
+  const handleLogin = async () => {
+    await signIn("credentials", {
+      username: "Jermey78@yahoo.com",
+      password: "Pa$$w0rd",
+      callbackUrl: "/portal",
+    });
+  };
   return (
     <>
       <Title ta="center" order={3}>
@@ -24,13 +55,18 @@ function LoginPage() {
       </GoogleButton>
       <Divider label="OR" color="gray.5" my="sm" />
 
-      <form>
-        <TextInput my="sm" label="Email" />
-        <TextInput mb="sm" label="Password" />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleLogin();
+        }}
+      >
+        <TextInput my="sm" label="Email" disabled={isPending} />
+        <TextInput mb="sm" label="Password" disabled={isPending} />
         <Text href="/register" size="sm" c="gray" component={Link}>
           Forgot your password ?
         </Text>{" "}
-        <Button fullWidth mt="lg">
+        <Button fullWidth mt="lg" type="submit" loading={isPending}>
           Log in
         </Button>
       </form>

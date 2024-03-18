@@ -1,7 +1,6 @@
 import { GoogleButton } from "@/components/GoogleButton";
 import { Title, TextInput, Button, Text, Divider, Group } from "@mantine/core";
 import Link from "next/link";
-import React from "react";
 
 function RegisterPage() {
   return (
