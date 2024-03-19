@@ -16,7 +16,12 @@ export default async function middleware(req: NextRequest, _: NextFetchEvent) {
     req,
   });
 
-  if (!session?.email && path !== "/login") {
+  if (
+    !session?.email &&
+    path !== "/login" &&
+    path !== "/register" &&
+    path !== "/"
+  ) {
     return NextResponse.redirect(
       new URL(
         `/login${path === "/" ? "" : `?next=${encodeURIComponent(fullPath)}`}`,
@@ -25,7 +30,7 @@ export default async function middleware(req: NextRequest, _: NextFetchEvent) {
     );
   } else if (session?.email) {
     if (path === "/login" || path === "/register") {
-      return NextResponse.redirect(new URL("/portal", req.url));
+      return NextResponse.redirect(new URL("/projects", req.url));
     }
   }
   return NextResponse.rewrite(

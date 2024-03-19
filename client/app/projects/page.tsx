@@ -1,7 +1,7 @@
 import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
 
-async function PortalPage() {
+async function ProjectsPage() {
   const authSession = await getServerAuthSession();
 
   return (
@@ -22,4 +22,4 @@ async function PortalPage() {
   );
 }
 
-export default PortalPage;
+export default ProjectsPage;

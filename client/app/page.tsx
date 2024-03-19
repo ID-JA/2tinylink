@@ -24,7 +24,7 @@ function HomePage() {
             2tinyLink
           </Text>
           <Flex gap="md">
-            <Button component={Link} href="/register" variant="outline">
+            <Button component={Link} href="/login" variant="outline">
               Login
             </Button>
             <Button component={Link} href="/register">

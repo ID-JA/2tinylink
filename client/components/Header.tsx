@@ -22,7 +22,7 @@ import {
   IconChevronDown,
 } from "@tabler/icons-react";
 import classes from "./Header.module.css";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useCurrentUserProfile } from "@/app/(portal)/layout";
 
 export function HeaderTabs() {
@@ -128,6 +128,7 @@ const UserDropDown = () => {
 
 const NavTabs = () => {
   const { slug } = useParams() as { slug?: string };
+  const pathname = usePathname();
 
   const tabs = [
     { name: "Links", href: `/${slug}` },
@@ -145,7 +146,7 @@ const NavTabs = () => {
     );
   });
 
-  if (slug === "portal") return null;
+  if (pathname === "/projects") return null;
 
   return (
     <Tabs
