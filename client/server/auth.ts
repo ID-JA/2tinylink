@@ -31,11 +31,15 @@ export const authOptions: NextAuthOptions = {
           username: string;
           password: string;
         };
-        const userInfo = await userService.authenticate({
-          userNameOrEmail: username,
-          password,
-        });
-        return userInfo;
+        try {
+          const userInfo = await userService.authenticate({
+            userNameOrEmail: username,
+            password,
+          });
+          return userInfo;
+        } catch (error) {
+          console.log("🚀 ~ authorize ~ error:", error);
+        }
       },
     }),
   ],
