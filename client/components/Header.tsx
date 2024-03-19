@@ -1,29 +1,9 @@
 "use client";
-import cx from "clsx";
-import { useState } from "react";
 import Link from "next/link";
-import {
-  Container,
-  Avatar,
-  UnstyledButton,
-  Group,
-  Text,
-  Menu,
-  Tabs,
-  Burger,
-  rem,
-  Skeleton,
-} from "@mantine/core";
+import { Container, Group, Tabs, Burger, Skeleton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  IconLogout,
-  IconSettings,
-  IconSwitchHorizontal,
-  IconChevronDown,
-} from "@tabler/icons-react";
 import classes from "./Header.module.css";
 import { useParams, usePathname } from "next/navigation";
-import { useCurrentUserProfile } from "@/app/(portal)/layout";
 
 export function HeaderTabs() {
   const [opened, { toggle }] = useDisclosure(false);
