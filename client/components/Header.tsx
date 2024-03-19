@@ -1,32 +1,33 @@
 "use client";
-import cx from "clsx";
-import { useState } from "react";
 import Link from "next/link";
+import cx from "clsx";
 import {
   Container,
-  Avatar,
-  UnstyledButton,
   Group,
-  Text,
-  Menu,
   Tabs,
   Burger,
-  rem,
   Skeleton,
+  rem,
+  Menu,
+  Avatar,
+  Text,
+  UnstyledButton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import classes from "./Header.module.css";
+import { useParams, usePathname } from "next/navigation";
+import { signIn, signOut, useSession } from "next-auth/react";
 import {
+  IconChevronDown,
   IconLogout,
   IconSettings,
   IconSwitchHorizontal,
-  IconChevronDown,
 } from "@tabler/icons-react";
-import classes from "./Header.module.css";
-import { useParams } from "next/navigation";
-import { useCurrentUserProfile } from "@/app/(portal)/layout";
+import { useState } from "react";
 
 export function HeaderTabs() {
   const [opened, { toggle }] = useDisclosure(false);
+  const { data: session } = useSession();
 
   return (
     <div className={classes.header}>
@@ -45,12 +46,12 @@ export function HeaderTabs() {
 }
 
 const UserDropDown = () => {
-  // const { data: user } = useCurrentUserProfile();
-  // const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <>
-      {/* {user && user?.userName ? (
+      {session && session?.user.userName ? (
         <Menu
           width={260}
           position="bottom-end"
@@ -70,12 +71,12 @@ const UserDropDown = () => {
                   src={
                     "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png"
                   }
-                  alt={user.userName}
+                  alt={session.user.userName}
                   radius="xl"
                   size={20}
                 />
                 <Text fw={500} size="sm" lh={1} mr={3}>
-                  {user.userName}
+                  {session.user.userName}
                 </Text>
                 <IconChevronDown
                   style={{ width: rem(12), height: rem(12) }}
@@ -107,6 +108,7 @@ const UserDropDown = () => {
               Change account
             </Menu.Item>
             <Menu.Item
+              onClick={() => signOut()}
               leftSection={
                 <IconLogout
                   style={{ width: rem(16), height: rem(16) }}
@@ -120,14 +122,14 @@ const UserDropDown = () => {
         </Menu>
       ) : (
         <Skeleton height={40} width={150} />
-      )} */}
-      <Skeleton height={40} width={150} />
+      )}
     </>
   );
 };
 
 const NavTabs = () => {
   const { slug } = useParams() as { slug?: string };
+  const pathname = usePathname();
 
   const tabs = [
     { name: "Links", href: `/${slug}` },
@@ -145,7 +147,7 @@ const NavTabs = () => {
     );
   });
 
-  if (slug === "portal") return null;
+  if (pathname === "/projects") return null;
 
   return (
     <Tabs

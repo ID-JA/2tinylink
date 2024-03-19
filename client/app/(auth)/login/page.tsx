@@ -1,45 +1,15 @@
 "use client";
 import { GoogleButton } from "@/components/GoogleButton";
-import { axios } from "@/utils";
 import { Button, Divider, Text, TextInput, Title } from "@mantine/core";
-import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-const useLogin = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const mutation = useMutation({
-    mutationKey: ["login"],
-    mutationFn: async () => {
-      const response = await axios.post("/auth/login", {
-        userNameOrEmail: "Jermey78@yahoo.com",
-        password: "Pa$$w0rd",
-      });
-      return response.data;
-    },
-    onSuccess: (data) => {
-      localStorage.setItem("token", data?.token);
-      if (searchParams.get("redirect")) {
-        router.push(searchParams.get("redirect") as string);
-      } else {
-        router.push("/portal");
-      }
-    },
-  });
-
-  return mutation;
-};
-
 function LoginPage() {
-  const { mutate, isPending } = useLogin();
   const handleLogin = async () => {
     await signIn("credentials", {
       username: "Jermey78@yahoo.com",
       password: "Pa$$w0rd",
-      callbackUrl: "/portal",
+      callbackUrl: "/projects",
     });
   };
   return (
@@ -61,12 +31,12 @@ function LoginPage() {
           handleLogin();
         }}
       >
-        <TextInput my="sm" label="Email" disabled={isPending} />
-        <TextInput mb="sm" label="Password" disabled={isPending} />
+        <TextInput my="sm" label="Email" />
+        <TextInput mb="sm" label="Password" />
         <Text href="/register" size="sm" c="gray" component={Link}>
           Forgot your password ?
         </Text>{" "}
-        <Button fullWidth mt="lg" type="submit" loading={isPending}>
+        <Button fullWidth mt="lg" type="submit">
           Log in
         </Button>
       </form>
