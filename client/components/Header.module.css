@@ -6,7 +6,6 @@
   );
   border-bottom: rem(1px) solid
     light-dark(var(--mantine-color-gray-2), transparent);
-  margin-bottom: rem(120px);
 }
 
 .mainSection {

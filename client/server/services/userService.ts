@@ -14,9 +14,6 @@ async function authenticate({
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userNameOrEmail, password }),
   });
-  console.log({
-    response,
-  });
   const data = await response.json();
   return data?.token ? data : null;
 }
