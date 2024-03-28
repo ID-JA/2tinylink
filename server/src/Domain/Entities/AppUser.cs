@@ -11,6 +11,6 @@ namespace Domain.Entities
         public DateTime LastModified { get; set; } = DateTime.Now;
         public bool IsActive { get; set; } = true;
         public ICollection<TinyLink> TinyLinks { get; set; }
-
+        public ICollection<Project> Projects { get; set; }
     }
 }

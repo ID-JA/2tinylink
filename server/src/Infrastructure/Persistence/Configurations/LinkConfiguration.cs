@@ -8,22 +8,22 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<TinyLink> builder)
         {
-            builder.ToTable("TINY_LINKS");
+            builder.ToTable("Links");
 
             builder.Property(x => x.Address)
-            .IsRequired();
+                .IsRequired();
 
             builder.Property(x => x.Url)
-            .IsRequired();
+                .IsRequired();
 
             builder.Property(x => x.LockHash)
-            .IsRequired(false);
+                .IsRequired(false);
 
             builder.Property(x => x.LockSalt)
-            .IsRequired(false);
+                .IsRequired(false);
 
             builder.Property(x => x.ExpiredAt)
-            .IsRequired(false);
+                .IsRequired(false);
 
         }
     }
