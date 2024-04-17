@@ -10,11 +10,11 @@ namespace WebUI.Controllers
 {
     [Route("api/standard/tiny-links")]
     [AllowAnonymous]
-    public class StandardTinyLinksController : ApiController
+    public class StandardLinksController : ApiController
     {
         private readonly ISender _sender;
 
-        public StandardTinyLinksController(ISender sender)
+        public StandardLinksController(ISender sender)
         {
            _sender = sender;    
         }

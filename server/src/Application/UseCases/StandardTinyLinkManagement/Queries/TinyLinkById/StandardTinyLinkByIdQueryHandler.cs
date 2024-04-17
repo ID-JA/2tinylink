@@ -19,7 +19,7 @@ namespace Application.UseCases.StandardTinyLinkManagement.Queries.TinyLinkById
         public async Task<StandardTinyLinkByIdQueryResult> Handle(StandardTinyLinkByIdQuery query, CancellationToken cancellationToken)
         {
             var userId = _currentUser.GetUserId();
-            var link = await _dbContext.TinyLinks.AsNoTracking()
+            var link = await _dbContext.Links.AsNoTracking()
                                        .Where(x => query.Id == x.Id && x.IsActive && x.AppUserId.ToString() == _currentUser.GetUserId())
                                        .Select(x => new
                                        {

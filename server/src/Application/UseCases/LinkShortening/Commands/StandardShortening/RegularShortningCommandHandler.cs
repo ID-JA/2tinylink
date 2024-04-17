@@ -22,15 +22,15 @@ namespace Application.UseCases.LinkShortening.Commands.StandardShortening
             {
                 generatedUniqueId = _uniqueIdProvider.GetUniqueString();
             }
-            while(_dbContext.TinyLinks.Any(x => x.Address == generatedUniqueId));
+            while(_dbContext.Links.Any(x => x.Address == generatedUniqueId));
 
-            var tinyLink = new TinyLink
+            var tinyLink = new Link
             {
                 Address = generatedUniqueId,
                 Url  = command.Url
             };
 
-            _dbContext.TinyLinks.Add(tinyLink);
+            _dbContext.Links.Add(tinyLink);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return new() { Id = tinyLink.Id, Address = tinyLink.Address , Url = tinyLink.Url };

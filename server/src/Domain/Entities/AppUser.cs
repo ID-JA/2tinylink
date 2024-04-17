@@ -10,7 +10,7 @@ namespace Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime LastModified { get; set; } = DateTime.Now;
         public bool IsActive { get; set; } = true;
-        public ICollection<TinyLink> TinyLinks { get; set; }
+        public ICollection<Link> Links { get; set; }
         public ICollection<Project> Projects { get; set; }
     }
 }

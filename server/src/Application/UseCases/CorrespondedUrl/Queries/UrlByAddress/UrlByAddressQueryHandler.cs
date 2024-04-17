@@ -15,7 +15,7 @@ namespace Application.UseCases.CorrespondedUrl.Queries.UrlByAddress
         }
         public async Task<UrlByAddressQueryResult> Handle(UrlByAddressQuery query, CancellationToken cancellationToken)
         {
-            var result = await _context.TinyLinks.AsNoTracking()
+            var result = await _context.Links.AsNoTracking()
                                                  .Where(x => x.IsActive && x.Address == query.Address)
                                                  .Select(x => new {
                                                     Url = x.Url

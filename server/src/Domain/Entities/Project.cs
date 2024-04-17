@@ -6,13 +6,11 @@ namespace Domain.Entities;
 public class Project : BaseEntity, IAggregateRoot
 {
     public string Name { get; private set; }
-
+    public string Description { get; set; }
+    public Guid AppUserId { get; private set; }
     public AppUser AppUser { get; private set; }
 
-    [Column("UserId")]
-    public Guid AppUserId { get; private set; }
-
-    public ICollection<TinyLink> links { get; private set; } = [];
+    public List<Link> Links { get; private set; } = [];
 
     public static Project Create(string name, AppUser appUser)
     {
