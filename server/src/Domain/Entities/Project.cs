@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Entities.Common;
 
 namespace Domain.Entities;
 
-public class Project : BaseEntity
+public class Project : BaseEntity, IAggregateRoot
 {
     public string Name { get; private set; }
 
@@ -19,4 +14,16 @@ public class Project : BaseEntity
 
     public ICollection<TinyLink> links { get; private set; } = [];
 
+    public static Project Create(string name, AppUser appUser)
+    {
+        return new Project
+        {
+            Id = Guid.NewGuid(),
+            Name = name,
+            AppUserId = appUser.Id,
+            CreatedAt = DateTime.Now,
+            LastModified = DateTime.Now,
+            IsActive = true
+        };
+    }
 }
