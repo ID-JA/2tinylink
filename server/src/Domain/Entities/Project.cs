@@ -12,13 +12,14 @@ public class Project : BaseEntity, IAggregateRoot
 
     public List<Link> Links { get; private set; } = [];
 
-    public static Project Create(string name, AppUser appUser)
+    public static Project Create(string name, string description, Guid userId)
     {
         return new Project
         {
             Id = Guid.NewGuid(),
             Name = name,
-            AppUserId = appUser.Id,
+            Description = description,
+            AppUserId = userId,
             CreatedAt = DateTime.Now,
             LastModified = DateTime.Now,
             IsActive = true
