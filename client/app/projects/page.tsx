@@ -1,7 +1,7 @@
 import ProjectsList from "@/components/projects/projects-list";
 import { Box, Button, Container, Group, Title } from "@mantine/core";
 
-async function ProjectsPage() {
+function ProjectsPage() {
   return (
     <>
       <Box

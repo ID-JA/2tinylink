@@ -10,11 +10,11 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@mantine/core": "^7.6.2",
-    "@mantine/hooks": "^7.6.2",
-    "@tabler/icons-react": "^3.1.0",
-    "@tanstack/react-query": "^5.28.4",
-    "@tanstack/react-query-devtools": "^5.28.4",
+    "@mantine/core": "^7.8.0",
+    "@mantine/hooks": "^7.8.0",
+    "@tabler/icons-react": "^3.2.0",
+    "@tanstack/react-query": "^5.29.2",
+    "@tanstack/react-query-devtools": "^5.29.2",
     "axios": "^1.6.8",
     "clsx": "^2.1.0",
     "next": "14.1.3",
@@ -23,15 +23,15 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.27.7",
+    "@tanstack/eslint-plugin-query": "^5.28.11",
     "@types/node": "20.11.28",
     "@types/react": "18.2.66",
     "@types/react-dom": "18.2.22",
-    "autoprefixer": "^10.4.18",
+    "autoprefixer": "^10.4.19",
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.3",
-    "postcss": "^8.4.35",
-    "postcss-preset-mantine": "^1.13.0",
+    "postcss": "^8.4.38",
+    "postcss-preset-mantine": "^1.14.4",
     "postcss-simple-vars": "^7.0.1",
     "typescript": "5.4.2"
   }
