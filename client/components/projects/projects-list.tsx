@@ -1,23 +1,25 @@
 "use client";
 
-import { SimpleGrid } from "@mantine/core";
 import ProjectCard from "./project-card";
 import useProjects from "@/lib/services/use-projects";
+import ProjectPlaceholder from "./project-placeholder";
 
 function ProjectsList() {
-  const { projects } = useProjects();
-  return (
-    <SimpleGrid
-      cols={{ base: 1, sm: 2, lg: 3 }}
-      spacing={{ base: 10, sm: "xl" }}
-      verticalSpacing={{ base: "md", sm: "xl" }}
-      my="xl"
-    >
-      {projects?.map((project) => (
-        <ProjectCard key={project.id} {...project} />
-      ))}
-    </SimpleGrid>
-  );
+  const { projects, loading } = useProjects();
+
+  if (loading) {
+    return Array.from({ length: 10 }).map((_, i) => (
+      <ProjectPlaceholder key={i} />
+    ));
+  }
+
+  if (projects?.length === 0) {
+    return <div>No projects found</div>;
+  }
+
+  return projects?.map((project) => (
+    <ProjectCard key={project.id} {...project} />
+  ));
 }
 
 export default ProjectsList;

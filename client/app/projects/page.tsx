@@ -1,5 +1,12 @@
 import ProjectsList from "@/components/projects/projects-list";
-import { Box, Button, Container, Group, Title } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Container,
+  Group,
+  SimpleGrid,
+  Title,
+} from "@mantine/core";
 
 function ProjectsPage() {
   return (
@@ -20,7 +27,14 @@ function ProjectsPage() {
         </Container>
       </Box>
       <Container size="xl">
-        <ProjectsList />
+        <SimpleGrid
+          cols={{ base: 1, sm: 2, lg: 3 }}
+          spacing={{ base: 10, sm: "xl" }}
+          verticalSpacing={{ base: "md", sm: "xl" }}
+          my="xl"
+        >
+          <ProjectsList />
+        </SimpleGrid>
       </Container>
     </>
   );
