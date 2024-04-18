@@ -1,3 +1,4 @@
+using Application.Common.Interfaces;
 using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Services;
 using Domain.Entities;
@@ -5,17 +6,13 @@ using MediatR;
 
 namespace Application.UseCases.LinkShortening.Commands.StandardShortening
 {
-    public class RegularShorteningCommandHandler : IRequestHandler<StandardShorteningCommand, StandardShorteningResult>
+    public class RegularShorteningCommandHandler(IAppDbContext _dbContext, IUniqueIdProvider _uniqueIdProvider, ICurrentUser _currentUser) : IRequestHandler<StandardShorteningCommand, StandardShorteningResult>
     {
-        private readonly IAppDbContext _dbContext;
-        private readonly IUniqueIdProvider _uniqueIdProvider;
-        public RegularShorteningCommandHandler(IAppDbContext dbContext, IUniqueIdProvider uniqueIdProvider)
-        {
-            _uniqueIdProvider = uniqueIdProvider;
-            _dbContext = dbContext;
-        }
+       
         public async Task<StandardShorteningResult> Handle(StandardShorteningCommand command, CancellationToken cancellationToken)
         {
+            var userId = Guid.Parse(_currentUser.GetUserId());
+
             string generatedUniqueId;
 
             do
@@ -24,16 +21,12 @@ namespace Application.UseCases.LinkShortening.Commands.StandardShortening
             }
             while(_dbContext.Links.Any(x => x.Address == generatedUniqueId));
 
-            var tinyLink = new Link
-            {
-                Address = generatedUniqueId,
-                Url  = command.Url
-            };
+            var tinyLink = Link.Create(generatedUniqueId, command.Url, DateTime.Now.AddDays(7), userId, command.ProjectId);
 
             _dbContext.Links.Add(tinyLink);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new() { Id = tinyLink.Id, Address = tinyLink.Address , Url = tinyLink.Url };
+            return new() { Id = tinyLink.Id, Address = tinyLink.Address , Url = tinyLink.Url,ProjectId = tinyLink.ProjectId };
         }
     }
 }

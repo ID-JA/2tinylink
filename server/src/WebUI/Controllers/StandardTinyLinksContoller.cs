@@ -9,7 +9,7 @@ using WebUI.Contracts.StandardTinyLinkManagement.TinyLinkById;
 namespace WebUI.Controllers
 {
     [Route("api/standard/tiny-links")]
-    [AllowAnonymous]
+    [Authorize]
     public class StandardLinksController : ApiController
     {
         private readonly ISender _sender;
@@ -36,16 +36,10 @@ namespace WebUI.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<StandardShorteningResponse>> CreateStandardTinyLink([FromBody] StandardShorteningRequest request)
+        public async Task<ActionResult<StandardShorteningResponse>> CreateStandardTinyLink([FromBody] StandardShorteningCommand request)
         {
-            var command = new StandardShorteningCommand { Url = request.Url };
-            
-            var result = await _sender.Send(command);
-
-            var response = new StandardShorteningResponse { Id = result.Id, Address = result.Address ,Url = result.Url };
-
-            return CreatedAtAction(nameof(GetStandardTinyLinkById), new { Id = response.Id }, response );
-
+            var result = await _sender.Send(request);
+            return CreatedAtAction(nameof(GetStandardTinyLinkById), new { result.Id }, result);
         }
 
 
