@@ -4,10 +4,6 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
   },
-  env: {
-    NEXT_PUBLIC_SERVER_API_URL: "http://api-2tinylink.runasp.net/api",
-    NEXT_PUBLIC_SERVER_API_URL_DEV: "https://localhost:7054/api",
-  },
   images: {
     remotePatterns: [
       {
