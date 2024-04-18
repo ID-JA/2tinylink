@@ -1,12 +1,18 @@
 import { axios } from "@/utils";
 import { useQuery } from "@tanstack/react-query";
 
+export type ProjectProps = {
+  id: string;
+  name: string;
+  description: string;
+};
+
 export default function useProjects() {
   const {
     data: projects,
     error,
     isLoading,
-  } = useQuery({
+  } = useQuery<ProjectProps[]>({
     queryKey: ["projects"],
     queryFn: async () => {
       const response = await axios().get("/projects");
@@ -17,6 +23,6 @@ export default function useProjects() {
   return {
     projects,
     error,
-    loading: !isLoading && !error && !projects,
+    loading: isLoading,
   };
 }
