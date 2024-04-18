@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 function LoginPage() {
   const handleLogin = async () => {
     await signIn("credentials", {
-      username: "Jermey78@yahoo.com",
+      username: "user.demo@2tinylink.com",
       password: "Pa$$w0rd",
       callbackUrl: "/projects",
     });

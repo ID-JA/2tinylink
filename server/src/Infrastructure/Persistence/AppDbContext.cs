@@ -7,13 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
 {
-    public class AppDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IAppDbContext
+    public class AppDbContext(DbContextOptions<AppDbContext> options)
+        : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>(options), IAppDbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-
-        }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -25,7 +21,8 @@ namespace Infrastructure.Persistence
             return await base.SaveChangesAsync(cancellationToken);
         }
 
-        public DbSet<TinyLink> TinyLinks { get; set; }
-        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Link> Links => Set<Link>();
+        public DbSet<AppUser> AppUsers => Set<AppUser>();
+        public DbSet<Project> Projects => Set<Project>();
     }
 }
