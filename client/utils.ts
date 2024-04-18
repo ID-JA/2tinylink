@@ -1,14 +1,14 @@
 import ax from "axios";
 import { getSession } from "next-auth/react";
 
-const baseURL = "https://localhost:7054/api";
 // export const version = "v1";
-// export const baseURL =
-//   process.env.NODE_ENV === "production"
-//     ? "https://localhost:7112/api" //'http://lockas-001-site1.dtempurl.com/api'
-//     : "https://localhost:7112/api";
+export const baseURL =
+  process.env.NODE_ENV === "production"
+    ? process.env.NEXT_PUBLIC_SERVER_API_URL_PROD
+    : process.env.NEXT_PUBLIC_SERVER_API_URL_DEV;
 
 export const axios = () => {
+  console.log(process.env.customKey);
   const defaultOptions = {
     baseURL,
   };

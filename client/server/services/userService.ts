@@ -1,3 +1,5 @@
+import { baseURL } from "@/utils";
+
 export const userService = {
   authenticate,
 };
@@ -9,7 +11,7 @@ async function authenticate({
   userNameOrEmail: string;
   password: string;
 }) {
-  const response = await fetch("http://localhost:5132/api/auth/login", {
+  const response = await fetch(`${baseURL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userNameOrEmail, password }),
