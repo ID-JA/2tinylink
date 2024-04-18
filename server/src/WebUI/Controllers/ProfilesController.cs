@@ -18,24 +18,6 @@ namespace WebUI.Controllers
             _sender = sender;
         }
 
-        [HttpGet("{userName}", Name = "GetUserProfileByUserName")]
-        public async Task<ActionResult<UserByUserNameResponse>> GetUserProfileByUserName([FromRoute] UserByUserNameResponse request)
-        {
-            var query = new UserByUserNameQuery { UserName = request.UserName };
-
-            var result = await _sender.Send(query);
-
-            var response = new UserByUserNameResponse()
-            {
-                FirstName = result.FirstName,
-                LastName = result.LastName,
-                UserName = result.UserName,
-                CreatedAt = result.CreatedAt
-            };
-
-            return Ok(response);
-        }
-
         [HttpGet("me", Name = "GetCurrentUser")]
         [Authorize]
         public async Task<ActionResult<UserByUserNameResponse>> GetCurrentUser()
