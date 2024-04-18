@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation";
 
 import { axios } from "@/utils";
 import { Button, Modal, TextInput, Title } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 
 function CreateProjectModal() {
   const [opened, { open, close }] = useDisclosure(false);
+  const isMobile = useMediaQuery("(max-width: 50em)");
+
   const router = useRouter();
 
   const [data, setData] = useState<{
@@ -41,8 +43,10 @@ function CreateProjectModal() {
         radius="md"
         opened={opened}
         onClose={close}
-        withCloseButton={false}
+        withCloseButton={isMobile}
         centered
+        fullScreen={isMobile}
+        transitionProps={{ transition: "fade", duration: 200 }}
         overlayProps={{
           backgroundOpacity: 0.55,
           blur: 3,

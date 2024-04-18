@@ -1,13 +1,6 @@
 import CreateProjectModal from "@/components/projects/create-project-modal";
 import ProjectsList from "@/components/projects/projects-list";
-import {
-  Box,
-  Button,
-  Container,
-  Group,
-  SimpleGrid,
-  Title,
-} from "@mantine/core";
+import { Box, Container, Group, SimpleGrid, Title } from "@mantine/core";
 
 function ProjectsPage() {
   return (
