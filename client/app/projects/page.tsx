@@ -1,3 +1,4 @@
+import CreateProjectModal from "@/components/projects/create-project-modal";
 import ProjectsList from "@/components/projects/projects-list";
 import {
   Box,
@@ -22,7 +23,7 @@ function ProjectsPage() {
         <Container w="100%">
           <Group justify="space-between" w="100%">
             <Title>My Projects</Title>
-            <Button>Create Project</Button>
+            <CreateProjectModal />
           </Group>
         </Container>
       </Box>
