@@ -16,7 +16,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./Header.module.css";
 import { useParams, usePathname } from "next/navigation";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import {
   IconChevronDown,
   IconLogout,
@@ -27,18 +27,15 @@ import { useState } from "react";
 
 export function HeaderTabs() {
   const [opened, { toggle }] = useDisclosure(false);
-  const { data: session } = useSession();
 
   return (
     <div className={classes.header}>
-      <Container className={classes.mainSection} size="md">
-        <Group justify="space-between">
+      <Container size="xl">
+        <Group pb="md" justify="space-between">
           <span>2tinyLink</span>
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
           <UserDropDown />
         </Group>
-      </Container>
-      <Container size="md">
         <NavTabs />
       </Container>
     </div>

@@ -20,7 +20,7 @@ function ProjectsPage() {
           borderBottom: "1px solid rgb(229, 231, 235)",
         }}
       >
-        <Container w="100%">
+        <Container size="xl" w="100%">
           <Group justify="space-between" w="100%">
             <Title>My Projects</Title>
             <CreateProjectModal />
