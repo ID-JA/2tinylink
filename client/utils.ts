@@ -8,7 +8,7 @@ export const baseURL =
     : process.env.NEXT_PUBLIC_SERVER_API_URL_DEV;
 
 export const axios = () => {
-  console.log(process.env.customKey);
+  console.log("BASEURL", baseURL);
   const defaultOptions = {
     baseURL,
   };

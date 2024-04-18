@@ -11,6 +11,7 @@ async function authenticate({
   userNameOrEmail: string;
   password: string;
 }) {
+  console.log("BASEURL - BASEURL", baseURL);
   const response = await fetch(`${baseURL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
