@@ -1,26 +1,27 @@
-import { getServerAuthSession } from "@/server/auth";
-import Link from "next/link";
+import CreateLinkModal from "@/components/links/create-link-modal";
+import { Box, Container, Group, Title } from "@mantine/core";
 import React from "react";
 
-async function Page({ params }: { params: { slug: string } }) {
-  const authSession = await getServerAuthSession(); //(1)
-
+async function LinksPage() {
   return (
     <div>
-      <pre>{JSON.stringify(authSession, null, 2)}</pre>
-      {authSession?.user && (
-        <pre>{JSON.stringify(authSession?.user, null, 2)}</pre>
-      )}{" "}
-      {!authSession?.user && ( //(3)
-        <Link
-          className="font-medium mt-2 text-blue-600 hover:underline"
-          href="/login"
-        >
-          Login
-        </Link>
-      )}
+      <Box
+        h="140px"
+        display="flex"
+        style={{
+          alignItems: "center",
+          borderBottom: "1px solid rgb(229, 231, 235)",
+        }}
+      >
+        <Container size="xl" w="100%">
+          <Group justify="space-between" w="100%">
+            <Title order={2}>Links</Title>
+            <CreateLinkModal />
+          </Group>
+        </Container>
+      </Box>
     </div>
   );
 }
 
-export default Page;
+export default LinksPage;
