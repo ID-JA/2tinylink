@@ -55,9 +55,7 @@ namespace WebUI.Extensions
             var configuration = builder.Configuration;
 
             builder.Services.AddControllers();
-            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(configuration.GetConnectionString("Default")));
-            builder.Services.AddScoped<IAppDbContext, AppDbContext>();
-
+            builder.Services.AddPersistence();
             // Add Options
             builder.Services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
 
@@ -126,7 +124,7 @@ namespace WebUI.Extensions
             {
                 using var scope = app.Services.CreateScope();
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                dbContext.Database.Migrate();
+                //dbContext.Database.Migrate();
             }
 
             app.UseHttpsRedirection();
