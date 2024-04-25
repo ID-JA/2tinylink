@@ -18,9 +18,9 @@ namespace Application.UseCases.CorrespondedUrl.Queries.UrlByAddress
             var result = await _context.Links.AsNoTracking()
                                                  .Where(x => x.IsActive && x.Address == query.Address)
                                                  .Select(x => new {
-                                                    Url = x.Url
+                                                     x.Url
                                                  })
-                                                 .SingleOrDefaultAsync(cancellationToken);
+                                                 .FirstOrDefaultAsync(cancellationToken);
             if(result is null)
             {
                 throw new AppException((int)HttpStatusCode.NotFound, $"Cannot find url with address : '{query.Address}'");
