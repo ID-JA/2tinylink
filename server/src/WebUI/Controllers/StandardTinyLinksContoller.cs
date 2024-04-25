@@ -1,4 +1,5 @@
 using Application.UseCases.LinkShortening.Commands.StandardShortening;
+using Application.UseCases.LinkShortening.Queries.GenerateRandomKey;
 using Application.UseCases.StandardTinyLinkManagement.Queries.TinyLinkById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,7 @@ using WebUI.Contracts.StandardTinyLinkManagement.TinyLinkById;
 
 namespace WebUI.Controllers
 {
-    [Route("api/standard/tiny-links")]
+    [Route("api/links")]
     [Authorize]
     public class StandardLinksController : ApiController
     {
@@ -34,7 +35,14 @@ namespace WebUI.Controllers
 
             return Ok(response);
         }
-        
+
+
+        [HttpGet("random")]
+        public async Task<ActionResult<string>> GenerateRandomKey()
+        {
+            return Ok(await _sender.Send(new GenerateRandomKeyRequest()));
+        }
+
         [HttpPost]
         public async Task<ActionResult<StandardShorteningResponse>> CreateStandardTinyLink([FromBody] StandardShorteningCommand request)
         {
