@@ -42,8 +42,6 @@ marketing campaigns, or any other purpose where tracking clicks is important.
 - back end:
   [ASP.NET Web API](https://dotnet.microsoft.com/en-us/apps/aspnet/apis)
 - front end: [Reactjs](https://reactjs.org/) + [Nextjs](https://www.nextjs.org/)
-- styling: [TalwindCss](https://tailwindcss.com/)
-- database: [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/)
 
 ## Contributors ✨
 
