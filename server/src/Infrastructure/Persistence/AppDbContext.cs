@@ -24,5 +24,6 @@ namespace Infrastructure.Persistence
         public DbSet<Link> Links => Set<Link>();
         public DbSet<AppUser> AppUsers => Set<AppUser>();
         public DbSet<Project> Projects => Set<Project>();
+        public DbSet<ProjectInvitation> ProjectInvitations => Set<ProjectInvitation>();
     }
 }
