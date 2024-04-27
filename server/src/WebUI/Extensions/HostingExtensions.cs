@@ -26,6 +26,7 @@ using Infrastructure.Options;
 using Application.Common.Interfaces;
 using Domain.Entities.Common;
 using Infrastructure.Repository;
+using Infrastructure.Mailing;
 
 namespace WebUI.Extensions
 {
@@ -97,6 +98,9 @@ namespace WebUI.Extensions
                 cfg.RegisterServicesFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
 
             });
+            
+            builder.Services.AddMailing();
+            builder.Services.AddScoped<IMailService, MailService>();
 
             builder.Services.AddScoped<IPipelineBehavior<StandardShorteningCommand, StandardShorteningResult>, StandardShorteningCommandValidationBehavior>();
             builder.Services.AddScoped<IPipelineBehavior<UrlByAddressQuery, UrlByAddressQueryResult>, UrlByAddressQueryValidationBehavior>();
