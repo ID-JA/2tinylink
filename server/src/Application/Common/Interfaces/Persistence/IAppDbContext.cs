@@ -9,7 +9,8 @@ namespace Application.Common.Interfaces.Persistence
         public DbSet<AppUser> AppUsers { get; }
         public DbSet<Project> Projects { get; }
         public DbSet<ProjectInvitation> ProjectInvitations { get; }
-        
+        public DbSet<ProjectUser> ProjectUsers { get; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
