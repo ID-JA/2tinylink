@@ -25,5 +25,6 @@ namespace Infrastructure.Persistence
         public DbSet<AppUser> AppUsers => Set<AppUser>();
         public DbSet<Project> Projects => Set<Project>();
         public DbSet<ProjectInvitation> ProjectInvitations => Set<ProjectInvitation>();
+        public DbSet<ProjectUser> ProjectUsers => Set<ProjectUser>();
     }
 }

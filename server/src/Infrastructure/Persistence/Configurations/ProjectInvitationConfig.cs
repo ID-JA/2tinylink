@@ -8,7 +8,7 @@ public class ProjectInvitationConfig : IEntityTypeConfiguration<ProjectInvitatio
 {
     public void Configure(EntityTypeBuilder<ProjectInvitation> builder)
     {
-        builder.HasNoKey()
+        builder
             .HasIndex(x => new { x.ProjectId, x.Email }).IsUnique();
     }
 }

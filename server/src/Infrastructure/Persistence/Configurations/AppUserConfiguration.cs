@@ -9,7 +9,11 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-           // builder.Property(x => x.Id)
+            builder.HasMany(x => x.Projects)
+                .WithMany(x => x.AppUsers)
+                .UsingEntity<ProjectUser>();
+           
+            // builder.Property(x => x.Id)
            // .HasColumnOrder(1);
 
            // builder.Property(x => x.UserName)
