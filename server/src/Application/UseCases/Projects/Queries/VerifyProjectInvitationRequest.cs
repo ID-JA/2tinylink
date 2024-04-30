@@ -20,25 +20,29 @@ public class VerifyProjectInvitationRequestHandler(
     {
 
         var userId = Guid.Parse(_currentUser.GetUserId());
-        //var project = await _dbContext.Projects
-        //    .Where(x => x.InviteCode == request.Code && x.AppUsers.Any(pu => pu.Id.Equals(userId)))
-        //    .FirstOrDefaultAsync(cancellationToken);
 
-        //var project = await _dbContext.Projects.Include(p => p.ProjectUsers).ThenInclude(pu => pu.AppUser)
-        //    .ToArrayAsync();
+        var project = await _dbContext.Projects
+            .Include(p => p.ProjectUsers)
+            .ThenInclude(pu => pu.AppUser)
+            .Where(x => x.InviteCode == request.Code)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync(cancellationToken);
 
-        //if (project.AppUsers.Count > 0)
-        //{
-        //    // redirect user to project because he's already a member in the project
-        //    return false;
-        //}
+        var userAlreadyInvited = project.ProjectUsers.Any(x => x.AppUser.Id.Equals(userId));
+        
+        if (userAlreadyInvited)
+        {
+            // todo: redirect user to project because he's already a member in the project
+            return false;
+        }
 
-        //var projectUser = new ProjectUser()
-        //{
-        //    AppUserId = userId,
-        //    ProjectId = project.Id,
-        //};
-        //await _repository.AddAsync(projectUser, cancellationToken);
+        // Add user to project as member
+        var projectUser = new ProjectUser()
+        {
+            AppUserId = userId,
+            ProjectId = project.Id,
+        };
+        await _repository.AddAsync(projectUser, cancellationToken);
 
         return true;
     }

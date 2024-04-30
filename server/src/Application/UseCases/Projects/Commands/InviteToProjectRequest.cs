@@ -28,7 +28,9 @@ public class InviteToProjectRequestHandler(
                 .Where(x => x.Id.Equals(request.ProjectId))
                 .Select(x => new { x.InviteCode, x.Name })
                 .FirstOrDefaultAsync(cancellationToken);
-            ;
+        
+        if (result is null) return "No project was found";
+
         foreach (var email in request.Emails)
         {
                 await _mailService.SendProjectInvitation(email,
