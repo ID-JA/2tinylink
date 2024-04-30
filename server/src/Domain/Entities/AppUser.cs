@@ -12,5 +12,7 @@ namespace Domain.Entities
         public bool IsActive { get; set; } = true;
         public ICollection<Link> Links { get; set; }
         public ICollection<Project> Projects { get; set; }
+        public List<ProjectUser> ProjectUsers { get; } = [];
+
     }
 }

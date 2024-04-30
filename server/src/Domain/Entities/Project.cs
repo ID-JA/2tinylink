@@ -11,6 +11,8 @@ public class Project : BaseEntity, IAggregateRoot
     public List<AppUser> AppUsers { get; } = [];
     public List<Link> Links { get;  } = [];
     public List<ProjectInvitation> Invitations { get; } = [];
+    public List<ProjectUser> ProjectUsers { get; } = [];
+
 
     public static Project Create(string name, string description, string inviteCode)
     {

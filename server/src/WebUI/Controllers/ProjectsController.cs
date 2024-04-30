@@ -34,4 +34,10 @@ public class ProjectsController(ISender _sender) : ControllerBase
             ProjectId = request.ProjectId
         });
     }
+
+    [HttpPost("invite/{code}")]
+    public async Task<bool> VerifyProjectInvitation([FromRoute] string code)
+    {
+        return await _sender.Send(new VerifyProjectInvitationRequest() { Code = code });
+    }
 }
