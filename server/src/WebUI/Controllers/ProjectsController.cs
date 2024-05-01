@@ -36,8 +36,10 @@ public class ProjectsController(ISender _sender) : ControllerBase
     }
 
     [HttpPost("invite/{code}")]
-    public async Task<bool> VerifyProjectInvitation([FromRoute] string code)
+    public async Task<IActionResult> VerifyProjectInvitation([FromRoute] string code)
     {
-        return await _sender.Send(new VerifyProjectInvitationRequest() { Code = code });
+        var result = await _sender.Send(new VerifyProjectInvitationRequest() { Code = code });
+        var messsage = result ? "You've joined the project successfully" : "You've already become a member for this project.";
+        return Ok(messsage);
     }
 }

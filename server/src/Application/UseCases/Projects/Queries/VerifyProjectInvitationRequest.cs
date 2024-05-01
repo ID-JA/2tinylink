@@ -1,4 +1,6 @@
-﻿using Application.Common.Interfaces;
+﻿using System.Net;
+using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Application.Common.Interfaces.Persistence;
 using Domain.Entities;
 using MediatR;
@@ -26,10 +28,10 @@ public class VerifyProjectInvitationRequestHandler(
             .ThenInclude(pu => pu.AppUser)
             .Where(x => x.InviteCode == request.Code)
             .AsSplitQuery()
-            .FirstOrDefaultAsync(cancellationToken);
-
-        var userAlreadyInvited = project.ProjectUsers.Any(x => x.AppUser.Id.Equals(userId));
+            .FirstOrDefaultAsync(cancellationToken) ?? throw new AppException((int)HttpStatusCode.NotFound, $"Project with this code '{request.Code}' dosen't exists, please verify again.");
         
+        var userAlreadyInvited = project.ProjectUsers.Any(x => x.AppUser.Id.Equals(userId));
+
         if (userAlreadyInvited)
         {
             // todo: redirect user to project because he's already a member in the project
