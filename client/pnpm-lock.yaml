@@ -41,8 +41,8 @@ dependencies:
 
 devDependencies:
   '@tanstack/eslint-plugin-query':
-    specifier: ^5.28.11
-    version: 5.28.11(eslint@8.57.0)(typescript@5.4.5)
+    specifier: ^5.32.1
+    version: 5.32.1(eslint@8.57.0)(typescript@5.4.5)
   '@types/node':
     specifier: 20.12.7
     version: 20.12.7
@@ -376,8 +376,8 @@ packages:
     resolution: {integrity: sha512-h8GQ2rtxgiSjltrVz4vcopAxTPSpUSUi5nBfJ09H3Bk4fJk6wZ/dVUjzhv/BHfDwGTkAxZBiYe/Q/T95cPeg5Q==}
     dev: false
 
-  /@tanstack/eslint-plugin-query@5.28.11(eslint@8.57.0)(typescript@5.4.5):
-    resolution: {integrity: sha512-bODGLeG4WCGmHVKCh3bH1KLfq7xdi1jsRjTESV6ifCw1mZ0m2fBMxAjK42KjbhJwcvNdTlYHI+YY/aZWBk4Niw==}
+  /@tanstack/eslint-plugin-query@5.32.1(eslint@8.57.0)(typescript@5.4.5):
+    resolution: {integrity: sha512-hlvKBV0JncpoA2HThfiD6OH8pdtn2N7WR74nWmDEuBEV1HMwXDo1QF/h/oKRPheEjzokVI13D3p11Lfw2kQr+g==}
     peerDependencies:
       eslint: ^8.0.0
     dependencies:
