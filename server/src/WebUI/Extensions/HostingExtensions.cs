@@ -27,6 +27,7 @@ using Application.Common.Interfaces;
 using Domain.Entities.Common;
 using Infrastructure.Repository;
 using Infrastructure.Mailing;
+using Infrastructure;
 
 namespace WebUI.Extensions
 {
@@ -93,6 +94,8 @@ namespace WebUI.Extensions
             builder.Services.AddScoped<CurrentUserMiddleware>().
                AddScoped<ICurrentUser, CurrentUser>();
 
+            builder.Services.AddAppExeptionMiddleware();
+
             builder.Services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(typeof(IApplicationAssemblyReference).Assembly);
@@ -140,9 +143,11 @@ namespace WebUI.Extensions
             app.UseAuthentication();
 
             app.UseMiddleware<CurrentUserMiddleware>();
+            
 
             app.UseAuthorization();
 
+            app.UseAppExceptionMiddleware();
 
             app.MapControllers()
                     .RequireAuthorization();
