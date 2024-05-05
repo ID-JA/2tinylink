@@ -4,12 +4,24 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { axios } from "@/utils";
-import { Button, Modal, TextInput, Title } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Collapse,
+  Divider,
+  Modal,
+  TagsInput,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 
 function CreateProjectModal() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [openedInviteUsers, { toggle: toggleOpenInviteUsers }] =
+    useDisclosure(false);
+
   const isMobile = useMediaQuery("(max-width: 50em)");
 
   const router = useRouter();
@@ -22,12 +34,20 @@ function CreateProjectModal() {
     description: "",
   });
 
+  const [emails, setEmails] = useState<string[]>([]);
+
   const { name, description } = data;
 
   const mutation = useMutation({
     mutationKey: ["create-project"],
     mutationFn: async (data: { name: string; description: string }) => {
       const response = await axios().post("/projects", data);
+      if (emails.length) {
+        await axios().post(`/projects/invite`, {
+          projectId: response.data,
+          emails,
+        });
+      }
       return response.data;
     },
     onSuccess: (projectId) => {
@@ -89,6 +109,25 @@ function CreateProjectModal() {
               setData({ ...data, description: e.target.value });
             }}
           />
+          <Box maw={400} mx="auto" mb="xl">
+            <Divider
+              onClick={toggleOpenInviteUsers}
+              my="xs"
+              label="You want to Invite member?"
+              labelPosition="center"
+              style={{ cursor: "pointer" }}
+            />
+
+            <Collapse in={openedInviteUsers}>
+              <TagsInput
+                type="email"
+                label="Emails"
+                placeholder="Enter email"
+                value={emails}
+                onChange={(value) => setEmails(value)}
+              />
+            </Collapse>
+          </Box>
           <Button fullWidth type="submit" loading={mutation.isPending}>
             Create project
           </Button>

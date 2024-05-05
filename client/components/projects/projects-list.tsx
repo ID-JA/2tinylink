@@ -8,7 +8,7 @@ function ProjectsList() {
   const { projects, loading } = useProjects();
 
   if (loading) {
-    return Array.from({ length: 10 }).map((_, i) => (
+    return Array.from({ length: 6 }).map((_, i) => (
       <ProjectPlaceholder key={i} />
     ));
   }

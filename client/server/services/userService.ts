@@ -1,4 +1,5 @@
 import { baseURL } from "@/utils";
+import axios from "axios";
 
 export const userService = {
   authenticate,
@@ -12,11 +13,17 @@ async function authenticate({
   password: string;
 }) {
   console.log("BASEURL - BASEURL", baseURL);
-  const response = await fetch(`${baseURL}/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userNameOrEmail, password }),
-  });
-  const data = await response.json();
+  const response = await axios.post(
+    `${baseURL}/auth/login`,
+    {
+      userNameOrEmail,
+      password,
+    },
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+  const data = response.data;
   return data?.token ? data : null;
 }
