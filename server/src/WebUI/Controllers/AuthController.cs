@@ -1,3 +1,4 @@
+using Application.Common.Interfaces.Services;
 using Application.UseCases.Auth.Commands.EmailConfirmation;
 using Application.UseCases.Auth.Commands.Register;
 using Application.UseCases.Auth.Queries.Login;
@@ -14,14 +15,9 @@ namespace WebUI.Controllers
     [ApiController]
     [AllowAnonymous]
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController(ISender _sender, IMailService _mailService) : ControllerBase
     {
-        private readonly ISender _sender;
-
-        public AuthController(ISender sender)
-        {
-            _sender = sender;
-        }
+        
 
         [HttpPost("register")]
         public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest registerRequest)
@@ -32,22 +28,11 @@ namespace WebUI.Controllers
                 FirstName = registerRequest.FirstName,
                 LastName = registerRequest.LastName,
                 Email = registerRequest.Email,
-                Password = registerRequest.Password
+                Password = registerRequest.Password,
+                Origin = $"{Request.Scheme}://{Request.Host.Value}{Request.PathBase.Value}"
             };
 
-            var result = await _sender.Send(command);
-
-            string endpointUrl = Url.Action(nameof(EmailConfirmation),
-                                        ControllerContext.ActionDescriptor.ControllerName,
-                                        new { UserName = command.UserName, Token = result.EmailConfirmationToken },
-                                        Request.Scheme);
-
-            var response = new RegisterResponse()
-            {
-                EmailConfirmationUrl = endpointUrl
-            };
-
-            return CreatedAtAction("GetUserProfileByUserName", "Profiles", new { UserName = registerRequest.UserName }, response);
+            return Ok(await _sender.Send(command));
         }
 
         [HttpPost("login")]

@@ -28,7 +28,7 @@ public static class Startup
     {
         return dbProvider.ToLowerInvariant() switch
         {
-            "sqlite" => builder.UseSqlite(connectionString, options => options.MigrationsAssembly("Migrators.SqLite")),
+            "sqlite" => builder.UseSqlite(connectionString, options => options.MigrationsAssembly("Migrators.SQLite")),
             "sqlserver" => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly("Migrators.MSSQL")),
             _ => throw new InvalidOperationException("the provider not supported")
         };

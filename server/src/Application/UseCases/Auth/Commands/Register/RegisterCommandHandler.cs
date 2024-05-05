@@ -1,20 +1,17 @@
-using System.Net;
 using Application.Common.Exceptions;
+using Application.Common.Interfaces.Services;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Net;
+using System.Text;
 
 namespace Application.UseCases.Auth.Commands.Register
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterCommandResult>
+    public class RegisterCommandHandler(UserManager<AppUser> _userManager, IMailService _mailSerivce) : IRequestHandler<RegisterCommand, string>
     {
-        private readonly UserManager<AppUser> _userManager;
-
-        public RegisterCommandHandler(UserManager<AppUser> userManager)
-        {
-            _userManager = userManager;
-        }
-        public async Task<RegisterCommandResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
+        public async Task<string> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
             var user = new AppUser()
             {
@@ -28,16 +25,23 @@ namespace Application.UseCases.Auth.Commands.Register
 
             if (result.Succeeded)
             {
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                // TODO: send Email for account's confirmation.
-                return new() { EmailConfirmationToken = token };
+                var confirmationEmail = await GetEmailVerificationUriAsync(user, command.Origin);
+                await _mailSerivce.SendAccountConfirmation(user, confirmationEmail);
+                return "User account created successfully";
             }
 
-            var firstError = result.Errors.First().Description;
+            throw new AppException((int)HttpStatusCode.Conflict, result.Errors.First().Description);
 
-            throw new AppException((int)HttpStatusCode.Conflict, firstError);
+        }
 
+        private async Task<string> GetEmailVerificationUriAsync(AppUser user, string origin)
+        {
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var endpointUri = new Uri(string.Concat($"{origin}/", "api/auth/email-confirmation/"));
+            var verificationUri = QueryHelpers.AddQueryString(endpointUri.ToString(), "username", user.UserName.ToString());
+            verificationUri = QueryHelpers.AddQueryString(verificationUri, "token", token);
+            return verificationUri;
         }
     }
 }

@@ -8,6 +8,9 @@ namespace Application.Common.Interfaces.Persistence
         public DbSet<Link> Links { get; }
         public DbSet<AppUser> AppUsers { get; }
         public DbSet<Project> Projects { get; }
+        public DbSet<ProjectInvitation> ProjectInvitations { get; }
+        public DbSet<ProjectUser> ProjectUsers { get; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

@@ -34,6 +34,6 @@ public class ProjectsByUserSpec : Specification<Project, ProjectDTO>
 {
     public ProjectsByUserSpec(Guid userId)
     {
-        Query.Where(x => x.AppUserId.Equals(userId));
+        //Query.Where(x => x.AppUserId.Equals(userId));
     }
 }

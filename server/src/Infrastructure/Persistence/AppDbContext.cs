@@ -13,6 +13,9 @@ namespace Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<ProjectInvitation>().HasKey(pv => new { pv.ProjectId, pv.Email });
+
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
@@ -24,5 +27,7 @@ namespace Infrastructure.Persistence
         public DbSet<Link> Links => Set<Link>();
         public DbSet<AppUser> AppUsers => Set<AppUser>();
         public DbSet<Project> Projects => Set<Project>();
+        public DbSet<ProjectInvitation> ProjectInvitations => Set<ProjectInvitation>();
+        public DbSet<ProjectUser> ProjectUsers => Set<ProjectUser>();
     }
 }

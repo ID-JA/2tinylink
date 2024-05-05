@@ -23,4 +23,23 @@ public class ProjectsController(ISender _sender) : ControllerBase
     {
         return await _sender.Send(request);
     }
+
+    [HttpPost("invite")]
+    public async Task<string> InviteToProjectAsync([FromBody] InviteToProjectRequest request)
+    {
+        return await _sender.Send(new InviteToProjectRequest()
+        {
+            Origin = $"{Request.Scheme}://{Request.Host.Value}{Request.PathBase.Value}",
+            Emails = request.Emails,
+            ProjectId = request.ProjectId
+        });
+    }
+
+    [HttpPost("invite/{code}")]
+    public async Task<IActionResult> VerifyProjectInvitation([FromRoute] string code)
+    {
+        var result = await _sender.Send(new VerifyProjectInvitationRequest() { Code = code });
+        var messsage = result ? "You've joined the project successfully" : "You've already become a member for this project.";
+        return Ok(messsage);
+    }
 }

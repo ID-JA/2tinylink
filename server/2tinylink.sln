@@ -5,25 +5,28 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ED1BD644-38DD-4531-B939-FB48E2CD5194}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{5D1C50D2-1622-4D21-BB3A-02BF40F0BFF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Application\Application.csproj", "{5D1C50D2-1622-4D21-BB3A-02BF40F0BFF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Domain\Domain.csproj", "{B0A7299F-0452-453F-A856-E1110A8E825C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{B0A7299F-0452-453F-A856-E1110A8E825C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{890D24F2-7B0E-44F8-A134-62D13309B7D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{890D24F2-7B0E-44F8-A134-62D13309B7D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "src\WebUI\WebUI.csproj", "{016427F1-1321-425D-998C-40DD45506937}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "src\WebUI\WebUI.csproj", "{016427F1-1321-425D-998C-40DD45506937}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9B7E54E5-A4F5-42E7-91EB-E1595B6F55CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Tests", "tests\Infrastructure.Tests\Infrastructure.Tests.csproj", "{E2571865-C5FD-49AD-9597-FC106BB3794D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Tests", "tests\Infrastructure.Tests\Infrastructure.Tests.csproj", "{E2571865-C5FD-49AD-9597-FC106BB3794D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrators", "Migrators", "{D0D88B63-7921-4A80-9FB3-680A11659DA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrators.SQLite", "src\Migrators\Migrators.SQLite\Migrators.SQLite.csproj", "{8F30B63A-D77D-4C8F-B2B0-7A5296DAD7C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrators.MSSQL", "src\Migrators\Migrators.MSSQL\Migrators.MSSQL.csproj", "{681FC094-FB50-4930-A46F-1FEAECDC6091}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5D1C50D2-1622-4D21-BB3A-02BF40F0BFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -46,6 +49,17 @@ Global
 		{E2571865-C5FD-49AD-9597-FC106BB3794D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2571865-C5FD-49AD-9597-FC106BB3794D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2571865-C5FD-49AD-9597-FC106BB3794D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F30B63A-D77D-4C8F-B2B0-7A5296DAD7C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F30B63A-D77D-4C8F-B2B0-7A5296DAD7C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F30B63A-D77D-4C8F-B2B0-7A5296DAD7C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F30B63A-D77D-4C8F-B2B0-7A5296DAD7C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{681FC094-FB50-4930-A46F-1FEAECDC6091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{681FC094-FB50-4930-A46F-1FEAECDC6091}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{681FC094-FB50-4930-A46F-1FEAECDC6091}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{681FC094-FB50-4930-A46F-1FEAECDC6091}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5D1C50D2-1622-4D21-BB3A-02BF40F0BFF9} = {ED1BD644-38DD-4531-B939-FB48E2CD5194}
@@ -53,5 +67,11 @@ Global
 		{890D24F2-7B0E-44F8-A134-62D13309B7D5} = {ED1BD644-38DD-4531-B939-FB48E2CD5194}
 		{016427F1-1321-425D-998C-40DD45506937} = {ED1BD644-38DD-4531-B939-FB48E2CD5194}
 		{E2571865-C5FD-49AD-9597-FC106BB3794D} = {9B7E54E5-A4F5-42E7-91EB-E1595B6F55CB}
+		{D0D88B63-7921-4A80-9FB3-680A11659DA2} = {ED1BD644-38DD-4531-B939-FB48E2CD5194}
+		{8F30B63A-D77D-4C8F-B2B0-7A5296DAD7C8} = {D0D88B63-7921-4A80-9FB3-680A11659DA2}
+		{681FC094-FB50-4930-A46F-1FEAECDC6091} = {D0D88B63-7921-4A80-9FB3-680A11659DA2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74E97122-109F-4B9A-8CB2-BD9C7BA8BF4B}
 	EndGlobalSection
 EndGlobal
